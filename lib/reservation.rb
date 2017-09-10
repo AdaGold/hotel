@@ -19,8 +19,8 @@ module Hotel
       return price_night * date
     end
 
-    def reservation
-      return @reservation
+    def self.reservation
+      return reservation
     end
 
   end #end of class

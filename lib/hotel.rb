@@ -4,7 +4,7 @@ require 'date'
 module Hotel
   class Hotel
     attr_reader :reservation
-    
+
     def initialize
       @rooms = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
       @reserved_rooms = []
@@ -17,6 +17,16 @@ module Hotel
 
     def collection_reservation
       return "#{@reservation}"
+    end
+
+    def check_if_reserved(room_number)
+      @reservation.each do |key, value|
+        if key == room_number && value[0] > 0
+          return true
+        else
+        end
+      end
+      return false
     end
 
   end #end of class
