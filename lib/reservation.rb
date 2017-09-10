@@ -4,7 +4,7 @@ require 'date'
 
 module Hotel
   class Reservation
-    attr_reader :date, :room_availability
+    attr_reader :date, :room_availability, :reservation
 
     def initialize(room_number, check_in, check_out)
       @date = DateRange.new(room_number, check_in, check_out).date
@@ -17,6 +17,10 @@ module Hotel
 
     def total_cost
       return price_night * date
+    end
+
+    def reservation
+      return @reservation
     end
 
   end #end of class
