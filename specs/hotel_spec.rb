@@ -10,9 +10,14 @@ describe "class Hotel"  do
       @hotel.must_be_instance_of Hotel::Hotel
     end
   end
-  describe "#rooms" do
-    it "is an array" do
-      @hotel.rooms.must_be_instance_of Array
+  describe "#collection_rooms" do
+    it "returns a string of collection_rooms" do
+      @hotel.collection_rooms.must_be_instance_of String
+    end
+  end
+  describe "#collection_reservation" do
+    it "returns a string of reservation" do
+      @hotel.collection_reservation.must_be_instance_of String
     end
   end
 end
