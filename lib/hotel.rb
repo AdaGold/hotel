@@ -12,11 +12,11 @@ module Hotel
     end
 
     def collection_rooms
-      return "#{@rooms}"
+      return @rooms
     end
 
     def collection_reservation
-      return "#{@reservation}"
+      return "{@reservation}"
     end
 
     def check_if_reserved(room_number)
@@ -29,5 +29,15 @@ module Hotel
       return false
     end
 
+    # def available_rooms
+    #   @reserved_rooms.each do |i|
+    #     checker = @reserved_rooms[i]
+    #     @rooms.each do |x|
+    #       if @rooms[x] == checker
+    #         @rooms[i - 1] = 0
+    #       end
+    #     end
+    #   end
+    # end
   end #end of class
 end #end of module
