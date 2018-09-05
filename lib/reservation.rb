@@ -10,7 +10,7 @@ module Reservation
       @end_date = end_date
       @cost = cost
     end
-
+    #
     # def start_date
     #   @start_date = start_date
     # end
@@ -21,15 +21,14 @@ module Reservation
     def self.create_reservation
       @new_reservation = Reservation.new
     end
-    @new_reservation
   end
 
   def check_room_status
     if :room_status == :Available
       puts 'Room is available.'
-    else
+    elsif :room_status == :Unavailable
       puts 'Room is not available.'
-    end
+    end 
   end
 end
 class BookingDates
