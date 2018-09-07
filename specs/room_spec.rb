@@ -13,7 +13,7 @@ describe 'Rooms Class' do
   end
 
   it 'creates a list of twenty rooms' do
-    all_rooms = Hotel::Room.create_rooms
-    expect(all_rooms.length).must_equal 20
+    @all_rooms = Hotel::Room.create_rooms
+    expect(@all_rooms.length).must_equal 20
   end
 end
