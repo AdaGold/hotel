@@ -4,24 +4,23 @@ module Reservation
   class ReserveRoom
     attr_accessor :room_status, :start_date, :end_date, :cost
 
-    def initialize(room_status, start_date, end_date, cost = 200)
+    def initialize(room_status, date_range, cost = 200)
       @room_status = room_status
-      @start_date = start_date
-      @end_date = end_date
+      @date_range = date_range
       @cost = cost
     end
 
     def self.create_reservation
-      @new_reservation = Reservation.new
     end
-    # @booked_rooms << @new_reservation
   end
 
   def check_room_status
-    if :room_status == :Available
-      puts 'Room is available.'
-    elsif :room_status == :Unavailable
-      puts 'Room is not available.'
+    @all_rooms.each do |status|
+      if :room_status == :Available
+        puts 'Room is Available.'
+      elsif :room_status == :Unavailable
+        puts 'Room is Unavailable.'
+      end
     end
   end
 
@@ -31,20 +30,18 @@ module Reservation
   open_rooms = []
   reserved_rooms = []
   def lists_booked_rooms
-    start_date = Date.parse('20/09/2018')
-    end_date = Date.parse ('30/09/2018')
-    date_range = (start_date..end_date)
-    @all_rooms.to_a.each do |room|
-      @booked_rooms.to_a.each do |room|
-        if all_rooms.room_number != booked_rooms.room_number
-          open_rooms << room
-        elsif all_rooms.room_number == booked_rooms.room_number
-          reserved_rooms << room
-        end
-        open_rooms
-        reserved_rooms
-      end
-    end
+    # start_date = Date.parse('20/09/2018')
+    # end_date = Date.parse ('30/09/2018')
+    # date_range = (start_date..end_date)
+    # @all_rooms.to_a.each do |room|
+    #   @booked_rooms.to_a.each do |room|
+    #     if all_rooms.room_number != booked_rooms.room_number
+    #       open_rooms << room
+    #     elsif all_rooms.room_number == booked_rooms.room_number
+    #       reserved_rooms << room
+    #     end
+    #    end
+    # end
   end
 end
 # Two date ranges *do* overlap if range A compared to range B:
