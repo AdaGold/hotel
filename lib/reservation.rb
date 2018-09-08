@@ -5,54 +5,45 @@ module Reservation
   class ReserveRoom
     attr_accessor :room_status, :start_date, :end_date, :cost
 
-    def initialize( start_date_time, end_date_time, cost = 200)
-      @start_date = DateTime.strptime(start_date_time + " 15:00", "%m/%d/%y %H:%M")
-      @end_date = DateTime.strptime(end_date_time + " 11:00", "%m/%d/%y %H:%M")
+    def initialize(start_date_time, end_date_time, cost = 200)
+      @start_date = DateTime.strptime(start_date_time + ' 15:00', '%m/%d/%y %H:%M')
+      @end_date = DateTime.strptime(end_date_time + ' 11:00', '%m/%d/%y %H:%M')
       @cost = cost
+
+#      create_reservation
     end
 
-    def self.create_reservation
-    end
-
+    # def create_reservation
+    #   @booked_rooms = []
+    #   @open_rooms = []
+    #   @all_rooms.each do |number, status|
+    #     if :room_status == :Available
+    #       status = :Unavailable
+    #       booked_rooms << room
+    #     end
+    #   end
+    # end
 
     def check_room_status
-      #@all_rooms.each do |status|
-      # if :room_status == :Available
-      #   puts 'Room is Available.'
-      # elsif :room_status == :Unavailable
-      #   puts 'Room is Unavailable.'
-      # end
-      #  end
+      @all_rooms.each do |status|
+        if :room_status == :Available
+          puts "Room is Available."
+        elsif :room_status == :Unavailable
+          puts "Room is not available."
+        end
+      end
     end
-    def calculate_cost
-       num_nights = (end_date - start_date).to_i
-      @room_cost = (num_nights + 1) * 200.to_f
-      # end_date = Date.parse('22/09/2018')
-      # start_date = Date.parse('20/09/2018')
 
-      # @room_cost = @num_nights * 200
+    def calculate_cost
+      num_nights = (end_date - start_date).to_i
+      @room_cost = (num_nights + 1) * 200.to_f
     end
 
   end
 end
 
 
-# open_rooms = []
-# reserved_rooms = []
-# def lists_booked_rooms
-# start_date = Date.parse('20/09/2018')
-# end_date = Date.parse ('30/09/2018')
-# date_range = (start_date..end_date)
-# @all_rooms.to_a.each do |room|
-#   @booked_rooms.to_a.each do |room|
-#     if all_rooms.room_number != booked_rooms.room_number
-#       open_rooms << room
-#     elsif all_rooms.room_number == booked_rooms.room_number
-#       reserved_rooms << room
-#     end
-#    end
-# end
-# end
+
 
 # Two date ranges *do* overlap if range A compared to range B:
 # - Same dates

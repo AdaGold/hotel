@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 # require_relative '../lib/reservation'
 
 describe 'Reservation Class' do
-   describe 'initialize a reservation' do
+  describe 'initialize a reservation' do
     it 'creates an instance of a reservation' do
       test_reservation = Reservation::ReserveRoom.new( '09/20/18', '09/22/18')
       expect(test_reservation).must_be_kind_of Reservation::ReserveRoom
@@ -13,18 +13,11 @@ describe 'Reservation Class' do
     end
 
     it 'can calculate the cost of a reservation' do
-      @test_reservation = Reservation::ReserveRoom.new( '09/20/18', '09/22/18')
+      @test_reservation = Reservation::ReserveRoom.new('09/20/18', '09/22/18')
       expect(@test_reservation.calculate_cost).must_equal 400.0
     end
   end
 
-  # (start_date_time, end_date_time, room_number, room_status)
-  #   @start_date_time = start_date_time
-  #   @end_date_time = end_date_time
-  #   @room_number = room_number
-  #   if room_status == :Available
-  #     room_status = :Unavailable
-  #   end
   # it 'can see a list of reservations for a specific date' do
   #
   # end
