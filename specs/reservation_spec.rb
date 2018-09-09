@@ -4,7 +4,7 @@ require_relative 'spec_helper'
 describe 'Reservation Class' do
    describe 'initialize a reservation' do
     it 'creates an instance of a reservation' do
-      test_reservation = Reservation::ReserveRoom.new( '09/20/18', '09/22/18')
+      test_reservation = Reservation::ReserveRoom.new( '09/20/18', '09/22/18', 1)
       expect(test_reservation).must_be_kind_of Reservation::ReserveRoom
     end
     it 'can check the status of a new room' do
@@ -13,7 +13,7 @@ describe 'Reservation Class' do
     end
 
     it 'can calculate the cost of a reservation' do
-      @test_reservation = Reservation::ReserveRoom.new( '09/20/18', '09/22/18')
+      @test_reservation = Reservation::ReserveRoom.new( '09/20/18', '09/22/18', 1, 200)
       expect(@test_reservation.calculate_cost).must_equal 400.0
     end
   end

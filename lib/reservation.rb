@@ -3,11 +3,12 @@ require 'pry'
 module Reservation
 
   class ReserveRoom
-    attr_accessor :room_status, :start_date, :end_date, :cost
+    attr_accessor :room_status, :start_date, :end_date, :cost, :res_id
 
-    def initialize( start_date_time, end_date_time, cost = 200)
+    def initialize( start_date_time, end_date_time, res_id, cost = 200)
       @start_date = DateTime.strptime(start_date_time + " 15:00", "%m/%d/%y %H:%M")
       @end_date = DateTime.strptime(end_date_time + " 11:00", "%m/%d/%y %H:%M")
+      @res_id = res_id
       @cost = cost
     end
 
@@ -27,10 +28,6 @@ module Reservation
     def calculate_cost
        num_nights = (end_date - start_date).to_i
       @room_cost = (num_nights + 1) * 200.to_f
-      # end_date = Date.parse('22/09/2018')
-      # start_date = Date.parse('20/09/2018')
-
-      # @room_cost = @num_nights * 200
     end
 
   end
