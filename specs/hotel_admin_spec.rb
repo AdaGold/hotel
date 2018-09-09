@@ -15,6 +15,10 @@ describe 'Admin Class' do
     expect(@rooms.length).must_equal 20
   end
 
+  # it 'can check the status of a room' do
+  #   @test_room = Hotel::Admin.new
+  #   expect(@test_room.check_room_status).must_equal Unavailable
+  # end
   # it 'creates a reservation' do
   #   test_reservation = Hotel::Admin.create_reservation.new( '09/20/18', '09/22/18', 1)
   #   expect(test_reservation).must_be_kind_of Reservation::ReserveRoom

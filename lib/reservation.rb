@@ -1,5 +1,6 @@
 # create module for reservations to hold classes
 require 'pry'
+require_relative 'hotel_admin.rb'
 module Reservation
 
   class ReserveRoom
@@ -12,24 +13,23 @@ module Reservation
       @cost = cost
     end
 
-    def self.create_reservation
-    end
+    # def self.create_reservation
+    # end
 
-
-    def check_room_status
-      #@all_rooms.each do |status|
-      # if :room_status == :Available
-      #   puts 'Room is Available.'
-      # elsif :room_status == :Unavailable
-      #   puts 'Room is Unavailable.'
-      # end
-      #  end
-    end
     def calculate_cost
-       num_nights = (end_date - start_date).to_i
+      num_nights = (end_date - start_date).to_i
       @room_cost = (num_nights + 1) * 200.to_f
     end
 
+    # def check_room_status
+    #   @rooms.each do |status|
+    #     if :room_status == :Available
+    #       puts 'Room is Available.'
+    #     elsif :room_status == :Unavailable
+    #       puts 'Room is Unavailable.'
+    #     end
+    #   end
+    # end
   end
 end
 
