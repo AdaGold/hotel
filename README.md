@@ -74,6 +74,7 @@ Remember that your job is only to build the classes that store information and h
 - Every room is identical, and a room always costs $200/night
 - The last day of a reservation is the checkout day, so the guest should not be charged for that night
 - For this wave, any room can be reserved at any time, and you don't need to check whether reservations conflict with each other (this will come in wave 2!)
+- These functionalities do not all need to be implemented in the same class
 
 ### Error Handling
 
@@ -114,6 +115,8 @@ If you are not familiar with what a block of hotel rooms, here is a brief descri
     - If a room is set aside in a block, it is not available for reservation by the general public, nor can it be included in another block
 - As an administrator, I can check whether a given block has any rooms available
 - As an administrator, I can reserve a room from within a block of rooms
+    - The room must be reserved for the full duration of the block
+    - Reservations made against a block should appear in the general list of reservations for that date (see wave 1 requirements)
 
 ### Constraints
 
