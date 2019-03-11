@@ -12,5 +12,11 @@ module Hotel
         raise ArgumentError, "end date must be after start date. Start date: #{start_date}, end date: #{end_date}"
       end
     end
+
+    def total_cost
+      # room cost * number of nights reserved
+      total_nights = end_date - start_date
+      return Hotel::HotelSystem.ROOM_COST * total_nights
+    end
   end
 end
