@@ -9,4 +9,20 @@ describe "Reservation class" do
     booking = Hotel::Reservation.new(start_date, end_date)
     expect(booking).must_be_kind_of Hotel::Reservation
   end
+
+  it "raises error for end_time before start_time" do
+    start_date = Date.new(2019, 3, 15)
+    end_date = Date.new(2019, 3, 14)
+    expect {
+      Hotel::Reservation.new(start_date, end_date)
+    }.must_raise ArgumentError
+  end
+
+  it "raises error for end_date same as start_date" do
+    start_date = Date.new(2019, 3, 15)
+    end_date = Date.new(2019, 3, 15)
+    expect {
+      Hotel::Reservation.new(start_date, end_date)
+    }.must_raise ArgumentError
+  end
 end
