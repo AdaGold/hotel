@@ -25,7 +25,11 @@ module Hotel
     end
 
     def in_date_range?(date)
-      return date >= start_date && date < end_date
+      if date.is_a?(Date)
+        return date >= start_date && date < end_date
+      else
+        false
+      end
     end
   end
 end

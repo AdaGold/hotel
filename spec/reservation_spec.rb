@@ -54,5 +54,13 @@ describe "Reservation class" do
     it "returns true for dates within range" do
       expect(range.in_date_range?(Date.today)).must_equal true
     end
+
+    it "returns false for dates outside range" do
+      expect(range.in_date_range?(Date.today + 4)).must_equal false
+    end
+
+    it "returns false for invalid dates" do
+      expect(range.in_date_range?("string")).must_equal false
+    end
   end
 end
