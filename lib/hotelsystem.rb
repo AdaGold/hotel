@@ -12,5 +12,15 @@ module Hotel
                "Room ##{num}"
              end
     end
+
+    ##### WIP ######
+    def reserve_room
+      return Reservation.new(start_date, end_date)
+    end
+
+    def current_reservations
+
+      # return reservations array by date
+    end
   end
 end
