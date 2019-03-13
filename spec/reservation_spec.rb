@@ -29,6 +29,13 @@ describe "Reservation class" do
   end
 
   describe "Reservation total cost" do
+    it "returns correct number of days" do
+      start_date = Date.new(2030, 3, 4)
+      end_date = start_date + 2
+      range = Hotel::Reservation.new(start_date, end_date)
+      expect(range.total_nights).must_equal 2
+    end
+
     it "returns the cost of a room" do
       start_date = Date.new(2019, 3, 15)
       end_date = Date.new(2019, 3, 16)

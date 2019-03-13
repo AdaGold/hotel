@@ -10,4 +10,9 @@ describe "HotelSystem class" do
     hotel = Hotel::HotelSystem.new
     expect(hotel.list_rooms).must_be_kind_of Array
   end
+
+  it "lists 20 rooms" do
+    hotel = Hotel::HotelSystem.new
+    expect(hotel.list_rooms.length).must_equal 20
+  end
 end
