@@ -2,24 +2,24 @@ require_relative "spec_helper.rb"
 
 describe "HotelSystem class" do
   let (:first_reservation) {
-    start_date = Date.new(2019, 3, 23)
+    start_date = Date.today
     end_date = start_date + 2
     Hotel::Reservation.new(start_date, end_date)
   }
 
   let (:second_reservation) {
-    start_date = Date.new(2020, 3, 23)
+    start_date = Date.today
     end_date = start_date + 3
     Hotel::Reservation.new(start_date, end_date)
   }
 
   let (:hotel_system) {
-    Hotel::HotelSystem.new
+    Hotel::HotelSystem.new(reservations = [first_reservation, second_reservation])
   }
 
   describe "HotelSystem instantiation" do
     it "creates an instance of HotelSystem" do
-      expect(:hotel_system).must_be_kind_of Hotel::HotelSystem
+      expect(hotel_system).must_be_kind_of Hotel::HotelSystem
     end
   end
 
@@ -34,12 +34,24 @@ describe "HotelSystem class" do
   end
 
   describe "HotelSystem mananges reservations" do
-    it "creates an array of reservations" do
-      # expect that hotel system can list an array of reservations
+    let (:reservation_matches) {
+      reservation_matches = hotel_system.reservations_by_date(Date.today)
+    }
+
+    it "returns array of all reservations" do
+      reservation_matches.each do |reservation|
+        expect(reservation).must_be_kind_of Hotel::Reservation
+      end
     end
 
-    it "stores instances of reservations" do
-      # expect that hotel system can pass reservations as an argument
+    it "returns the proper number of reservations" do
+      expect(reservation_matches.length).must_equal 2
+    end
+
+    it "returns empty array if there are no matches" do
+      no_reservations = hotel_system.reservations_by_date(Date.today + 20)
+      expect(no_reservations).must_be_kind_of Array
+      expect(no_reservations.length).must_equal 0
     end
   end
 end

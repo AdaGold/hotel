@@ -1,8 +1,10 @@
+require_relative "reservation"
+
 module Hotel
   class HotelSystem
     attr_reader :rooms, :reservations
 
-    def initialize
+    def initialize(reservations = [])
       @rooms = [*1..20]
       @reservations = reservations
     end
@@ -13,14 +15,14 @@ module Hotel
              end
     end
 
-    ##### WIP ######
     def reserve_room
       return Reservation.new(start_date, end_date)
     end
 
-    def current_reservations
-
-      # return reservations array by date
+    def reservations_by_date(date)
+      return reservations.select do |booking|
+               date >= booking.start_date && date < booking.end_date
+             end
     end
   end
 end
