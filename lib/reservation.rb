@@ -23,5 +23,9 @@ module Hotel
       # decouple this!!!!
       return Hotel::Room::ROOM_COST * total_nights
     end
+
+    def in_date_range?(date)
+      return date >= start_date && date < end_date
+    end
   end
 end

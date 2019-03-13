@@ -43,4 +43,16 @@ describe "Reservation class" do
       expect(booking.total_cost).must_equal 200
     end
   end
+
+  describe "Reservation in_date_range?" do
+    let (:range) {
+      start_date = Date.today
+      end_date = start_date + 2
+      range = Hotel::Reservation.new(start_date, end_date)
+    }
+
+    it "returns true for dates within range" do
+      expect(range.in_date_range?(Date.today)).must_equal true
+    end
+  end
 end
