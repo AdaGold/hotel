@@ -4,10 +4,13 @@ require_relative "spec_helper.rb"
 
 describe "Reservation class" do
   describe "Reservation instantiation" do
+    let (:booking) {
+      start_date = Date.today
+      end_date = Date.today + 2
+      booking = Hotel::Reservation.new(start_date, end_date, 1)
+    }
+
     it "creates an instance of Reservation" do
-      start_date = Date.new(2019, 3, 15)
-      end_date = Date.new(2019, 3, 18)
-      booking = Hotel::Reservation.new(start_date, end_date)
       expect(booking).must_be_kind_of Hotel::Reservation
     end
 
@@ -15,15 +18,14 @@ describe "Reservation class" do
       start_date = Date.new(2019, 3, 15)
       end_date = Date.new(2019, 3, 14)
       expect {
-        Hotel::Reservation.new(start_date, end_date)
+        Hotel::Reservation.new(start_date, end_date, 1)
       }.must_raise ArgumentError
     end
 
     it "raises error for end_date same as start_date" do
       start_date = Date.new(2019, 3, 15)
-      end_date = Date.new(2019, 3, 15)
       expect {
-        Hotel::Reservation.new(start_date, end_date)
+        Hotel::Reservation.new(start_date, start_date, 1)
       }.must_raise ArgumentError
     end
   end
@@ -32,14 +34,14 @@ describe "Reservation class" do
     it "returns correct number of days" do
       start_date = Date.new(2030, 3, 4)
       end_date = start_date + 2
-      range = Hotel::Reservation.new(start_date, end_date)
+      range = Hotel::Reservation.new(start_date, end_date, 1)
       expect(range.total_nights).must_equal 2
     end
 
     it "returns the cost of a room" do
       start_date = Date.new(2019, 3, 15)
       end_date = Date.new(2019, 3, 16)
-      booking = Hotel::Reservation.new(start_date, end_date)
+      booking = Hotel::Reservation.new(start_date, end_date, 1)
       expect(booking.total_cost).must_equal 200
     end
   end
@@ -48,7 +50,7 @@ describe "Reservation class" do
     let (:range) {
       start_date = Date.today
       end_date = start_date + 2
-      range = Hotel::Reservation.new(start_date, end_date)
+      range = Hotel::Reservation.new(start_date, end_date, 1)
     }
 
     it "returns true for dates within range" do

@@ -4,9 +4,12 @@ module Hotel
   class Reservation
     attr_accessor :start_date, :end_date, :total_cost
 
-    def initialize(start_date, end_date)
+    ROOM_COST = 200 # identical rooms at $200/night
+
+    def initialize(start_date, end_date, room)
       @start_date = start_date
       @end_date = end_date
+      @room = room
       @total_cost = total_cost
 
       if start_date >= end_date
@@ -20,8 +23,7 @@ module Hotel
     end
 
     def total_cost
-      # decouple this!!!!
-      return Hotel::Room::ROOM_COST * total_nights
+      return ROOM_COST * total_nights
     end
 
     def in_date_range?(date)
