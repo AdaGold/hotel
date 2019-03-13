@@ -7,6 +7,10 @@ module Hotel
 
     def initialize(number)
       @number = number
+
+      if !@number.to_s.match /\d+/
+        raise ArgumentError, "Invalid Room Number"
+      end
     end
   end
 end
