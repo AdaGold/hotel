@@ -17,7 +17,7 @@ module Hotel
 
     def reservations_by_date(date)
       return reservations.select do |booking|
-               date >= booking.start_date && date < booking.end_date
+               booking.in_date_range?(date)
              end
     end
 

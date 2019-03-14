@@ -26,7 +26,6 @@ module Hotel
       return ROOM_COST * total_nights
     end
 
-    ### DATE RANGE CLASS?! ###
     def total_nights
       return end_date - start_date
     end
