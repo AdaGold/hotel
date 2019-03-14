@@ -15,14 +15,23 @@ module Hotel
              end
     end
 
-    def reserve_room
-      return Reservation.new(start_date, end_date)
-    end
-
     def reservations_by_date(date)
       return reservations.select do |booking|
                date >= booking.start_date && date < booking.end_date
              end
+    end
+
+    def available_rooms(date)
+      days_reservations = reservations_by_date(date)
+      occupied_rooms = days_reservations.map do |reservation|
+        reservation.room
+      end
+      return @rooms - occupied_rooms
+    end
+
+    def reserve_room
+      room = @rooms.sample
+      return Reservation.new(start_date, end_date, room)
     end
   end
 end

@@ -4,13 +4,13 @@ describe "HotelSystem class" do
   let (:first_reservation) {
     start_date = Date.today
     end_date = start_date + 2
-    Hotel::Reservation.new(start_date, end_date)
+    Hotel::Reservation.new(start_date, end_date, 1)
   }
 
   let (:second_reservation) {
     start_date = Date.today
     end_date = start_date + 3
-    Hotel::Reservation.new(start_date, end_date)
+    Hotel::Reservation.new(start_date, end_date, 2)
   }
 
   let (:hotel_system) {
@@ -52,6 +52,16 @@ describe "HotelSystem class" do
       no_reservations = hotel_system.reservations_by_date(Date.today + 20)
       expect(no_reservations).must_be_kind_of Array
       expect(no_reservations.length).must_equal 0
+    end
+  end
+
+  describe "manages available rooms" do
+    it "returns array with available rooms" do
+      expect(hotel_system.available_rooms(Date.today)).must_be_kind_of Array
+    end
+
+    it "returns correct number of available rooms" do
+      expect(hotel_system.available_rooms(Date.today).length).must_equal 18
     end
   end
 end
