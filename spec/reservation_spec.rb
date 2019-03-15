@@ -28,6 +28,12 @@ describe "Reservation class" do
         Hotel::Reservation.new(start_date, start_date, 1)
       }.must_raise ArgumentError
     end
+
+    it "raises an error for invalid room number" do
+      expect {
+        Hotel::Reservation.new(Date.today, Date.today + 2, 30).must_raise ArgumentError
+      }
+    end
   end
 
   describe "Reservation total cost" do

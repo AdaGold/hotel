@@ -10,7 +10,6 @@ module Hotel
       @start_date = start_date
       @end_date = end_date
       @room = room
-      @total_cost = total_cost
 
       if !@room.to_s.match /\d+/
         raise ArgumentError, "Invalid Room Number"

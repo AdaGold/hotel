@@ -10,15 +10,17 @@ module Hotel
     end
 
     def list_rooms
-      return @rooms.map do |num|
-               "Room ##{num}"
-             end
+      room_list = @rooms.map do |num|
+        "Room ##{num}"
+      end
+      return room_list
     end
 
     def reservations_by_date(date)
-      return reservations.select do |booking|
-               booking.in_date_range?(date)
-             end
+      reservations_by_date = reservations.select do |booking|
+        booking.in_date_range?(date)
+      end
+      return reservations_by_date
     end
 
     def available_rooms(date)
