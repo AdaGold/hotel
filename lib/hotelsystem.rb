@@ -33,7 +33,18 @@ module Hotel
     end
 
     def available_rooms(date)
+      # if !invalid_dates?(start_date, end_date)
+      #   raise ArgumentError, "Invalid "
+      #   rooms_occupied =
       return @rooms - occupied_rooms(date)
+    end
+
+    def is_date?(date)
+      return date.class == Date
+    end
+
+    def invalid_dates?(start_date, end_date)
+      return start_date > end_date || !is_date?(start_date) || !is_date?(end_date)
     end
 
     def reserve_room(start_date, end_date)
