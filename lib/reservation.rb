@@ -11,7 +11,7 @@ module Hotel
       @end_date = end_date
       @room = room
 
-      if !@room.to_s.match /\d+/
+      if !room.to_s.match /\d+/
         raise ArgumentError, "Invalid Room Number"
       end
 
@@ -30,11 +30,10 @@ module Hotel
     end
 
     def in_date_range?(date)
-      if date.is_a?(Date)
-        return date >= start_date && date < end_date
-      else
-        false
+      if !date.is_a?(Date)
+        return false
       end
+      return date >= start_date && date < end_date
     end
   end
 end

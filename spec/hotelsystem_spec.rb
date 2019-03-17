@@ -33,9 +33,25 @@ describe "HotelSystem class" do
     end
   end
 
-  describe "HotelSystem mananges reservations" do
+  describe "HotelSystem reserves rooms" do
+    it "returns an instance of reservation" do
+      expect(hotel_system.reserve_room(Date.today + 2, Date.today + 4)).must_be_kind_of Hotel::Reservation
+    end
+
+    it "raises error when given invalid dates" do
+      expect {
+        hotel_system.reserve_room(Date.today, Date.today - 1).must_raise ArgumentError
+      }
+    end
+
+    it "reserves first available room" do
+      expect(hotel_system.reserve_room(Date.today + 1, Date.today + 2).room).must_equal 3
+    end
+  end
+
+  describe "HotelSystem mananges reservations by date" do
     let (:reservation_matches) {
-      reservation_matches = hotel_system.reservations_by_date(Date.today)
+      hotel_system.reservations_by_date(Date.today)
     }
 
     it "returns array of all reservations" do
@@ -50,6 +66,18 @@ describe "HotelSystem class" do
 
     it "returns empty array if there are no matches" do
       no_reservations = hotel_system.reservations_by_date(Date.today + 20)
+      expect(no_reservations).must_be_kind_of Array
+      expect(no_reservations.length).must_equal 0
+    end
+  end
+
+  describe "accurately manages occupied rooms" do
+    it "returns instance of an occupied room" do
+      expect(hotel_system.occupied_rooms(Date.today)[0]).must_equal first_reservation.room
+    end
+
+    it "returns empty array when not occupied" do
+      no_reservations = hotel_system.occupied_rooms(Date.today + 20)
       expect(no_reservations).must_be_kind_of Array
       expect(no_reservations.length).must_equal 0
     end
