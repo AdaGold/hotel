@@ -62,8 +62,9 @@ module Hotel
     def available_rooms_list(start_date, end_date)
       until invalid_dates?(start_date, end_date)
         rooms_occupied = occupied_rooms_list(start_date, end_date)
+        avail_rooms_array = @rooms - rooms_occupied
 
-        return @rooms - rooms_occupied
+        return "Rooms Available: #{avail_rooms_array}"
       end
     end
 
