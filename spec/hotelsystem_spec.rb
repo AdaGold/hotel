@@ -35,18 +35,26 @@ describe "HotelSystem class" do
 
   describe "HotelSystem reserves rooms" do
     it "returns an instance of reservation" do
-      expect(hotel_system.reserve_room(Date.today + 2, Date.today + 4)).must_be_kind_of Hotel::Reservation
+      expect(hotel_system.reserve_room(Date.today + 2, Date.today + 4, 3)).must_be_kind_of Hotel::Reservation
     end
 
     it "raises error when given invalid dates" do
       expect {
-        hotel_system.reserve_room(Date.today, Date.today - 1).must_raise ArgumentError
+        hotel_system.reserve_room(Date.today, Date.today - 1, 3).must_raise ArgumentError
       }
     end
 
-    it "reserves first available room" do
-      expect(hotel_system.reserve_room(Date.today + 1, Date.today + 2).room).must_equal 3
+    it "adds reservations to the @reservations array" do 
+      reservations_length = hotel_system.reservations.length
+      new_reservation = hotel_system.reserve_room(Date.today, Date.today + 3, 3)
+
+      expect(hotel_system.reservations.length - 1).must_equal reservations_length
     end
+
+
+    # it "reserves first available room" do
+    #   expect(hotel_system.reserve_room(Date.today + 1, Date.today + 2).room).must_equal 3
+    # end
   end
 
   describe "HotelSystem mananges reservations by date" do
@@ -73,23 +81,41 @@ describe "HotelSystem class" do
 
   describe "accurately manages occupied rooms" do
     it "returns instance of an occupied room" do
-      expect(hotel_system.occupied_rooms(Date.today)[0]).must_equal first_reservation.room
+      expect(hotel_system.occupied_rooms_list(Date.today, Date.today + 2)[0]).must_equal first_reservation.room
     end
 
     it "returns empty array when not occupied" do
-      no_reservations = hotel_system.occupied_rooms(Date.today + 20)
+      no_reservations = hotel_system.occupied_rooms_list(Date.today + 18, Date.today + 20)
       expect(no_reservations).must_be_kind_of Array
       expect(no_reservations.length).must_equal 0
+    end
+
+    it "returns array of unavailable room numbers" do 
+      expect(hotel_system.occupied_rooms_list(Date.today, Date.today + 3)).must_be_kind_of Array
+    end
+
+    # date ranges
+    it "returns correct list of unavailable rooms scenarios" do 
+      first_room = [1]
+      second_room = [2]
+      both_rooms = first_room + second_room
+
+      expect(hotel_system.occupied_rooms_list(Date.today + 1, Date.today + 7)).must_equal both_rooms
+      expect(hotel_system.occupied_rooms_list(Date.today + 2, Date.today + 3)).must_equal second_room
+      expect(hotel_system.occupied_rooms_list(Date.today - 3, Date.today + 1)).must_equal both_rooms
+      expect(hotel_system.occupied_rooms_list(Date.today + 2, Date.today + 7)).must_equal second_room
+      expect(hotel_system.occupied_rooms_list(Date.today + 4, Date.today + 7)).must_equal []
+      expect(hotel_system.occupied_rooms_list(Date.today - 3, Date.today - 2)).must_equal []
     end
   end
 
   describe "manages available rooms" do
     it "returns array with available rooms" do
-      expect(hotel_system.available_rooms(Date.today)).must_be_kind_of Array
+      expect(hotel_system.available_rooms_list(Date.today, Date.today + 7)).must_be_kind_of Array
     end
 
     it "returns correct number of available rooms" do
-      expect(hotel_system.available_rooms(Date.today).length).must_equal 18
+      expect(hotel_system.available_rooms_list(Date.today, Date.today + 7).length).must_equal 18
     end
   end
 end
