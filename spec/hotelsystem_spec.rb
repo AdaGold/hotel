@@ -8,7 +8,7 @@ describe "HotelSystem class" do
   }
 
   let (:second_reservation) {
-    start_date = Date.today
+    start_date = Date.today + 1
     end_date = start_date + 3
     Hotel::Reservation.new(start_date, end_date, 2)
   }
@@ -59,7 +59,7 @@ describe "HotelSystem class" do
 
   describe "HotelSystem mananges reservations by date" do
     let (:reservation_matches) {
-      hotel_system.reservations_by_date(Date.today)
+      hotel_system.reservations_by_date(Date.today + 1)
     }
 
     it "returns array of all reservations" do
@@ -72,7 +72,7 @@ describe "HotelSystem class" do
       expect(reservation_matches.length).must_equal 2
     end
 
-    it "returns empty array if there are no matches" do
+    it "returns empty array if there are no matche÷s" do
       no_reservations = hotel_system.reservations_by_date(Date.today + 20)
       expect(no_reservations).must_be_kind_of Array
       expect(no_reservations.length).must_equal 0
@@ -102,7 +102,7 @@ describe "HotelSystem class" do
 
       expect(hotel_system.occupied_rooms_list(Date.today + 1, Date.today + 7)).must_equal both_rooms
       expect(hotel_system.occupied_rooms_list(Date.today + 2, Date.today + 3)).must_equal second_room
-      expect(hotel_system.occupied_rooms_list(Date.today - 3, Date.today + 1)).must_equal both_rooms
+      expect(hotel_system.occupied_rooms_list(Date.today - 3, Date.today + 1)).must_equal first_room
       expect(hotel_system.occupied_rooms_list(Date.today + 2, Date.today + 7)).must_equal second_room
       expect(hotel_system.occupied_rooms_list(Date.today + 4, Date.today + 7)).must_equal []
       expect(hotel_system.occupied_rooms_list(Date.today - 3, Date.today - 2)).must_equal []
@@ -116,6 +116,24 @@ describe "HotelSystem class" do
 
     it "returns correct number of available rooms" do
       expect(hotel_system.available_rooms_list(Date.today, Date.today + 7).length).must_equal 18
+    end
+
+    it "returns correct list of available rooms scenarios" do 
+      all_rooms = [*1..20]
+      avail_rooms = [*3..20]
+      include_first = [1,*3..20] # start: today, end: today + 2
+      include_second = [*2..20] # start: today + 1, end: today + 3
+
+
+      expect(hotel_system.available_rooms_list(Date.today, Date.today + 3)).must_equal avail_rooms
+      expect(hotel_system.available_rooms_list(Date.today + 1, Date.today + 7)).must_equal avail_rooms
+      expect(hotel_system.available_rooms_list(Date.today - 3, Date.today + 1)).must_equal include_second
+      expect(hotel_system.available_rooms_list(Date.today - 3, Date.today + 2)).must_equal avail_rooms
+      expect(hotel_system.available_rooms_list(Date.today - 7, Date.today)).must_equal all_rooms
+      expect(hotel_system.available_rooms_list(Date.today + 7, Date.today + 14)).must_equal all_rooms
+      expect(hotel_system.available_rooms_list(Date.today + 2, Date.today + 7)).must_equal include_first
+      expect(hotel_system.available_rooms_list(Date.today - 7, Date.today + 7)).must_equal avail_rooms
+      expect(hotel_system.available_rooms_list(Date.today - 14, Date.today - 7)).must_equal all_rooms
     end
   end
 end
