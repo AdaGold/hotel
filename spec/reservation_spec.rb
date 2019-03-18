@@ -3,13 +3,12 @@ require "date"
 require_relative "spec_helper.rb"
 
 describe "Reservation class" do
+  let (:booking) {
+    start_date = Date.today
+    end_date = Date.today + 2
+    booking = Hotel::Reservation.new(start_date, end_date, 1)
+  }
   describe "Reservation instantiation" do
-    let (:booking) {
-      start_date = Date.today
-      end_date = Date.today + 2
-      booking = Hotel::Reservation.new(start_date, end_date, 1)
-    }
-
     it "creates an instance of Reservation" do
       expect(booking).must_be_kind_of Hotel::Reservation
     end
@@ -39,6 +38,12 @@ describe "Reservation class" do
       expect {
         Hotel::Reservation.new(Date.today, Date.today + 1, "string").must_raise ArgumentError
       }
+    end
+  end
+
+  describe "Reservation total nights" do 
+    it "returns length of stay" do 
+      expect(booking.total_nights).must_equal 2
     end
   end
 
