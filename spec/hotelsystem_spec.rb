@@ -51,10 +51,17 @@ describe "HotelSystem class" do
       expect(hotel_system.reservations.length - 1).must_equal reservations_length
     end
 
+    it "raises an error with invalid dates" do 
+      expect {
+        hotel_system.reserve_room(Date.today, Date.today - 1, 3)
+      }.must_raise ArgumentError
+    end
 
-    # it "reserves first available room" do
-    #   expect(hotel_system.reserve_room(Date.today + 1, Date.today + 2).room).must_equal 3
-    # end
+    it "raises error for unavailable room" do
+      expect {
+        hotel_system.reserve_room(Date.today, Date.today + 1, 1)
+      }.must_raise ArgumentError
+    end
   end
 
   describe "HotelSystem mananges reservations by date" do

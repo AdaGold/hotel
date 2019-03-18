@@ -48,7 +48,11 @@ module Hotel
 
 
     def reserve_room(start_date, end_date, room)
-      if room_available?(start_date, end_date, room)
+      if invalid_dates?(start_date, end_date)
+        raise ArgumentError, "Invalid Dates. Start date: #{start_date}. End date: #{end_date}."
+      elsif !room_available?(start_date, end_date, room)
+        raise ArgumentError, "Room not available. Room number: #{room}"
+      else
         reservation = Hotel::Reservation.new(start_date, end_date, room)
         @reservations << reservation
         return reservation
