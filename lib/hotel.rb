@@ -51,13 +51,14 @@ end
 class HotelSystem
 
   # attribute accessor
-  attr_accessor :room_numbers, :date_reservation_hash, :id_reservation_hash
+  attr_accessor :room_numbers, :date_reservation_hash, :id_reservation_hash, :available_rooms
 
   # initialize
   def initialize()
     @room_numbers = (1..20).to_a #[1, 2, 3, 4, ... 20]
     @date_reservation_hash = {} #hash where key is date and value is rooms reserved on that date
     @id_reservation_hash = {} # has where key is ID and value is Reservation object
+    @available_rooms = @room_numbers
   end
 
 
@@ -67,19 +68,23 @@ class HotelSystem
 
 
     #add an exception for an invalid date range
+    #check what rooms are available
+    self.get_available_rooms(start_year, start_month, start_day, end_year, end_month, end_day)
 
-    reservation = Reservation.new(start_year, start_month, start_day, end_year, end_month, end_day, @room_numbers.sample, 200)
+    reservation = Reservation.new(start_year, start_month, start_day, end_year, end_month, end_day, @available_rooms.sample, 200)
 
-    if (reservation.end_date. - reservation.start_date).to_i < 1
+    if (reservation.end_date - reservation.start_date).to_i < 1
       raise ArgumentError.new("Can't make a reservation for less than 1 day")
     end
 
+    if (@available_rooms.include? reservation.room_number == false)
+      raise ArgumentError.new("That room is already booked")
+    end
 
     # keys for date_reservation_has and id_reservation_hash
     date = reservation.start_date
     date_key = date.strftime("%m/%d/%Y")
     reservation_id = reservation.id.to_s
-    puts reservation_id
 
     # iterate through dates from start_date to end_date
     while date < reservation.end_date
@@ -101,9 +106,32 @@ class HotelSystem
     # update id_reservation_hash
     @id_reservation_hash[reservation_id] = [reservation.start_date.strftime("%m/%d/%Y"), reservation.end_date.strftime("%m/%d/%Y"), reservation.room_number, reservation.total_cost]
 
+    # update the available rooms FileList
+    self.get_available_rooms(start_year, start_month, start_day, end_year, end_month, end_day)
   end
 
   def get_available_rooms(start_year, start_month, start_day, end_year, end_month, end_day)
+    # make start_date and end_date objects
+    start_date = Date.new(start_year, start_month, start_day)
+    end_date = Date.new(end_year, end_month, end_day)
+
+    date = start_date
+    date_key = date.strftime("%m/%d/%Y")
+
+    # loops through dates
+    while date < end_date
+
+    # loop through room numbers
+      @available_rooms.each do |room|
+        if @date_reservation_hash[date_key] == nil
+          @available_rooms = @available_rooms
+        elsif @date_reservation_hash[date_key].include? room
+          @available_rooms.delete(room)
+        end
+      end
+      date += 1
+      date_key = date.strftime("%m/%d/%Y")
+    end
   end
 
 end
@@ -113,17 +141,45 @@ end
 #puts reservation
 
 # test wave one
+puts "-------------------------------------"
+puts "-------------------------------------"
 marriott = HotelSystem.new()
-
-marriott.make_reservation(2019, 5, 29, 2019, 6, 2)
-marriott.make_reservation(2019, 5, 31, 2019, 6, 5)
-marriott.make_reservation(2019, 5, 31, 2019, 6, 8)
+puts "make a bunch of reservations"
+puts "available rooms: #{marriott.available_rooms}"
 puts " "
-puts marriott.id_reservation_hash
+marriott.make_reservation(2019, 5, 31, 2019, 6, 3)
+marriott.make_reservation(2019, 5, 31, 2019, 6, 3)
+marriott.make_reservation(2019, 5, 31, 2019, 6, 3)
+marriott.make_reservation(2019, 5, 31, 2019, 6, 3)
 puts " "
-puts marriott.date_reservation_hash
+puts "id_reservation_ash: #{marriott.id_reservation_hash}"
+puts " "
+puts "date_reservation_ash: #{marriott.date_reservation_hash}"
 puts " "
 # should return exception
-marriott.make_reservation(2019, 6, 30, 2019, 6, 8)
+# marriott.make_reservation(2019, 6, 30, 2019, 6, 8)
 
 # test wave two
+marriott.get_available_rooms(2019, 5, 31, 2019, 6, 3)
+puts " "
+puts "available rooms: #{marriott.available_rooms}"
+puts " "
+puts "make more reservations"
+marriott.make_reservation(2019, 5, 31, 2019, 6, 3)
+puts " "
+puts "available rooms: #{marriott.available_rooms}"
+puts "date_reservation_ash: #{marriott.date_reservation_hash}"
+marriott.make_reservation(2019, 5, 31, 2019, 6, 3)
+puts " "
+puts "available rooms: #{marriott.available_rooms}"
+puts "date_reservation_ash: #{marriott.date_reservation_hash}"
+marriott.make_reservation(2019, 5, 31, 2019, 6, 3)
+puts " "
+puts "available rooms: #{marriott.available_rooms}"
+puts "date_reservation_ash: #{marriott.date_reservation_hash}"
+marriott.make_reservation(2019, 5, 31, 2019, 6, 3)
+puts " "
+puts "available rooms: #{marriott.available_rooms}"
+puts "date_reservation_ash: #{marriott.date_reservation_hash}"
+puts " "
+puts "id_reservation_ash: #{marriott.id_reservation_hash}"

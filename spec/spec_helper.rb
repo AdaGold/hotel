@@ -1,5 +1,7 @@
 # spec_helper.rb
 
+# to do: figure out Rake
+
 # Add simplecov
 require "minitest"
 require "minitest/autorun"
