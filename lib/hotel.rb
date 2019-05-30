@@ -169,7 +169,7 @@ class HotelSystem
         @date_block_hash[date_key] = block_rooms
       #add a value to the list of reservations
       else
-        @date_block_hash[date_key].concat block_rooms
+        @date_block_hash[date_key] += block_rooms
       end
 
       # update the date
@@ -228,10 +228,11 @@ puts " "
 puts "-------------------------------------"
 puts "test wave three"
 puts "-------------------------------------"
-puts "create 2 blocks"
+puts "create 3 blocks"
 puts " "
 marriott.create_block(2019, 5, 31, 2019, 6, 3, [1, 2, 3, 4], 200, 0.15)
 marriott.create_block(2019, 5, 31, 2019, 6, 3, [5, 6, 7, 8], 200, 0.15)
+marriott.create_block(2019, 6, 3, 2019, 6, 5, [5, 6], 200, 0.15)
 puts "blocks_hash:"
 ap marriott.blocks_hash
 puts " "
@@ -241,11 +242,15 @@ puts " "
 puts "available rooms:"
 ap marriott.get_available_rooms(2019, 5, 31, 2019, 6, 3)
 puts " "
-puts "reserve a room from a block"
+puts "reserve room 5 room from block 318052"
+puts "reserve room 6 room from block 318052"
 puts " "
 #should return an exception
 #marriott.reserve_blocked_room(318052, 1)
 marriott.reserve_blocked_room(318052, 5)
+marriott.reserve_blocked_room(318052, 6)
+marriott.reserve_blocked_room(218055, 5)
+marriott.reserve_blocked_room(218055, 6)
 puts "blocks"
 ap marriott.blocks_hash
 puts " "
@@ -255,9 +260,9 @@ puts " "
 puts "available rooms"
 ap marriott.get_available_rooms(2019, 5, 31, 2019, 6, 3)
 puts " "
-puts "date_reservation_ash"
+puts "date_reservation_hash"
 ap marriott.date_reservation_hash
 puts " "
-puts "id_reservation_ash"
+puts "id_reservation_hash"
 ap marriott.id_reservation_hash
 puts " "
