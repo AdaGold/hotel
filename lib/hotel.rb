@@ -78,12 +78,12 @@ class HotelSystem
     end
 
     # keys for date_reservation_has and id_reservation_hash
-    date = reservation.start_date
-    date_key = date.strftime("%m/%d/%Y")
+    date_key = reservation.start_date
+    #date_key = date.strftime("%m/%d/%Y")
     reservation_id = reservation.id.to_s
 
     # iterate through dates from start_date to end_date
-    while date < reservation.end_date
+    while date_key < reservation.end_date
 
       # add room number to date_reservation hash
       if @date_reservation_hash[date_key] == nil # first entry
@@ -94,13 +94,17 @@ class HotelSystem
       end
 
       # update the date
-      date += 1
-      date_key = date.strftime("%m/%d/%Y")
+      #date += 1
+      date_key += 1
+      #date_key = date.strftime("%m/%d/%Y")
 
     end
 
+    # update id_reservation_hash -- formatted date
+    #@id_reservation_hash[reservation_id] = [reservation.start_date.strftime("%m/%d/%Y"), #reservation.end_date.strftime("%m/%d/%Y"), reservation.room_number, #reservation.total_cost]
+
     # update id_reservation_hash
-    @id_reservation_hash[reservation_id] = [reservation.start_date.strftime("%m/%d/%Y"), reservation.end_date.strftime("%m/%d/%Y"), reservation.room_number, reservation.total_cost]
+    @id_reservation_hash[reservation_id] = [reservation.start_date, reservation.end_date, reservation.room_number, reservation.total_cost]
 
   end
 
@@ -114,11 +118,13 @@ class HotelSystem
     end_date = Date.new(end_year, end_month, end_day)
 
     #create keys for hash
-    date = start_date
-    date_key = date.strftime("%m/%d/%Y")
+    #date = start_date
+    #date_key = date.strftime("%m/%d/%Y")
+    date_key = start_date
 
     # loops through dates
-    while date < end_date
+    #while date < end_date
+    while date_key < end_date
 
     # loop through room numbers
       available_rooms.each do |room|
@@ -136,8 +142,9 @@ class HotelSystem
           available_rooms.delete(room)
         end
       end
-      date += 1
-      date_key = date.strftime("%m/%d/%Y")
+      #date += 1
+      #date_key = date.strftime("%m/%d/%Y")
+      date_key += 1
     end
     return available_rooms
   end
@@ -160,10 +167,12 @@ class HotelSystem
     num_days = end_date - start_date
     block_id = ((num_days*100000) + start_date.to_time.to_i / (60 * 60 * 24) + block_rooms[0]).to_i
 
-    date = start_date
-    date_key = date.strftime("%m/%d/%Y")
+    #date = start_date
+    #date_key = date.strftime("%m/%d/%Y")
+    date_key = start_date
     # iterate through dates from start_date to end_date
-    while date < end_date
+    #while date < end_date
+    while date_key < end_date
       # add room number to date_reservation hash
       if @date_block_hash[date_key] == nil # first entry
         @date_block_hash[date_key] = block_rooms
@@ -173,8 +182,10 @@ class HotelSystem
       end
 
       # update the date
-      date += 1
-      date_key = date.strftime("%m/%d/%Y")
+      date_key += 1
+      #date += 1
+      #date_key = date.strftime("%m/%d/%Y")
+
     end
 
     @blocks_hash[block_id] = [start_date, end_date, block_rooms, discount]
