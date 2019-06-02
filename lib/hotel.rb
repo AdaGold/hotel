@@ -48,11 +48,12 @@ end
 # the hotel system
 class HotelSystem
   # attribute accessor
-  attr_accessor :room_numbers, :date_reservation_hash, :id_reservation_hash, :blocks_hash, :date_block_hash
+  attr_accessor :room_numbers, :blocked_rooms, :date_reservation_hash, :id_reservation_hash, :blocks_hash, :date_block_hash
 
   # initialize
   def initialize()
     @room_numbers = (1..20).to_a #[1, 2, 3, 4, ... 20]
+    @blocked_rooms = []
     @date_reservation_hash = {} #hash where key is date and value is rooms reserved on that date
     @id_reservation_hash = {} # has where key is ID and value is Reservation object
     @date_block_hash = {} #date key, rooms reserved in block
@@ -75,6 +76,10 @@ class HotelSystem
 
     unless available_rooms.include?reservation.room_number
       raise ArgumentError.new("That room is already booked")
+    end
+
+    if (@blocked_rooms.include?reservation.room_number) && (discount != 0)
+      raise ArgumentError.new("That room is only available as part of a block")
     end
 
     # keys for date_reservation_has and id_reservation_hash
@@ -136,11 +141,11 @@ class HotelSystem
         end
 
         #remove blocked rooms from available rooms
-        if @date_block_hash[date_key] == nil
-          available_rooms = available_rooms
-        elsif @date_block_hash[date_key].include? room
-          available_rooms.delete(room)
-        end
+        #if @date_block_hash[date_key] == nil
+        #  available_rooms = available_rooms
+        #elsif @date_block_hash[date_key].include? room
+        #  available_rooms.delete(room)
+        #end
       end
       #date += 1
       #date_key = date.strftime("%m/%d/%Y")
@@ -151,6 +156,8 @@ class HotelSystem
 
   # updates blocks hash with info about block: [start_date, end_date, rooms, discount]
   def create_block(start_year, start_month, start_day, end_year, end_month, end_day, block_rooms, cost, discount)
+
+    @blocked_rooms += block_rooms
 
     available_rooms = self.get_available_rooms(start_year, start_month, start_day, end_year, end_month, end_day)
 
