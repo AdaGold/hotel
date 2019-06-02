@@ -61,19 +61,19 @@ class HotelSystem
 
   # make a reservation
   # updates attributes: id_reservation_hash and date_reservation_hash
-  def make_reservation(start_year, start_month, start_day, end_year, end_month, end_day, room, cost, discount)
+  def make_reservation(start_year, start_month, start_day, end_year, end_month, end_day, room_number, cost, discount)
 
     #check what rooms are available
     available_rooms = self.get_available_rooms(start_year, start_month, start_day, end_year, end_month, end_day)
 
-    reservation = Reservation.new(start_year, start_month, start_day, end_year, end_month, end_day, room, cost, discount)
+    reservation = Reservation.new(start_year, start_month, start_day, end_year, end_month, end_day, room_number, cost, discount)
 
     #exception handling
     if (reservation.end_date - reservation.start_date).to_i < 1
       raise ArgumentError.new("Can't make a reservation for less than 1 day")
     end
 
-    if (available_rooms.include? reservation.room_number == false)
+    unless available_rooms.include?reservation.room_number
       raise ArgumentError.new("That room is already booked")
     end
 
@@ -213,6 +213,9 @@ class HotelSystem
 
 end
 
+=begin
+
+# tests -- moved to spec_helper.rb
 puts " "
 puts " "
 puts " "
@@ -230,11 +233,13 @@ marriott.make_reservation(2019, 5, 31, 2019, 6, 3, marriott.get_available_rooms(
 puts "available rooms:"
 ap marriott.get_available_rooms(2019, 5, 31, 2019, 6, 3)
 puts " "
-puts "id_reservation_ash: "
+puts "id_reservation_hash: "
 ap marriott.id_reservation_hash
 puts " "
 puts "date_reservation_ash:"
 ap marriott.date_reservation_hash
+puts "should raise exception"
+marriott.make_reservation(2019, 5, 31, 2019, 6, 3, 20, 200, 0)
 puts " "
 puts "-------------------------------------"
 puts "test wave three"
@@ -277,3 +282,5 @@ puts " "
 puts "id_reservation_hash"
 ap marriott.id_reservation_hash
 puts " "
+
+=end
