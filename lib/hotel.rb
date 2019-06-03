@@ -74,12 +74,13 @@ class HotelSystem
       raise ArgumentError.new("Can't make a reservation for less than 1 day")
     end
 
-    unless available_rooms.include?reservation.room_number
+    unless available_rooms.include?(reservation.room_number)
       raise ArgumentError.new("That room is already booked")
     end
 
-    if (@blocked_rooms.include?reservation.room_number) && (discount != 0)
-      raise ArgumentError.new("That room is only available as part of a block")
+    # can't make a reservation of a blocked room outside block
+    if (@blocked_rooms.include?(reservation.room_number) == true && discount == 0)
+        raise ArgumentError.new("That room is only available as part of a block")
     end
 
     # keys for date_reservation_has and id_reservation_hash
@@ -136,7 +137,7 @@ class HotelSystem
         #remove reserved rooms from available rooms
         if @date_reservation_hash[date_key] == nil
           available_rooms = available_rooms
-        elsif @date_reservation_hash[date_key].include? room
+        elsif @date_reservation_hash[date_key].include?(room)
           available_rooms.delete(room)
         end
 

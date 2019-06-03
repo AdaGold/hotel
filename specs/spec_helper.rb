@@ -14,7 +14,7 @@ require_relative "../lib/hotel.rb"
 
 # initialize a hotel system
 describe "HotelSystem" do
-  it "should have access to an array of room numbers" do
+  it "set up the hotel system" do
     #act
     marriott = HotelSystem.new()
 
@@ -26,7 +26,7 @@ describe "HotelSystem" do
     expect(marriott.blocks_hash.size).must_equal 0
   end
 
-  it "update: the available rooms, id_reservation_hash, and date_reservation_hash -- argument errors" do
+  it "makes a reservation" do
     #arrange
     start_year = 2019
     start_month = 5
@@ -58,7 +58,7 @@ describe "HotelSystem" do
     expect {marriott.make_reservation(start_year, start_month, start_day, start_year, start_month-1, start_day, 18, cost, discount)}.must_raise ArgumentError
   end
 
-  it "update: the available rooms, id_reservation_hash, and date_reservation_hash, blocks_hash, date_blocks, hash -- argument errors" do
+  it "block rooms" do
     #arrange
     start_year = 2019
     start_month = 5
@@ -102,6 +102,9 @@ describe "HotelSystem" do
     expect(marriott.date_reservation_hash[Date.new(start_year, start_month, start_day)]).must_include 5
 
     # rooms not reserved or not included in block
-    expect(marriott.get_available_rooms(start_year, start_month, start_day,end_year, end_month, end_day)).must_equal 9..17.to_a
+    expect(marriott.get_available_rooms(start_year, start_month, start_day,end_year, end_month, end_day)).must_equal [2,3,4,6,7,8]+(9..17).to_a
+
+    # can't reserve room that's in a block
+    expect{marriott.make_reservation(start_year, start_month, start_day,end_year, end_month, end_day, 6, 200, 0)}.must_raise ArgumentError
   end
 end
