@@ -195,7 +195,7 @@ class HotelSystem
 end
 
 
-#=begin
+=begin
 
 # tests -- moved to spec_helper.rb
 puts " \n\n\n"
@@ -255,5 +255,4 @@ puts " "
 puts "id_reservation_hash"
 ap marriott.id_reservation_hash
 puts " "
-
-#=end
+=end
