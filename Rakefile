@@ -1,4 +1,6 @@
 require 'rake/testtask'
+require 'simplecov'
+
 
 Rake::TestTask.new do |t|
   t.libs = ["lib"]

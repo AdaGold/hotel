@@ -17,15 +17,25 @@ describe Hotel::HotelController do
         start_date = @date
         end_date = start_date + 3
 
-        reservation = @hotel_controller.reserve_room(start_date, end_date)
+        reservation = @hotel_controller.reserve_room(start_date, end_date, 1)
 
         expect(reservation).must_be_kind_of Hotel::Reservation
       end
+
+      it "raises an argument error if room is not available" do
+        start_date = @date
+        end_date = start_date + 3
+
+        reservation = @hotel_controller.reserve_room(start_date, end_date, 1)
+
+        expect{@hotel_controller.reserve_room(start_date, end_date, 1)}.must_raise ArgumentError
+      end
+
     end
 
-    describe "reservations" do
+    describe "get_reservations" do
       it "takes a Date and returns a list of Reservations" do
-        reservation_list = @hotel_controller.reservations(@date)
+        reservation_list = @hotel_controller.get_reservations(@date)
 
         expect(reservation_list).must_be_kind_of Array
         reservation_list.each do |res|
@@ -36,14 +46,20 @@ describe Hotel::HotelController do
   end
 
   describe "wave 2" do
-    describe "available_rooms" do
-      it "takes two dates and returns a list" do
+    describe "get_available_rooms" do
+      it "takes two dates and return a list of the correct available rooms" do
         start_date = @date
         end_date = start_date + 3
 
-        room_list = @hotel_controller.available_rooms(start_date, end_date)
+        reservation = @hotel_controller.reserve_room(start_date, end_date, 1)
+        reservation = @hotel_controller.reserve_room(start_date, end_date, 2)
+        reservation = @hotel_controller.reserve_room(start_date, end_date, 3)
+        reservation = @hotel_controller.reserve_room(start_date, end_date, 4)
+        reservation = @hotel_controller.reserve_room(start_date, end_date, 5)
 
-        expect(room_list).must_be_kind_of Array
+        room_list = @hotel_controller.get_available_rooms(start_date, end_date)
+
+        expect(room_list).must_equal [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
       end
     end
   end

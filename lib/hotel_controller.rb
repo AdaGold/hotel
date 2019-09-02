@@ -8,18 +8,22 @@ module Hotel
       @reservation_list = []
     end
 
-    def reserve_room(start_date, end_date)
-      # start_date and end_date should be instances of class Date
-      reservation = Reservation.new(start_date, end_date, @rooms.sample)
+    def reserve_room(start_date, end_date, room)
+      available_rooms = get_available_rooms(start_date, end_date)
+      unless available_rooms.include?(room)
+        raise ArgumentError, "That room is not available"
+      end
+
+      reservation = Reservation.new(start_date, end_date, room)
       @reservation_list << reservation
-      return Reservation.new(start_date, end_date, @rooms.sample)
+      return reservation
     end
 
-    def reservations(date)
+    def get_reservations(date)
       reservations = []
       @reservation_list.each do |reservation|
-        date_range = Hotel::DateRange(reservation.start_date, reservation.end_date)
-        if date_range.include(date)
+        date_range = Hotel::DateRange.new(reservation.start_date, reservation.end_date)
+        if date_range.include?(date)
           reservations << reservation
         end
       end
@@ -27,9 +31,17 @@ module Hotel
     end
 
     # Wave 2
-    def available_rooms(start_date, end_date)
-      # start_date and end_date should be instances of class Date
-      return []
+    def get_available_rooms(start_date, end_date)
+      available_rooms = rooms
+      date = start_date
+      while date < end_date
+        reservations = get_reservations(date)
+        reservations.each do |reservation|
+          available_rooms.delete(reservation.room)
+        end
+        date += 1
+      end
+      return available_rooms
     end
   end
 end
