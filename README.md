@@ -169,4 +169,4 @@ In order to keep track of your current thoughts about design refactoring, as par
 1. **Do not make any further changes to your code at this time**
 
 ## What we're looking for
-You can find what instructors will be looking for in the [feedback](feedback.md) markdown document.
+You can find what instructors will be looking for in the [feedback](feedback.md) markdown document. 
