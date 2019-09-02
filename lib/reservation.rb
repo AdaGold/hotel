@@ -1,11 +1,17 @@
 module Hotel
   class Reservation
-    # Feel free to change this method signature as needed. Make sure to update the tests!
+    
+    attr_reader :start_date, :end_date, :room
+
     def initialize(start_date, end_date, room)
+      @start_date = start_date
+      @end_date = end_date
+      @room = room
+      @range = Hotel::DateRange.new(start_date, end_date)
     end
 
     def cost
-      return 3
+      return @range.nights*Hotel::HotelController.new.cost
     end
   end
 end
