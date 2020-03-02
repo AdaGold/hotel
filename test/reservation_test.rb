@@ -40,3 +40,5 @@ describe "Reservation Class" do
 	end
 	# How to calculate total cost if start and end date are the same
 end
+
+# Edge case - date entered is > 31 days per month or leap year
