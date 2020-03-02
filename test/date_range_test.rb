@@ -61,7 +61,7 @@ describe Hotel::DateRange do
   end
 
   xdescribe "include?" do
-    it "reutrns false if the date is clearly out" do
+    it "returns false if the date is clearly out" do
     end
 
     it "returns true for dates in the range" do
