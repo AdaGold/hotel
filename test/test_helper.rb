@@ -1,7 +1,11 @@
-# Add simplecov
 require "minitest"
 require "minitest/autorun"
 require "minitest/reporters"
+
+require 'simplecov'
+SimpleCov.start do
+  add_filter 'test/' # Tests should not be checked for coverage.
+end
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 

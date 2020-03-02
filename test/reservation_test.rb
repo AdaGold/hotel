@@ -9,5 +9,9 @@ describe "Reservation Class" do
 		it "is an instance of Reservation" do
 			expect(@reservation).must_be_kind_of HotelManager::Reservation
 		end
+
+		# Raises argument error if invalid date range
+		# Confirms that total cost is calculated correctly
+		# Validate that start/end date is a date class
 	end
 end
