@@ -39,10 +39,12 @@ describe "DateRange" do
         it "Should have the .duration method" do 
             expect(@date).must_respond_to :duration
         end
-        
+
         it "Should calculate the correct amount of durations" do 
             expect(@duration).must_equal 9
         end
+
+        #add more edge case tests here?
     end
     # describe "include?" do 
     #     before do 

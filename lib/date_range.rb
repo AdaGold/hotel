@@ -8,13 +8,15 @@ module Hotel
             @start_date = start_date
             @end_date = end_date
         end 
-        def overlap?(another_date_range)
-            return false 
-        end
+
         def duration
             total_duration = (@end_date - @start_date).to_i
             total_duration -= 1
             return total_duration 
+        end
+
+        def overlap?(another_date_range)
+            return false 
         end
 
     end
