@@ -8,7 +8,7 @@ describe "Reservation Class" do
 			start_date: Date.new(2020,3,2),
 			end_date: Date.new(2020,3,5),
 			room_cost: 200,
-			room: 1
+			room: HotelManager::Room.new(id: 1)
 		}
 		@reservation = HotelManager::Reservation.new(@reservation_data)
 	end
@@ -38,7 +38,8 @@ describe "Reservation Class" do
 		reservation_cost = @reservation.total_cost()
 		expect(reservation_cost).must_equal 400
 	end
-	# How to calculate total cost if start and end date are the same
+
 end
 
 # Edge case - date entered is > 31 days per month or leap year
+# raise argument error if start and end date are the same

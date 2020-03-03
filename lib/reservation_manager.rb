@@ -21,10 +21,18 @@ module HotelManager
 
 		# Add/create new reservation
 		def add_reservation(reservation)
-			@reservations << reservation
+			potential_rooms = self.list_room_by_range(reservation.start_date, reservation.end_date) 
+			
+			if potential_rooms.include? find_room(reservation.room_id)
+				@reservations << reservation
+			else 
+				raise ArgumentError, "Room #{reservation.room_id} has been double booked. Reservation not finalized in reservation manager."
+			end
 		end
 
-		# Create connection between room and reservation when new booking is made
+		def find_room(id)
+      return @rooms.find { |room| room.id == id }
+    end
 
 		# List out all rooms in hotel 
 		def rooms_list
@@ -45,7 +53,7 @@ module HotelManager
 
 			reservation_by_room_date = []
 			@reservations.each do |reservation|
-				if reservation.check_date_range(first_date, second_date) && reservation.room == room
+				if reservation.check_date_range(first_date, second_date) && reservation.room_id == room
 					reservation_by_room_date << reservation 
 				end
 			end
@@ -64,12 +72,24 @@ module HotelManager
 				reservation_by_date << reservation if reservation.check_date(date)
 			end
 
-			if reservation_by_date.empty?
-				return "No reservations found within date range."
-			else
-				return reservation_by_date
-			end
+			return reservation_by_date.empty? ? "No reservations found within date range." : reservation_by_date
 		end
 
+		def list_room_by_range(first_date, second_date) 
+		
+			if first_date.class != Date || second_date.class != Date 
+				raise ArgumentError, "One date (#{first_date} or #{second_date}) is not valid"
+			end 
+
+			available_rooms = @rooms.dup
+			
+			@reservations.each do |reservation|
+				if reservation.check_date_range(first_date, second_date)
+					available_rooms -= [find_room(reservation.room_id)]
+				end
+			end
+			
+			return available_rooms.empty? ? "No rooms available in this date range." : available_rooms
+		end
 	end
 end

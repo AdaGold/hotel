@@ -6,7 +6,7 @@ require_relative 'hotel'
 module HotelManager
 	class Reservation
 
-		attr_reader :id, :customer_id, :start_date, :end_date, :room_cost, :room
+		attr_reader :id, :customer_id, :start_date, :end_date, :room_cost, :room, :room_id
 		# Initialize reservation with start/end date, cost (default $200), customer id
 		# Raise exception for invalid date range is provided 
 		def initialize (
@@ -15,7 +15,8 @@ module HotelManager
 			start_date: , 
 			end_date: , 
 			room_cost: 200, 
-			room:
+			room: nil,
+			room_id: nil
 			)
 
 			@id = id
@@ -24,6 +25,15 @@ module HotelManager
 			@end_date = end_date
 			@room_cost = room_cost
 			@room = room
+
+			if room
+				@room = room
+				@room_id = room_id
+			elsif
+				@room_id = room_id
+			else
+				raise ArgumentError, "Room or room_id is required"
+			end
 
 			if @start_date.class() != Date
 				raise ArgumentError, "Start date #{@start_date} not valid"
@@ -56,10 +66,11 @@ module HotelManager
 				first_date, second_date = date_two, date_one
 			end
 
-			(@end_date >= first_date) && (@end_date <= second_date)
+			(@end_date > first_date) && (@end_date <= second_date) ||
+			(@start_date >= first_date) && (@start_date <= second_date)
 		end
-
-		# Choose first available room for reservation 
 
 	end
 end
+
+# Add in requirement that room must be populated

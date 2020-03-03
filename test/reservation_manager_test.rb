@@ -30,7 +30,7 @@ describe "Reservation Manager Class - Manipulation" do
 			start_date: Date.new(2020,3,2),
 			end_date: Date.new(2020,3,5),
 			room_cost: 200,
-			room: 1
+			room_id: 1
 		}
 		@res_two_data = {
 			id: 2,
@@ -38,7 +38,7 @@ describe "Reservation Manager Class - Manipulation" do
 			start_date: Date.new(2020,3,15),
 			end_date: Date.new(2020,3,24),
 			room_cost: 200,
-			room: 1
+			room_id: 1
 		}
 		@res_one = HotelManager::Reservation.new(@res_one_data)
 		@res_two = HotelManager::Reservation.new(@res_two_data)
@@ -48,8 +48,42 @@ describe "Reservation Manager Class - Manipulation" do
 		@sample_two.add_reservation(@res_two)
 	end
 
-	it "able to add reservations to Reservation Manager" do
-		expect(@sample_two.reservations.length).must_equal 2
+	describe "ability to add reservations to the Reservation Manager" do
+		it "able to add reservations to Reservation Manager" do
+			expect(@sample_two.reservations.length).must_equal 2
+		end
+
+		it "open room for reservation after it's end date" do
+			@res_four_data = {
+				id: 4,
+				customer_id: 4, 
+				start_date: Date.new(2020,3,24),
+				end_date: Date.new(2020,3,28),
+				room_cost: 200,
+				room_id: 1
+			}
+			
+			@res_four = HotelManager::Reservation.new(@res_four_data)
+			
+			@sample_two.add_reservation(@res_four)
+			
+
+			expect(@sample_two.reservations.length).must_equal 3
+		end
+
+		it "raise argument error if overbooking attempted" do
+			@res_five_data = {
+				id: 5,
+				customer_id: 5, 
+				start_date: Date.new(2020,3,23),
+				end_date: Date.new(2020,3,28),
+				room_cost: 200,
+				room_id: 1
+			}
+			
+			@res_five = HotelManager::Reservation.new(@res_five_data)
+			expect{@sample_two.add_reservation(@res_five)}.must_raise ArgumentError
+		end
 	end
 
 	describe "test search by room AND date range" do
@@ -73,8 +107,7 @@ describe "Reservation Manager Class - Manipulation" do
 
 	
 	describe "test search by date" do
-		it "able to list reservation by room/date range" do
-			
+		it "able to list reservation by specific date" do
 			@search_result = @sample_two.search_by_date(Date.new(2020,3,17))
 			expect(@search_result).must_be_kind_of Array
 			expect(@search_result[0]).must_be_kind_of HotelManager::Reservation
@@ -91,9 +124,27 @@ describe "Reservation Manager Class - Manipulation" do
 		end
 	end
 
+	# see list of rooms not reserved for a given date range (see all available rooms for those days) <-- two date inputs 
+	describe "list rooms available by date range" do
+		it "able to list out all available rooms by date range" do
+			@search_result = @sample_two.list_room_by_range(Date.new(2020,4,1),Date.new(2020,4,7))
+			expect(@search_result).must_be_kind_of Array
+			expect(@search_result[0]).must_be_kind_of HotelManager::Room
+			expect(@search_result.length).must_equal 20
+		end 
+
+		it "able to list out all available rooms by date range" do
+			@search_result = @sample_two.list_room_by_range(Date.new(2020,3,1),Date.new(2020,3,5))
+			expect(@search_result).must_be_kind_of Array
+			expect(@search_result[0]).must_be_kind_of HotelManager::Room
+			expect(@search_result.length).must_equal 19
+		end 
+
+		it "notify user if no rooms are available" do
+			#complete later, need to modify hotel room # to by dynamic (user input)
+		end
+	end
 end
 
-# 
-# 
-# access list of reservations for specific date
-# call on total cost for givien reservation (from reservation class)
+
+# Raise exception if reservation is made on double booked room (user selects time and room) 
