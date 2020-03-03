@@ -66,8 +66,11 @@ module HotelManager
 				first_date, second_date = date_two, date_one
 			end
 
-			(@end_date > first_date) && (@end_date <= second_date) ||
-			(@start_date >= first_date) && (@start_date <= second_date)
+			(first_date >= @start_date && first_date < @end_date) || (second_date < @end_date && second_date > @start_date) 
+
+
+			# (@end_date > first_date) && (@end_date <= second_date) ||
+			# (@start_date >= first_date) && (@start_date <= second_date) || (@start_date < first_date) && (@end_date <= second_date)
 		end
 
 	end

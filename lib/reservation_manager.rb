@@ -7,12 +7,13 @@ require_relative 'room'
 module HotelManager
 	class ReservationManager
 
-		attr_reader :rooms, :reservations
+		attr_reader :rooms, :reservations, :reservation_blocks
 
 		# Populate hotel with 20 rooms upon initialization
 		def initialize
 			@rooms = []
 			@reservations = []
+			@reservation_blocks = []
 
 			20.times do |index|
 				@rooms << HotelManager::Room.new(id: index + 1)
@@ -27,6 +28,25 @@ module HotelManager
 				@reservations << reservation
 			else 
 				raise ArgumentError, "Room #{reservation.room_id} is double booked. Reservation not finalized in reservation manager."
+			end
+		end
+
+		def find_room(id)
+      return @rooms.find { |room| room.id == id }
+		end
+		
+		# Add/create new block reservation
+		def add_reservation_block(reservation_block)
+			potential_rooms = self.list_room_by_range(reservation_block.start_date, reservation_block.end_date) 
+			
+			found_room = reservation_block.room_ids.map do |room_id|
+					potential_rooms.include? find_room(room_id)
+				end.all? (true)
+			
+			if found_room
+				@reservation_blocks << reservation_block
+			else 
+				raise ArgumentError, "Some of rooms #{reservation_block.room_ids} are double booked. Hotel block not finalized in reservation manager."
 			end
 		end
 
@@ -80,8 +100,18 @@ module HotelManager
 			available_rooms = @rooms.dup
 			
 			@reservations.each do |reservation|
+				
 				if reservation.check_date_range(first_date, second_date)
 					available_rooms -= [find_room(reservation.room_id)]
+				end
+			end
+			
+			@reservation_blocks.each do |reservation_block|
+				
+				if reservation_block.check_date_range(first_date, second_date)
+					reservation_block.room_ids.each do |room_id|
+						available_rooms -= [find_room(room_id)]
+					end
 				end
 			end
 			

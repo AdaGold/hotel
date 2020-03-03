@@ -38,7 +38,7 @@ describe "Reservation Class" do
 		reservation_cost = @reservation.total_cost()
 		expect(reservation_cost).must_equal 400
 	end
-
+	
 end
 
 # Edge case - date entered is > 31 days per month or leap year
