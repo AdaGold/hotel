@@ -1,7 +1,7 @@
 require_relative "test_helper"
 require 'date'
 
-describe "date" do 
+describe "DateRange" do 
     describe "initialize" do 
         it "Should create an instance of DateRange when given a start_date and end_date" do
             start_date = Date.new(2020, 2, 2)
