@@ -1,5 +1,6 @@
 require_relative 'date_range'
-
+require_relative 'hotel'
+require_relative 'room'
 require 'date'
 
 module HotelSystem
@@ -12,7 +13,7 @@ module HotelSystem
       check_dates(start_date, end_date)
       @start_date = start_date
       @end_date = end_date
-      @total_cost = ((@end_date - @start_date)-1) * 200
+      @total_cost = ((@end_date - @start_date)) * 200
     end 
 
     def get_total_cost 
@@ -20,11 +21,9 @@ module HotelSystem
     end 
 
     def check_dates(start_date, end_date)
-      # if Date.today - start_date > 0 
-      #   raise ArgumentError.new("Invalid date, you can't start a reservation in the past")
-      # elsif Date.today - end_date > 0 
-      #   raise ArgumentError.new("Invalid date, you can't end a reservation in the past")
-      # end 
+      if Date.today > start_date || Date.today > end_date
+        raise ArgumentError.new("Invalid date, you can't start or end a reservation in the past")
+      end 
     end 
 
   end 
