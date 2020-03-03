@@ -1,6 +1,3 @@
-require_relative 'date_range'
-require_relative 'hotel'
-require_relative 'room'
 require 'date'
 
 module HotelSystem

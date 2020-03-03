@@ -1,16 +1,12 @@
 require_relative 'room'
-require_relative 'reservation'
+#require_relative 'reservation'
 
 module HotelSystem 
   class Hotel 
     attr_accessor :rooms
    
     def initialize
-      @rooms = []
-      20.times do |i|
-        @rooms << Room.new(i+1, 200, [])
-      end 
-
+      @rooms = create_rooms
     end 
     
 
@@ -30,6 +26,11 @@ module HotelSystem
       return reservs
     end 
 
+    def get_all_rooms
+      @rooms.each do |room|
+        puts room
+      end 
+    end 
     
     def find_room(room_number)
       @rooms.each do |room| 
@@ -38,8 +39,29 @@ module HotelSystem
         end 
       end
     end
+
+    private
+
+    def create_rooms
+      rooms = []
+      20.times do |i|
+        rooms << HotelSystem::Room.new(i+1, 200)
+      end 
+      return rooms
+    end 
+    
     
   end 
 end 
+
+def main
+  hotel = HotelSystem::Hotel.new 
+  hotel.get_all_rooms
+
+
+
+end 
+
+main
 
 

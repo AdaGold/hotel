@@ -10,7 +10,7 @@ require_relative '../lib/reservation'
 describe "room" do 
 
   it "creates an instance of room" do 
-    
+
 
 
 
@@ -30,9 +30,5 @@ describe "room" do
     res.must_be_instance_of Array 
 
   end
-
-
-
-
 
 end 
