@@ -65,11 +65,9 @@ module HotelManager
 		
 			if first_date.class != Date || second_date.class != Date 
 				raise ArgumentError, "One date (#{first_date} or #{second_date}) is not valid"
-			end 
-			
-			if @rooms.last.id < room
+			elsif @rooms.last.id < room
 				raise ArgumentError, "Room #{room} does not exist"
-			end
+			end 
 
 			reservation_by_room_date = []
 			@reservations.each do |reservation|
@@ -100,14 +98,12 @@ module HotelManager
 			available_rooms = @rooms.dup
 			
 			@reservations.each do |reservation|
-				
 				if reservation.check_date_range(first_date, second_date)
 					available_rooms -= [find_room(reservation.room_id)]
 				end
 			end
 			
 			@reservation_blocks.each do |reservation_block|
-				
 				if reservation_block.check_date_range(first_date, second_date)
 					reservation_block.room_ids.each do |room_id|
 						available_rooms -= [find_room(room_id)]
@@ -117,7 +113,6 @@ module HotelManager
 			
 			return available_rooms.empty? ? "No rooms available in this date range." : available_rooms
 		end
+		
 	end
 end
-
-# 
