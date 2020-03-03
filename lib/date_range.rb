@@ -8,6 +8,12 @@ module Hotel
             @start_date = start_date
             @end_date = end_date
         end 
+        def overlap?(another_date_range)
+            return false 
+        end
+        def duration
+            return #how many nights 
+        end
 
     end
 end
