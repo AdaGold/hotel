@@ -70,11 +70,70 @@ describe "other instance methods" do
     hotel.rooms[1].add_reservation(res3)
 
 
-    array = hotel.find_reservations_with_date(1 , Date.new(2020, 03, 07), Date.new(2020, 03, 13))
+    array = hotel.find_reservations_with_room_number(2 , Date.new(2020, 03, 07), Date.new(2020, 03, 13))
 
     array.must_be_instance_of Array 
 
   end
+
+
+  it "outputs the correct reservations" do 
+     
+
+    res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
+
+    hotel = HotelSystem::Hotel.new
+    hotel.rooms[1].add_reservation(res2)
+    hotel.rooms[1].add_reservation(res3)
+    hotel.rooms[2].add_reservation(res1)
+    
+    array = hotel.list_reservations_dates(Date.new(2020, 03, 07), Date.new(2020, 03, 31))
+    
+    array.must_equal [res2, res3]
+  end 
+
+
+  it "finds the correct reservations given a room number" do 
+
+    res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
+
+    hotel = HotelSystem::Hotel.new
+    hotel.rooms[1].add_reservation(res2)
+    hotel.rooms[1].add_reservation(res1)
+    hotel.rooms[10].add_reservation(res3)
+    
+    
+    array = hotel.find_reservations_with_room_number(11, Date.new(2020, 03, 07), Date.new(2020, 03, 31))
+
+    array.must_equal [res3]
+
+  end 
+
+
+  it "finds the correct reservations given a room number - test 2" do 
+
+    res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
+
+    hotel = HotelSystem::Hotel.new
+    hotel.rooms[1].add_reservation(res2)
+    hotel.rooms[1].add_reservation(res1)
+    hotel.rooms[10].add_reservation(res3)
+    
+
+    array = hotel.find_reservations_with_room_number(2, Date.new(2020, 03, 07), Date.new(2020, 03, 31))
+
+    array.must_equal [res2]
+
+  end 
 
 
 end 

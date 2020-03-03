@@ -1,4 +1,5 @@
 
+require 'awesome_print'
 module HotelSystem
   class Room
     
@@ -14,7 +15,11 @@ module HotelSystem
       @reservations << reservation
     end
 
+    def list_reservations 
+      ap @reservations
+    end 
   
   end 
 
 end 
+
