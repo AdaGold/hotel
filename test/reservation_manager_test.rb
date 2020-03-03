@@ -64,9 +64,7 @@ describe "Reservation Manager Class - Manipulation" do
 			}
 			
 			@res_four = HotelManager::Reservation.new(@res_four_data)
-			
 			@sample_two.add_reservation(@res_four)
-			
 
 			expect(@sample_two.reservations.length).must_equal 3
 		end
@@ -124,7 +122,7 @@ describe "Reservation Manager Class - Manipulation" do
 		end
 	end
 
-	# see list of rooms not reserved for a given date range (see all available rooms for those days) <-- two date inputs 
+	# see list of rooms available for a given date range 
 	describe "list rooms available by date range" do
 		it "able to list out all available rooms by date range" do
 			@search_result = @sample_two.list_room_by_range(Date.new(2020,4,1),Date.new(2020,4,7))
@@ -145,6 +143,3 @@ describe "Reservation Manager Class - Manipulation" do
 		end
 	end
 end
-
-
-# Raise exception if reservation is made on double booked room (user selects time and room) 

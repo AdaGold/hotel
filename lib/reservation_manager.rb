@@ -9,7 +9,7 @@ module HotelManager
 
 		attr_reader :rooms, :reservations
 
-		# Load initial reservation data to variable
+		# Populate hotel with 20 rooms upon initialization
 		def initialize
 			@rooms = []
 			@reservations = []
@@ -26,7 +26,7 @@ module HotelManager
 			if potential_rooms.include? find_room(reservation.room_id)
 				@reservations << reservation
 			else 
-				raise ArgumentError, "Room #{reservation.room_id} has been double booked. Reservation not finalized in reservation manager."
+				raise ArgumentError, "Room #{reservation.room_id} is double booked. Reservation not finalized in reservation manager."
 			end
 		end
 
@@ -58,11 +58,7 @@ module HotelManager
 				end
 			end
 			
-			if reservation_by_room_date.empty?
-				return "No reservations found within date range."
-			else
-				return reservation_by_room_date
-			end
+			return reservation_by_room_date.empty? ? "No reservations found within date range." : reservation_by_room_date
 		end
 
 		# List out reservations by specific date
