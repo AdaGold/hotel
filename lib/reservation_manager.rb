@@ -62,12 +62,8 @@ module HotelManager
 		# List out all reservations by room and date range
 		# Error handling if date is not entered properly, or date range is invalid (store in master class?)
 		def search_by_room_date(room, first_date, second_date)
-		
-			if first_date.class != Date || second_date.class != Date 
-				raise ArgumentError, "One date (#{first_date} or #{second_date}) is not valid"
-			elsif @rooms.last.id < room
-				raise ArgumentError, "Room #{room} does not exist"
-			end 
+			search_date_validation(first_date,second_date)
+			raise ArgumentError, "Room #{room} does not exist" if @rooms.last.id < room
 
 			reservation_by_room_date = []
 			@reservations.each do |reservation|
@@ -90,10 +86,7 @@ module HotelManager
 		end
 
 		def list_room_by_range(first_date, second_date) 
-		
-			if first_date.class != Date || second_date.class != Date 
-				raise ArgumentError, "One date (#{first_date} or #{second_date}) is not valid"
-			end 
+			search_date_validation(first_date,second_date)
 
 			available_rooms = @rooms.dup
 			
@@ -113,6 +106,12 @@ module HotelManager
 			
 			return available_rooms.empty? ? "No rooms available in this date range." : available_rooms
 		end
-		
+
+		def search_date_validation(first_date, second_date)
+			if first_date.class != Date || second_date.class != Date 
+				raise ArgumentError, "One date (#{first_date} or #{second_date}) is not valid"
+			end 
+		end
+
 	end
 end

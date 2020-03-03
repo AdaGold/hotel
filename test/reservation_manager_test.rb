@@ -184,15 +184,15 @@ describe "Reservation Manager Class - Manipulation" do
 		end 
 	end
 
-	# describe "test search by room AND date range" do
-	# 	it "able to list reservation by room/date range" do
-	# 		@search_result = @sample_two.search_by_room_date(1, Date.new(2020,3,1), Date.new(2020,3,10))
-	# 		expect(@search_result).must_be_kind_of Array
-	# 		expect(@search_result[0]).must_be_kind_of HotelManager::Reservation
-	# 		expect(@search_result[1]).must_be_kind_of HotelManager::ReservationBlock
-	# 		expect(@search_result[0].id).must_equal 1
-	# 		expect(@search_result[1].id).must_equal 3
-	# 	end
+	describe "test search by room AND date range" do
+		# it "able to list reservation by room/date range" do
+		# 	@search_result = @sample_two.search_by_room_date(1, Date.new(2020,3,1), Date.new(2020,3,10))
+		# 	expect(@search_result).must_be_kind_of Array
+		# 	expect(@search_result[0]).must_be_kind_of HotelManager::Reservation
+		# 	expect(@search_result[1]).must_be_kind_of HotelManager::ReservationBlock
+		# 	expect(@search_result[0].id).must_equal 1
+		# 	expect(@search_result[1].id).must_equal 3
+		# end
 
 	# 	it "raise argument error if no room by room/date range" do
 	# 		@search_result = @sample_two.search_by_room_date(1, Date.new(2020,4,1), Date.new(2020,4,10))
@@ -243,7 +243,7 @@ describe "Reservation Manager Class - Manipulation" do
 	# 	it "notify user if no rooms are available" do
 	# 		#complete later, need to modify hotel room # to by dynamic (user input)
 	# 	end
-	# end
+	end
 end
 
 
