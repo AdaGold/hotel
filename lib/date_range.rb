@@ -12,7 +12,9 @@ module Hotel
             return false 
         end
         def duration
-            return #how many nights 
+            total_duration = (@end_date - @start_date).to_i
+            total_duration -= 1
+            return total_duration 
         end
 
     end

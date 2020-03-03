@@ -28,6 +28,22 @@ describe "DateRange" do
             expect{ Hotel::DateRange.new(start_date, end_date) }.must_raise ArgumentError 
         end 
     end
+    describe "duration" do 
+        before do 
+            @start_date = Date.new(2020, 2, 2)
+            @end_date = Date.new(2020, 2, 12)
+            @date = Hotel::DateRange.new(@start_date, @end_date)
+            @duration = (@end_date - @start_date).to_i 
+            @duration -= 1
+        end
+        it "Should have the .duration method" do 
+            expect(@date).must_respond_to :duration
+        end
+        
+        it "Should calculate the correct amount of durations" do 
+            expect(@duration).must_equal 9
+        end
+    end
     # describe "include?" do 
     #     before do 
     #         start_date = Date.new(2020, 2, 2)
