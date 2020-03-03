@@ -29,7 +29,7 @@ describe "Reservation" do
 
     it "Should instantiate an instance of DateRange given start and end date" do 
       expect(@reserve).must_respond_to :reservation_dates
-      expect(@reserve.reservation_dates(@start_date, @end_date)).must_be_kind_of Hotel::DateRange 
+      expect(@reserve.reservation_dates).must_be_kind_of Hotel::DateRange 
     end
   end
   describe "cost" do 
