@@ -89,3 +89,5 @@ module HotelManager
 		end
 	end
 end
+
+# 

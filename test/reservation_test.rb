@@ -43,3 +43,18 @@ end
 
 # Edge case - date entered is > 31 days per month or leap year
 # raise argument error if start and end date are the same
+
+# Able to reserve a hotel block (group of rooms for a specific group of customers for a set period of time)
+# Block reservation has more than one room
+# Block reservation has less than five rooms
+# Block reservation can be at a discount rate
+# Block reservation cen be over a period of days
+# List of available rooms will not include the rooms in block reservation
+# Raise exception if one or more rooms is unavailable for the given date range
+# Cannot double book a room for single reservation if it is reserved for a hotel block
+# Cannot double book a room for another hotel block if it is reserved for a hotel block 
+# Correctly list out whether a given block has any rooms available?
+# Able to reserve a specific room from a hotel block, but only for the full duration of the block (individual reservations still work?)
+# List of reservation by date will list out both individual and block reservations
+# Check to make sure that when a block is reserved, the indivudal room reservation dates will also be there
+# Confirm that all availabilty checking logic from Wave 2 also respects room blocks
