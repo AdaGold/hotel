@@ -37,7 +37,7 @@ module Hotel
       if available.length > 0
         return Reservation.new(start_date, end_date, available[0])
       else
-        raise ArgumentError "No rooms available."
+        raise ArgumentError, "No available rooms."
       end
     end
   # access the list of reservations for a specific date,
@@ -56,19 +56,16 @@ module Hotel
     # Wave 2
     def find_available_rooms(start_date, end_date)
       # start_date and end_date should be instances of class Date
-      rooms = []
-      room_number = 1
-      while room_number <= 20
-        reservations = list_reservations_for_room(start_date, end_date, room_number)
+      available_rooms = []
+      # iterate through the rooms to find available room 
+      @rooms.each_with_index do |room, index|
+        reservations = list_reservations_for_room(start_date, end_date, index + 1)
       
-        if (reservations.length() == 0) # rooms that are empty
-          rooms << room_number
+        if(reservations.length() == 0) # rooms that are empty
+          available_rooms << index + 1
         end
-
-        room_number += 1
       end
-
-      return rooms
+      return available_rooms
     end
   end
 end
