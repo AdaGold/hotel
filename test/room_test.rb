@@ -12,5 +12,13 @@ describe Hotel::Room do
     it "has an Intenger ID" do 
       expect(@room.id).must_be_kind_of Integer
     end
+  describe "Room reservations"
+  
+    it "is an array" do 
+    end 
+
+  end 
+
+
   end 
 end 

@@ -37,7 +37,7 @@ describe Hotel::HotelController do
         start_date = @date
         end_date = start_date + 3
 
-        reservation = @hotel_controller.reserve_room(start_date, end_date)
+        reservation = @hotel_controller.reserve_room(DateRange.new(start_date, end_date))
 
         expect(reservation).must_be_kind_of Hotel::Reservation
       end
