@@ -21,7 +21,48 @@ module HotelManager
 			end
 		end
 
-		# Add/create new reservation
+		# Creates and saves new reservation/block to instance variables
+		def save_reservation(first_date, second_date, num_of_rooms: 1, customer_id: nil, room_cost: 200)
+
+			# change list_room_by_range to return argument rather than string
+			available_rooms = list_room_by_range(first_date,second_date)
+			
+			if available_rooms.is_a? Array
+				chosen_rooms = available_rooms.select.with_index do |room, index|
+					room.id if index < num_of_rooms
+				end
+			else
+				raise ArgumentError, "Something's not right here..."
+			end
+			
+			chosen_rooms.map!{|room| room.id}
+			
+			if num_of_rooms == 1
+				class_storage = @reservations
+				new_reservation = HotelManager::Reservation.new(
+					id: @reservations.length + 1, 
+					customer_id: customer_id, 
+					start_date: first_date, 
+					end_date: second_date,
+					room_cost: room_cost, 
+					room_id: chosen_rooms[0]
+				)
+			else 
+				class_storage = @reservation_blocks
+				new_reservation = HotelManager::ReservationBlock.new(
+					id: @reservation_blocks.length + 1, 
+					customer_id: customer_id, 
+					start_date: first_date, 
+					end_date: second_date,
+					room_cost: room_cost, 
+					room_ids: chosen_rooms
+				)
+			end
+
+			add_reservation(new_reservation,class_storage)
+		end
+
+		# Add reservation to instance variables
 		def add_reservation(reservation, class_storage)
 			potential_rooms = self.list_room_by_range(reservation.start_date, reservation.end_date) 
 
@@ -32,7 +73,7 @@ module HotelManager
 					potential_rooms.include? find_room(room_id)
 				end.all? (true)
 			end
-
+			
 			if found_room
 				class_storage << reservation
 			else 
@@ -107,7 +148,7 @@ module HotelManager
 			return reservation_found?(available_rooms, "rooms")
 		end
 
-		def reservation_found? (tracker, type)
+		def reservation_found? tracker, type
 			tracker.empty? ? "No #{type} available in date range." : tracker
 		end
 
