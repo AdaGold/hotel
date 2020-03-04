@@ -14,23 +14,15 @@ module Hotel
     end
     # check if date selected overlaps with the date_range
     def overlap?(new_start_date, new_end_date)
-      if (start_date <= new_end_date && end_date >= new_start_date) # double check
-        return true
-      else
-       return false
-      end
+      return(start_date <= new_end_date && end_date >= new_start_date) # double check
     end
 # check if new_date is between start_date and end_date
     def include?(new_date)
-      if start_date <= new_date && end_date > new_date # double check
-        return true
-      else
-       return false
-      end
+      return start_date <= new_date && end_date > new_date # double check
     end
 
     def nights
-   return end_date - start_date
+      return end_date - start_date
     end
   end
 end
