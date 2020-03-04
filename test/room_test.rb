@@ -11,14 +11,6 @@ describe Hotel::Room do
 
     it "has an Intenger ID" do 
       expect(@room.id).must_be_kind_of Integer
-    end 
-
-    it "id should be positive" do 
-      room_negative_id = Hotel::Room.new(-2)
-      expect(room_negative_id).must_raise ArgumentError
-    end 
-
-
-
+    end
   end 
 end 

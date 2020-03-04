@@ -1,27 +1,28 @@
 require 'date'
-require_relative 'room'
+require_relative 'date_range'
 
 module Hotel 
   class Reservation
-    # Feel free to change this method signature as needed. Make sure to update the tests!
-    def initialize(start_date, end_date, room) #room
-      @start_date = start_date
-      @end_date = end_date
+    attr_reader :id, :date_range, :room, :cost
+    def initialize(date_range, room) #room
+      @date_range = date_range
       @room = room #each time that makes a reservation, creates an instance that is added in hotel controller reservations 
       
     end
   
     def cost 
-      days = (@end_date - @start_date).to_i
       price = 200
-      total_cost = days * price
-      return total_cost
+      total_cost = @date_range.nights * price 
+      return total_cost 
     end
-
-    # def lookup_all_reservations_for_this_room 
-    #   @room.lookup_reservations
-    # end
 
   end
 end
 
+
+ # def lookup_all_reservations_for_this_room 
+    #   @room.lookup_reservations
+    # end
+
+
+   
