@@ -10,14 +10,13 @@ module HotelManager
 		attr_reader :id, :customer_id, :start_date, :end_date, :room_cost, :rooms, :room_ids
 		# Initialize reservation with start/end date, cost (default $200), customer id
 		# Raise exception for invalid date range is provided 
-		def initialize (id: , 
-			customer_id: , 
-			start_date: , 
-			end_date: , 
-			room_cost: 200, 
-			rooms: nil,
-			room_ids: nil
-			)
+		def initialize id: , 
+									customer_id: , 
+									start_date: , 
+									end_date: , 
+									room_cost: 200, 
+									rooms: nil,
+									room_ids: nil
 
 			@id = id 
 			@customer_id = customer_id

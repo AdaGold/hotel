@@ -3,7 +3,7 @@ module HotelManager
 
 		attr_reader :id
 		
-		def initialize (id: )
+		def initialize id:
 			@id = id
 		end
 

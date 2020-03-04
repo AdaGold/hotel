@@ -8,16 +8,15 @@ module HotelManager
 
 		attr_reader :id, :customer_id, :start_date, :end_date, :room_cost, 							:room, :room_id
 
-		def initialize (
-			id: , 
-			customer_id: , 
-			start_date: , 
-			end_date: , 
-			room_cost: 200, # Room default cost of $200
-			room: nil,
-			room_id: nil
-			)
-
+		# Room default cost of $200
+		def initialize id:, 
+									customer_id:, 
+									start_date:, 
+									end_date:,
+									room_cost: 200, 
+									room: nil, 
+									room_id: nil
+									
 			@id = id
 			@customer_id = customer_id
 			@start_date = start_date
@@ -30,7 +29,7 @@ module HotelManager
 
 			raise ArgumentError, "Room or room_id is required" if room.nil? && room_id.nil?
 
-			if @start_date.class() != Date || @end_date.class() != Date
+			if @start_date.class != Date || @end_date.class != Date
 				raise ArgumentError, "Date #{@start_date} or #{@end_date} not valid"
 			elsif @start_date >= @end_date 
 				raise ArgumentError, "#{@start_date} is before #{@end_date} "

@@ -30,10 +30,6 @@ module HotelManager
 				raise ArgumentError, "Room #{reservation.room_id} is double booked. Reservation not finalized in reservation manager."
 			end
 		end
-
-		def find_room(id)
-      return @rooms.find { |room| room.id == id }
-		end
 		
 		# Add/create new block reservation
 		def add_reservation_block(reservation_block)
@@ -51,8 +47,8 @@ module HotelManager
 		end
 
 		def find_room(id)
-      return @rooms.find { |room| room.id == id }
-    end
+			@rooms.find { |room| room.id == id }
+		end
 
 		# List out all rooms in hotel 
 		def rooms_list
