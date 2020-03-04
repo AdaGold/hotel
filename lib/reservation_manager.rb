@@ -36,7 +36,7 @@ module HotelManager
 			if found_room
 				class_storage << reservation
 			else 
-				raise ArgumentError, "Room(s) are double booked. Hotel block not saved in reservation manager."
+				raise ArgumentError, "#{reservation.class} double booked. Not saved to reservation manager."
 			end
 		end
 
@@ -50,7 +50,6 @@ module HotelManager
 		end
 
 		# List out all reservations by room and date range
-		# Error handling if date is not entered properly, or date range is invalid (store in master class?)
 		def search_by_room_date(room, first_date, second_date)
 			search_date_validation(first_date,second_date)
 			raise ArgumentError, "Room #{room} does not exist" if @rooms.last.id < room
@@ -63,7 +62,6 @@ module HotelManager
 			end
 			
 			@reservation_blocks.each do |reservation_block|
-			
 				found_room = reservation_block.room_ids.include? room
 				if reservation_block.check_reservation_range(first_date,second_date) && found_room
 					reservation_room_date << reservation_block

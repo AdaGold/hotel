@@ -260,6 +260,60 @@ describe "Reservation Manager Class - Manipulation" do
 	end
 end
 
+xdescribe "Reservation Manager Class - Create New Reservation" do
+	before do 
+		@sample = HotelManager::ReservationManager.new()
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5))
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5))
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5),5)
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5),4)
+	end
+
+	it "create and save reservation providing only dates" do
+		expect(@sample.reservations.length).must_equal 2
+	end
+
+	it "verify that next available rooms were used - individual" do
+		@sample.save_reservation(Date.new(2020,3,4),Date.new(2020,3,7))
+		@sample.save_reservation(Date.new(2020,3,10),Date.new(2020,3,17))
+
+		expect(@sample.reservations[0].room_id).must_equal 1
+		expect(@sample.reservations[1].room_id).must_equal 2
+		expect(@sample.reservations[2].room_id).must_equal 12
+		expect(@sample.reservations[3].room_id).must_equal 1
+	end
+
+	it "create and save reservation blocks providing only dates" do
+		expect(@sample.reservations_blocks.length).must_equal 2
+	end
+
+	it "verify that next available rooms were used - block" do
+		@sample.save_reservation(Date.new(2020,3,4),Date.new(2020,3,7),4)
+		@sample.save_reservation(Date.new(2020,3,10),Date.new(2020,3,5),5)
+
+		expect(@sample.reservations[0].room_id).must_equal [3,4,5,6,7]
+		expect(@sample.reservations[1].room_id).must_equal [8,9,10,11]
+		expect(@sample.reservations[2].room_id).must_equal [12,13,14,15]
+		expect(@sample.reservations[3].room_id).must_equal [1,2,3,4,5]
+	end
+
+	it "raises arugment error if no rooms are available - individual" do
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5),5)
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5),4)
+
+		expect{@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5))}.must_raise ArgumentError
+	end
+
+	it "raises arugment error if no rooms are available - block" do
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5),5)
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5),4)
+
+		expect{@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5),2)}.must_raise ArgumentError
+	end
+end
+
+# Be able enter date range and create reservation from that (assign room automatically)
+
 
 
 
