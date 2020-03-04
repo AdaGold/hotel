@@ -218,25 +218,25 @@ describe "Reservation Manager Class - Manipulation" do
 		end
 	end
 
-	# describe "test search by date" do
-	# 	it "able to list reservation by specific date" do
-	# 		@search_result = @sample_two.search_by_date(Date.new(2020,3,17))
-	# 		expect(@search_result).must_be_kind_of Array
-	# 		expect(@search_result[0]).must_be_kind_of HotelManager::ReservationBlock
-	# 		expect(@search_result[1]).must_be_kind_of HotelManager::Reservation
-	# 		expect(@search_result[0].id).must_equal 3
-	# 		expect(@search_result[1].id).must_equal 2
-	# 	end
+	describe "test search by date" do
+		it "able to list reservation by specific date" do
+			@search_result = @sample_two.search_by_date(Date.new(2020,3,17))
+			expect(@search_result).must_be_kind_of Array
+			expect(@search_result[0]).must_be_kind_of HotelManager::Reservation
+			expect(@search_result[1]).must_be_kind_of HotelManager::ReservationBlock
+			expect(@search_result[0].id).must_equal 2
+			expect(@search_result[1].id).must_equal 3
+		end
 
-	# 	it "raise argument error if no reservations on that date" do
-	# 		@search_result = @sample_two.search_by_date(Date.new(2020,4,1))
-	# 		expect(@search_result).must_include "No reservations found within date range."
-	# 	end
+		it "raise argument error if no reservations on that date" do
+			@search_result = @sample_two.search_by_date(Date.new(2020,4,1))
+			expect(@search_result).must_include "No reservations found within date range."
+		end
 
-	# 	it "raise argument error if invalid date entered" do
-	# 		expect{@sample_two.search_by_date("Date.new(2020,3,1)")}.must_raise ArgumentError
-	# 	end
-	# end
+		it "raise argument error if invalid date entered" do
+			expect{@sample_two.search_by_date("Date.new(2020,3,1)")}.must_raise ArgumentError
+		end
+	end
 
 	# # see list of rooms available for a given date range 
 	# describe "list rooms available by date range" do

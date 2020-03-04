@@ -90,6 +90,10 @@ module HotelManager
 				reservation_by_date << reservation if reservation.check_date(date)
 			end
 
+			@reservation_blocks.each do |reservation_block|
+				reservation_by_date << reservation_block if reservation_block.check_date(date)
+			end
+
 			return reservation_by_date.empty? ? "No reservations found within date range." : reservation_by_date
 		end
 
