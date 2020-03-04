@@ -58,7 +58,7 @@ module HotelManager
 			(search_date >= @start_date) && (search_date <= @end_date)
 		end
 
-		# Check whether reservation is within range 
+		# Check whether date range overlaps with reservation
 		def check_date_range(date_one, date_two)
 			if date_one < date_two
 				first_date, second_date = date_one, date_two
@@ -67,10 +67,17 @@ module HotelManager
 			end
 
 			(first_date >= @start_date && first_date < @end_date) || (second_date < @end_date && second_date > @start_date) 
+		end
 
+		# Check whether reservation is within range 
+		def check_reservation_range(date_one, date_two)
+			if date_one < date_two
+				first_date, second_date = date_one, date_two
+			else
+				first_date, second_date = date_two, date_one
+			end
 
-			# (@end_date > first_date) && (@end_date <= second_date) ||
-			# (@start_date >= first_date) && (@start_date <= second_date) || (@start_date < first_date) && (@end_date <= second_date)
+			first_date < @end_date && second_date > @start_date
 		end
 
 	end

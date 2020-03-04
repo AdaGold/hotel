@@ -67,8 +67,16 @@ module HotelManager
 
 			reservation_by_room_date = []
 			@reservations.each do |reservation|
-				if reservation.check_date_range(first_date, second_date) && reservation.room_id == room
+				if reservation.check_reservation_range(first_date, second_date) && reservation.room_id == room
 					reservation_by_room_date << reservation 
+				end
+			end
+			
+			@reservation_blocks.each do |reservation_block|
+			
+				found_room = reservation_block.room_ids.include? room
+				if reservation_block.check_reservation_range(first_date,second_date) && found_room
+					reservation_by_room_date << reservation_block
 				end
 			end
 			
