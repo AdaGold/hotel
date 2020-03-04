@@ -103,13 +103,14 @@ module HotelManager
 			available_rooms = @rooms.dup
 			
 			@reservations.each do |reservation|
-				if reservation.check_date_range(first_date, second_date)
+
+				if reservation.check_reservation_range(first_date, second_date)
 					available_rooms -= [find_room(reservation.room_id)]
 				end
 			end
 			
 			@reservation_blocks.each do |reservation_block|
-				if reservation_block.check_date_range(first_date, second_date)
+				if reservation_block.check_reservation_range(first_date, second_date)
 					reservation_block.room_ids.each do |room_id|
 						available_rooms -= [find_room(room_id)]
 					end

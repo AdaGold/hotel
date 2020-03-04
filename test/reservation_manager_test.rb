@@ -238,25 +238,25 @@ describe "Reservation Manager Class - Manipulation" do
 		end
 	end
 
-	# # see list of rooms available for a given date range 
-	# describe "list rooms available by date range" do
-	# 	it "able to list out all available rooms by date range" do
-	# 		@search_result = @sample_two.list_room_by_range(Date.new(2020,4,1),Date.new(2020,4,7))
-	# 		expect(@search_result).must_be_kind_of Array
-	# 		expect(@search_result.length).must_equal 20
-	# 	end 
+	# see list of rooms available for a given date range 
+	describe "list rooms available by date range" do
+		it "able to list out all available rooms by date range" do
+			@search_result = @sample_two.list_room_by_range(Date.new(2020,4,1),Date.new(2020,4,7))
+			expect(@search_result).must_be_kind_of Array
+			expect(@search_result.length).must_equal 20
+		end 
 
-	# 	it "able to list out all available rooms by date range" do
-	# 		@search_result = @sample_two.list_room_by_range(Date.new(2020,3,1),Date.new(2020,3,5))
-	# 		expect(@search_result).must_be_kind_of Array
-	# 		expect(@search_result[0]).must_be_kind_of HotelManager::Room
-	# 		expect(@search_result.length).must_equal 15
-	# 	end 
+		it "able to list out all available rooms by date range" do
+			@search_result = @sample_two.list_room_by_range(Date.new(2020,3,1),Date.new(2020,3,5))
+			expect(@search_result).must_be_kind_of Array
+			expect(@search_result[0]).must_be_kind_of HotelManager::Room
+			expect(@search_result.length).must_equal 16
+		end 
 
-	# 	it "notify user if no rooms are available" do
-	# 		#complete later, need to modify hotel room # to by dynamic (user input)
-	# # 	end
-	# end
+		it "notify user if no rooms are available" do
+			#complete later, need to modify hotel room # to by dynamic (user input)
+		end
+	end
 end
 
 
