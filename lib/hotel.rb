@@ -9,9 +9,7 @@ module HotelSystem
       @rooms = create_rooms
     end 
     
-
     def find_reservations_with_room_number(room_number, start_date, end_date)
- 
       room = find_room(room_number)
       list_reservations = []
         room.reservations.each do |reservation|
@@ -55,6 +53,18 @@ module HotelSystem
     def total_cost(reservation_number)
       res = find_reservation(reservation_number)
       return res.total_cost
+    end 
+
+    def available_rooms(start_date, end_date) 
+      #TODO create method 
+      #try to use enumerables
+    end 
+
+
+    def make_reservation(room_number)
+      #TODO create method 
+      #try to
+     
     end 
 
     private
