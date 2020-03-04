@@ -2,6 +2,7 @@ require 'pry'
 require 'date'
 
 require_relative 'reservation'
+require_relative 'reservation_block'
 require_relative 'room'
 
 module HotelManager

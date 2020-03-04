@@ -1,8 +1,6 @@
 require 'date'
 require 'pry'
 
-require_relative 'hotel'
-
 module HotelManager
 	class Reservation
 
@@ -16,7 +14,7 @@ module HotelManager
 									room_cost: 200, 
 									room: nil, 
 									room_id: nil
-									
+
 			@id = id
 			@customer_id = customer_id
 			@start_date = start_date
