@@ -2,7 +2,7 @@ require_relative "test_helper"
 
 describe Hotel::HotelController do
   before do
-    @hotel_controller = Hotel::HotelController.new(20)
+    @hotel_controller = Hotel::HotelController.new
     @date = Date.parse("2020-08-04")
   end
   describe "wave 1" do
@@ -25,7 +25,7 @@ describe Hotel::HotelController do
 
     describe "reservations" do
       it "takes a Date and returns a list of Reservations" do
-        reservation_list = @hotel_controller.reservations(@date)
+        reservation_list = @hotel_controller.show_reservations_for_date(@date)
 
         expect(reservation_list).must_be_kind_of Array
         reservation_list.each do |res|
@@ -36,12 +36,12 @@ describe Hotel::HotelController do
   end
 
   describe "wave 2" do
-    describe "available_rooms" do
+    describe "find_available_rooms" do
       it "takes two dates and returns a list" do
         start_date = @date
         end_date = start_date + 3
 
-        room_list = @hotel_controller.available_rooms(start_date, end_date)
+        room_list = @hotel_controller.find_available_rooms(start_date, end_date)
 
         expect(room_list).must_be_kind_of Array
       end
