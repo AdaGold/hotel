@@ -2,13 +2,14 @@ require 'date'
 require 'pry'
 
 require_relative 'reservation'
+require_relative 'room'
 
 module HotelManager
 	class ReservationBlock < Reservation
 
 		attr_reader :id, :customer_id, :start_date, :end_date, :room_cost, :rooms, :room_ids
-		# Initialize reservation with start/end date, cost (default $200), customer id
-		# Raise exception for invalid date range is provided 
+
+		# Room default cost of $200
 		def initialize id: , 
 									customer_id: , 
 									start_date: , 
@@ -23,70 +24,25 @@ module HotelManager
 			@end_date = end_date
 			@room_cost = room_cost
 			@rooms = rooms 
+			@room_ids = room_ids
 
-			if rooms
-				@rooms = rooms
-				@room_ids = room_ids
-				if rooms.length <= 1 || rooms.length > 5
-					raise ArgumentError, "#{rooms.length} is an invalid number of rooms for a hotel block"
-				end
-			elsif
-				@room_ids = room_ids
-				if room_ids.length <= 1 || room_ids.length > 5 
-					raise ArgumentError, "#{rooms.length} is an invalid number of rooms for a hotel block"
-				end
-			else
-				raise ArgumentError, "Rooms or room_ids is required"
-			end
+			validate_date			
+			@rooms.nil? ? validate_room(@room_ids) : validate_room(@rooms)
+		end
 
-	
-			# if room_ids.length <= 1 || room_ids.length > 5 
-			# 	raise ArgumentError, "#{rooms.length} is an invalid number of rooms for a hotel block"
-			# elsif rooms.length <= 1 || rooms.length > 5
-			# 	raise ArgumentError, "#{rooms.length} is an invalid number of rooms for a hotel block"
-			# end
 
-			# Move to method later to avoid needing to call here?
-			if @start_date.class() != Date
-				raise ArgumentError, "Start date #{@start_date} not valid"
-			end  
-
-			if @end_date.class() != Date
-				raise ArgumentError, "End date #{@end_date} not valid"
-			end 
+		def validate_room(attribute)
+			raise ArgumentError, "Room or room_id is required" if @rooms.nil? && @room_ids.nil?
 			
-			if @start_date >= @end_date 
-				raise ArgumentError, "#{@start_date} is before #{@end_date} "
+			if attribute.length <= 1 || attribute.length > 5
+				raise ArgumentError, "#{attribute.length} is an invalid number of rooms for a hotel block"
 			end
 		end
 
 		# Calculate cost of reservation (exclusive of last date)
 		def total_cost
-			@room_cost * (@end_date - @start_date - 1) * @rooms.length
+			super * @rooms.length
 		end
-
-		def check_date_range(date_one, date_two)
-			super
-		end
-		
-		# # Check whether date is within range 
-		# def check_date(search_date)
-		# 	(search_date >= @start_date) && (search_date <= @end_date)
-		# end 
-
-		# # Check whether reservation is within range 
-		# def check_date_range(date_one, date_two)
-		# 	if date_one < date_two
-		# 		first_date, second_date = date_one, date_two
-		# 	else 
-		# 		first_date, second_date = date_two, date_one
-		# 	end
-
-		# 	(@end_date > first_date) && (@end_date <= second_date) ||
-		# 	(@start_date >= first_date) && (@start_date <= second_date)
-		# end
 
 	end
 end
-
-# Add in requirement that room must be populated

@@ -268,3 +268,5 @@ end
 # List of reservation by date will list out both individual and block reservations
 # Check to make sure that when a block is reserved, the indivudal room reservation dates will also be there
 # Confirm that all availabilty checking logic from Wave 2 also respects room blocks
+
+# 2 or more days overlapping (of all dates in the range)

@@ -24,14 +24,21 @@ module HotelManager
 			@room_id = room_id
 
 			# Raise exception for missing or invalid inputs
+			validate_date
+			validate_room
+		end
 
-			raise ArgumentError, "Room or room_id is required" if room.nil? && room_id.nil?
-
+		# Check input validation
+		def validate_date
 			if @start_date.class != Date || @end_date.class != Date
 				raise ArgumentError, "Date #{@start_date} or #{@end_date} not valid"
 			elsif @start_date >= @end_date 
 				raise ArgumentError, "#{@start_date} is before #{@end_date} "
 			end
+		end
+
+		def validate_room
+			raise ArgumentError, "Room or room_id is required" if room.nil? && room_id.nil?
 		end
 
 		# Calculate cost of reservation, exclusive of last date
