@@ -1,5 +1,6 @@
 require_relative 'room'
 require_relative 'reservation'
+require 'awesome_print'
 
 module HotelSystem 
   class Hotel 
@@ -15,7 +16,7 @@ module HotelSystem
         room.reservations.each do |reservation|
           if is_between_two_dates([start_date, end_date], reservation.start_date) || is_between_two_dates([start_date, end_date], reservation.end_date) 
             list_reservations << reservation
-          end 
+          end
         end 
       return list_reservations
     end 
@@ -28,7 +29,7 @@ module HotelSystem
             list_reservations << reservation
           end 
         end 
-      end 
+      end  
       return list_reservations
     end 
     
@@ -56,8 +57,15 @@ module HotelSystem
     end 
 
     def available_rooms(start_date, end_date) 
-      #TODO create method 
-      #try to use enumerables
+      list_rooms = []
+      @rooms.each do |room|
+          if room.reservations.length == 0 || room.reservations == nil 
+            list_rooms << room 
+          elsif no_shared_days?(start_date, end_date, room.reservations.last) === true 
+            list_rooms << room
+          end 
+        end  
+      return list_rooms
     end 
 
 
@@ -65,6 +73,26 @@ module HotelSystem
       #TODO create method 
       #try to
      
+    end 
+    
+    def no_shared_days?(start_date, end_date, reservation)
+      count = 0 
+      reservation_start = reservation.start_date
+      reservation_end = reservation.end_date
+      i = 1
+
+      while start_date < end_date
+        while reservation_start < reservation_end
+          if start_date == reservation_start  
+            count += 1
+          end 
+          reservation_start += 1
+       end 
+       reservation_start = reservation.start_date + i 
+       start_date += 1
+       i +=1 
+      end 
+      return count < 2
     end 
 
     private
@@ -79,11 +107,11 @@ module HotelSystem
 
     def is_between_two_dates(range_wanted, date)
       return date >= range_wanted[0] && date <= range_wanted[1];
-    end 
-    
+    end
+
+   
+
   end 
 end 
-
-
 
 

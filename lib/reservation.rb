@@ -23,7 +23,7 @@ module HotelSystem
       end 
     end 
 
-    def reservation_in_progress
+    def reservation_in_progress?
       #TODO 
 
     end 

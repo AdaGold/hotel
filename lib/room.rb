@@ -17,7 +17,8 @@ module HotelSystem
     end
 
     def list_reservations 
-      ap @reservations
+      res = ap @reservations
+      return res
     end 
     #this method only looks at the very last reservation 
     def is_room_available?(start_date, end_date)

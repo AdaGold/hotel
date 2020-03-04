@@ -14,9 +14,7 @@ describe "initialize" do
   it "I can access the list of all of the rooms in the hotel" do 
     hotel = HotelSystem::Hotel.new 
     hotel.must_be_instance_of HotelSystem::Hotel
-
   end 
-
   it "an element in Hotel object must be a room" do 
     hotel = HotelSystem::Hotel.new 
     room = hotel.rooms[1]
@@ -25,7 +23,7 @@ describe "initialize" do
   end 
 
 end
-# def find_reservations_with_date(room_number, start_date, end_date)
+
 
 describe "other instance methods" do 
 
@@ -134,6 +132,34 @@ describe "other instance methods" do
     array.must_equal [res2]
 
   end 
+  
+  it "finds the available rooms" do 
+    res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
 
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
+
+    hotel = HotelSystem::Hotel.new
+    hotel.rooms[1].add_reservation(res2)
+    hotel.rooms[1].add_reservation(res1)
+    hotel.rooms[10].add_reservation(res3)
+
+    avail_rooms = hotel.available_rooms(Date.new(2020, 03, 06), Date.new(2020, 03, 18)) 
+
+    avail_rooms.must_be_instance_of Array 
+
+
+  end 
+
+  it "evaluates overlapping correcty " do 
+    hotel = HotelSystem::Hotel.new
+
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 06), Date.new(2020, 03,29))
+    answer = hotel.no_shared_days?(Date.new(2020, 03, 18), Date.new(2020, 04, 18), res3)
+
+
+    answer.must_equal false
+
+  end
 
 end 
