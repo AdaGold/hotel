@@ -8,7 +8,7 @@ describe "DateRange" do
         @date = Hotel::DateRange.new(@start_date, @end_date)
         @duration = (@end_date - @start_date).to_i 
         @duration -= 1
-        @all_dates = (@start_date..@end_date).map do |day|
+        @all_dates = (@start_date...@end_date).map do |day|
             day 
         end
     end
@@ -58,27 +58,16 @@ describe "DateRange" do
         it "Should include date that exists within date range" do 
             expect(@date.all_dates).must_include Date.new(2020, 2, 10)
         end
-
         
-    end
-    # describe "include?" do 
-    #     before do 
-    #         start_date = Date.new(2020, 2, 2)
-    #         end_date = Date.new(2020, 2, 12)
-    #         @date = Hotel::DateRange.new(start_date, end_date)
-    #     end
-    #     it "Should return true for the same date range" do 
-    #         start_date = @date.start_date
-    #         end_date = @date.end_date
-             
-    #         test_range = Hotel::DateRange.new(start_date, end_date)
-    #         expect(@date.overlap?(test_range)).must_equal true 
-    #     end
-    #     #TODO
-    #     it "" do 
+        # it "Should not include the last day of date range aka move out date" do 
+        #     expect(@date.all_dates).wont_include @end_date
+        # end ???????????
 
-    #     end
-    # end
+
+
+
+    end
+  
 
 
 end

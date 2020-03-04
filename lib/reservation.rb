@@ -5,9 +5,10 @@ module Hotel
         def initialize(start_date, end_date, room:, guest_name:)
             @start_date = start_date
             @end_date = end_date
-            @room = room.to_s #the room list must match with room lists, raise an argument if invalid room number is given
+            @room = Hotel::Room.new(room)
             @guest_name = guest_name.to_s
         end
+        
         def reservation_dates
             #instantiate DateRange with the given start and end date 
             return Hotel::DateRange.new(@start_date, @end_date)

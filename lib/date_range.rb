@@ -17,7 +17,7 @@ module Hotel
     end
 
     def all_dates
-      return (@start_date..@end_date).map do |date|
+      return (@start_date...@end_date).map do |date|
                date
              end
     end
