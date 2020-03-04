@@ -3,18 +3,34 @@ module Hotel
     attr_accessor :start_date, :end_date
 
     def initialize(start_date, end_date)
+      # if start date is on or after end Date, raise exception
+      if start_date >= end_date
+        raise ArgumentError, " Invalid Date Range."
+      
+      end
+      
+      @start_date = start_date
+      @end_date = end_date
     end
-
-    def overlap?(other)
-      return false
+    # check if date selected overlaps with the date_range
+    def overlap?(new_start_date, new_end_date)
+      if (start_date <= new_end_date && end_date >= new_start_date) # double check
+        return true
+      else
+       return false
+      end
     end
-
-    def include?(date)
-      return false
+# check if new_date is between start_date and end_date
+    def include?(new_date)
+      if start_date <= new_date && end_date > new_date # double check
+        return true
+      else
+       return false
+      end
     end
 
     def nights
-      return 3
+   return end_date - start_date
     end
   end
 end
