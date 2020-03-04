@@ -57,10 +57,10 @@ describe "Reservation Manager Class - Manipulation" do
 		@res_block = HotelManager::ReservationBlock.new(@res_block_data)
 		@sample_two = HotelManager::ReservationManager.new()
 
-		@sample_two.add_reservation(@res_one) 
+		@sample_two.add_reservation(@res_one, @sample_two.reservations) 
 		
-		@sample_two.add_reservation(@res_two)
-		@sample_two.add_reservation_block(@res_block)
+		@sample_two.add_reservation(@res_two, @sample_two.reservations)
+		@sample_two.add_reservation(@res_block, @sample_two.reservation_blocks)
 	end
 
 	describe "ability to add reservations to the Reservation Manager" do
@@ -80,7 +80,7 @@ describe "Reservation Manager Class - Manipulation" do
 			}
 			
 			@res_three = HotelManager::ReservationBlock.new(@res_three_data)
-			@sample_two.add_reservation_block(@res_three)
+			@sample_two.add_reservation(@res_three, @sample_two.reservation_blocks)
 
 			expect(@sample_two.reservations.length).must_equal 2
 		end
@@ -96,7 +96,7 @@ describe "Reservation Manager Class - Manipulation" do
 			}
 			
 			@res_four = HotelManager::Reservation.new(@res_four_data)
-			@sample_two.add_reservation(@res_four)
+			@sample_two.add_reservation(@res_four, @sample_two.reservations)
 
 			expect(@sample_two.reservations.length).must_equal 3
 		end
@@ -113,7 +113,7 @@ describe "Reservation Manager Class - Manipulation" do
 			} 
 			
 			@res_six = HotelManager::ReservationBlock.new(@res_six_data)
-			@sample_two.add_reservation_block(@res_six)
+			@sample_two.add_reservation(@res_six, @sample_two.reservation_blocks)
 
 			expect(@sample_two.reservations.length).must_equal 2
 		end
@@ -129,7 +129,7 @@ describe "Reservation Manager Class - Manipulation" do
 			}
 			
 			@res_seven = HotelManager::Reservation.new(@res_seven_data)
-			@sample_two.add_reservation(@res_seven)
+			@sample_two.add_reservation(@res_seven,@sample_two.reservations)
 
 			expect(@sample_two.reservations.length).must_equal 3
 		end 
@@ -145,7 +145,7 @@ describe "Reservation Manager Class - Manipulation" do
 			}
 			
 			@res_five = HotelManager::Reservation.new(@res_five_data)
-			expect{@sample_two.add_reservation(@res_five)}.must_raise ArgumentError 
+			expect{@sample_two.add_reservation(@res_five,@sample_two.reservations)}.must_raise ArgumentError 
 		end 
 
 		it "raise argument error if individual overbooking attempted on block" do
@@ -160,12 +160,12 @@ describe "Reservation Manager Class - Manipulation" do
 			
 			@res_five = HotelManager::Reservation.new(@res_five_data)
 			
-			expect{@sample_two.add_reservation(@res_five)}.must_raise ArgumentError  
+			expect{@sample_two.add_reservation(@res_five,@sample_two.reservations)}.must_raise ArgumentError  
 		end
 
 		it "raise argument error if block overbooking attempted on block" do
 			@res_five = HotelManager::ReservationBlock.new(@res_block_data)
-			expect{@sample_two.add_reservation_block(@res_five)}.must_raise ArgumentError
+			expect{@sample_two.add_reservation(@res_five,@sample_two.reservations)}.must_raise ArgumentError
 		end
 
 		it "raise argument error if block overbooking attempted on individual" do
@@ -173,14 +173,15 @@ describe "Reservation Manager Class - Manipulation" do
 			@res_six_data = {
 				id: 3,
 				customer_id: 3, 
-				start_date: Date.new(2020,3,9),
+				start_date: Date.new(2020,3,4),
 				end_date: Date.new(2020,3,14),
 				room_cost: 100,
 				room_ids: @rooms
 			}
 			
 			@res_six = HotelManager::ReservationBlock.new(@res_six_data)
-			expect{@sample_two.add_reservation(@res_six)}.must_raise ArgumentError
+			
+			expect{@sample_two.add_reservation(@res_six, @sample_two.reservation_blocks)}.must_raise ArgumentError
 		end 
 	end
 
@@ -197,7 +198,7 @@ describe "Reservation Manager Class - Manipulation" do
 			} 
 
 			@res_block = HotelManager::ReservationBlock.new(@res_block_data)
-			@sample_two.add_reservation_block(@res_block)
+			@sample_two.add_reservation(@res_block,@sample_two.reservation_blocks)
 
 			@search_result = @sample_two.search_by_room_date(1, Date.new(2020,3,1), Date.new(2020,3,10))
 			expect(@search_result).must_be_kind_of Array
@@ -209,7 +210,7 @@ describe "Reservation Manager Class - Manipulation" do
 
 		it "notifies user if no room by room/date range" do
 			@search_result = @sample_two.search_by_room_date(1, Date.new(2020,4,1), Date.new(2020,4,10))
-			expect(@search_result).must_include "No reservations found within date range."
+			expect(@search_result).must_include "No reservations available in date range."
 		end
 
 		it "raise argument error if invalid room or date range" do
@@ -230,7 +231,7 @@ describe "Reservation Manager Class - Manipulation" do
 
 		it "raise argument error if no reservations on that date" do
 			@search_result = @sample_two.search_by_date(Date.new(2020,4,1))
-			expect(@search_result).must_include "No reservations found within date range."
+			expect(@search_result).must_include "No reservations available in date range."
 		end
 
 		it "raise argument error if invalid date entered" do

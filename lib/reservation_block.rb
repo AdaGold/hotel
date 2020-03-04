@@ -30,7 +30,6 @@ module HotelManager
 			@rooms.nil? ? validate_room(@room_ids) : validate_room(@rooms)
 		end
 
-
 		def validate_room(attribute)
 			raise ArgumentError, "Room or room_id is required" if @rooms.nil? && @room_ids.nil?
 			
