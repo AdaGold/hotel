@@ -18,7 +18,6 @@ module HotelSystem
 
     def list_reservations 
       return @reservations
-      
     end 
   end 
 

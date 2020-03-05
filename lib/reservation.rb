@@ -22,14 +22,5 @@ module HotelSystem
         raise ArgumentError.new("Invalid date, you can't start or end a reservation in the past")
       end 
     end 
-
-    def reservation_in_progress?
-      #TODO 
-
-    end 
-
-
-
-
   end 
 end 

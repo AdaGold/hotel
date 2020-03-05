@@ -1,6 +1,5 @@
 require_relative 'room'
 require_relative 'reservation'
-require 'awesome_print'
 
 module HotelSystem 
   class Hotel 
@@ -11,7 +10,6 @@ module HotelSystem
       20.times do |i|
         @rooms << HotelSystem::Room.new(i+1, 200)
       end 
-      
     end 
     
     def find_reservations_with_room_number(room_number, start_date, end_date)
@@ -75,16 +73,17 @@ module HotelSystem
   
     def make_reservation(room_number, start_date, end_date)
       room = find_room(room_number)
-      end_date_object = room.reservations[0]
-      room.reservations.each do |res|
-        if res.end_date > end_date_object.end_date
-          end_date_object = res
-        end 
-      end 
-
+      true_for_all = []
       if room.reservations == [] 
         room.reservations << HotelSystem::Reservation.new(next_reservation_number, start_date, end_date)
-      elsif no_shared_days?(start_date, end_date, end_date_object) === true 
+      else
+        room.reservations.each do |res|
+          if no_shared_days?(start_date, end_date, res) === true
+            true_for_all << true 
+          end
+        end 
+      end 
+      if true_for_all.length == room.reservations.length 
         room.reservations << HotelSystem::Reservation.new(next_reservation_number, start_date, end_date)
       else 
         raise ArgumentError.new("you can't overlap reservations")
@@ -92,16 +91,18 @@ module HotelSystem
 
     end
     
-    
-
+  
     def no_shared_days?(start_date, end_date, reservation)
       count = 0 
       reservation_start = reservation.start_date
       reservation_end = reservation.end_date
       i = 1
       while start_date < end_date
+        
         while reservation_start < reservation_end
-          if start_date == reservation_start  
+          if start_date == reservation_start 
+            puts "#{start_date} && #{reservation_start}"
+            puts " " 
             count += 1
           end 
           reservation_start += 1
@@ -110,13 +111,15 @@ module HotelSystem
        start_date += 1
        i +=1 
       end 
-      return count < 2
+      if (reservation.end_date - reservation.start_date == 1) && reservation_start == start_date
+        return false 
+      else
+        return count < 2
+      end 
     end 
     
-
     #PRIVATE METHODS 
     private
-
     #used for fine_reservations_for_room and list_reservations_with_date 
     def is_between_two_dates(range_wanted, date)
       return date >= range_wanted[0] && date <= range_wanted[1];
@@ -134,7 +137,6 @@ module HotelSystem
       end
       return max + 1 
     end 
-
   end 
 end 
 

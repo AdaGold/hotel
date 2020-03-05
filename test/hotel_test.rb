@@ -216,4 +216,17 @@ describe "other instance methods" do
 
   end 
 
+  it " can make a reservation the same day one ends" do 
+    #make_reservation(room_number, start_date, end_date)
+    res1 = HotelSystem::Reservation.new(1, Date.new(2020,03,05), Date.new(2020,03,06))
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+
+    #should raise argument error
+    hotel = HotelSystem::Hotel.new
+    hotel.rooms[1].add_reservation(res2)
+    hotel.rooms[1].add_reservation(res1)
+    expect{hotel.make_reservation(2, Date.new(2020, 03, 05), Date.new(2020, 04, 02))}.must_raise ArgumentError
+
+  end 
+
 end 
