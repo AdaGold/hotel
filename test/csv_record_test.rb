@@ -2,9 +2,8 @@ require_relative 'test_helper'
 
 TEST_DATA_DIR = 'test/test_data'
 
-describe HotelManager::CsvRecord do
-
-  it 'is an instance of Hotel Manager' do
+describe 'CSV Record Class' do
+  it 'is an instance of CSV Record' do
     record = HotelManager::CsvRecord.new(1)
     expect(record.id).must_equal 1
   end
@@ -13,6 +12,13 @@ describe HotelManager::CsvRecord do
     expect {HotelManager::CsvRecord.new(-7)}.must_raise ArgumentError
     expect {HotelManager::CsvRecord.new("One")}.must_raise ArgumentError
   end
+end
+
+describe 'CSV Record Class - Load All' do
+  it "raise argument error if invalid file path" do
+    expect {HotelManager::CsvRecord.load_all}.must_raise ArgumentError
+  end
+
 end
 
 describe "blah" do
