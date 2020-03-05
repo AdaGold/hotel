@@ -10,20 +10,17 @@ module Hotel
       @end_date = end_date
     end
 
-    def duration
-      total_duration = (@end_date - @start_date).to_i
-      total_duration -= 1
-      return total_duration
-    end
-
+    #return an array of all the dates within the range- excluding the last day aka the day the guest leaves
     def all_dates
       return (@start_date...@end_date).map do |date|
                date
              end
     end
 
-    def overlap?(another_date_range)
-      return false
+    def duration
+      return all_dates.length
     end
+
+    
   end
 end
