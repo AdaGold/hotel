@@ -68,19 +68,33 @@ module HotelSystem
       return list_rooms
     end 
 
+  
+    def make_reservation(room_number, start_date, end_date)
+      room = find_room(room_number)
+      end_date_object = room.reservations[0]
+      room.reservations.each do |res|
+        if res.end_date > end_date_object.end_date
+          end_date_object = res
+        end 
+      end 
 
-    def make_reservation(room_number)
-      #TODO create method 
-      #try to
-     
-    end 
+      if room.reservations == [] 
+        room.reservations << HotelSystem::Reservation.new(next_reservation_number, start_date, end_date)
+      elsif no_shared_days?(start_date, end_date, end_date_object) === true 
+        room.reservations << HotelSystem::Reservation.new(next_reservation_number, start_date, end_date)
+      else 
+        raise ArgumentError.new("you can't overlap reservations")
+      end 
+
+    end
     
+    
+
     def no_shared_days?(start_date, end_date, reservation)
       count = 0 
       reservation_start = reservation.start_date
       reservation_end = reservation.end_date
       i = 1
-
       while start_date < end_date
         while reservation_start < reservation_end
           if start_date == reservation_start  
@@ -94,7 +108,9 @@ module HotelSystem
       end 
       return count < 2
     end 
+    
 
+    #PRIVATE METHODS 
     private
 
     def create_rooms
@@ -105,11 +121,23 @@ module HotelSystem
       return rooms
     end 
 
+    #used for fine_reservations_for_room and list_reservations_with_date 
     def is_between_two_dates(range_wanted, date)
       return date >= range_wanted[0] && date <= range_wanted[1];
     end
 
-   
+    def next_reservation_number  
+      max = 0 
+      @rooms.each do |room|
+        room.reservations.each do |reservation| 
+          if max < reservation.reservation_number
+            max = reservation.reservation_number
+          end 
+
+        end
+      end
+      return max + 1 
+    end 
 
   end 
 end 

@@ -17,21 +17,9 @@ module HotelSystem
     end
 
     def list_reservations 
-      res = ap @reservations
-      return res
-    end 
-    #this method only looks at the very last reservation 
-    def is_room_available?(start_date, end_date)
-      return is_between_two_dates([start_date, end_date], @reservations.last.end_date) #&& is_between_two_dates([start_date, end_date], @reservations.last.start_date)   
+      return @reservations
       
     end 
-
-    private 
-
-    def is_between_two_dates(range_wanted, date)
-      return date >= range_wanted[0] && date <= range_wanted[1];
-    end 
-  
   end 
 
 end 

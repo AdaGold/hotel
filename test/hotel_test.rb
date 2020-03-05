@@ -1,12 +1,9 @@
 
-require 'date'
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
 
-require_relative '../lib/hotel'
-require_relative '../lib/room'
-require_relative '../lib/reservation'
+
+require_relative 'test_helper'
+
+
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
@@ -28,11 +25,8 @@ end
 describe "other instance methods" do 
 
   it "finds a room " do 
-  
     hotel = HotelSystem::Hotel.new
-
     room = hotel.find_room(1)
-
     room.must_be_instance_of HotelSystem::Room
 
   end 
@@ -81,7 +75,7 @@ describe "other instance methods" do
     res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
     res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
 
-    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02)) 
 
     hotel = HotelSystem::Hotel.new
     hotel.rooms[1].add_reservation(res2)
@@ -161,5 +155,48 @@ describe "other instance methods" do
     answer.must_equal false
 
   end
+
+  it "must raise argument error if there is an invalid reservation" do
+    
+    hotel = HotelSystem::Hotel.new
+
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 06), Date.new(2020, 03,29))
+    hotel.rooms[1].add_reservation(res3)
+    #make_reservation(room_number, start_date, end_date)
+
+    expect{hotel.make_reservation(2, Date.new(2020, 03, 07), Date.new(2020, 04, 1))}.must_raise ArgumentError
+  end 
+
+  it "must make a reservation inside of specified room" do 
+    hotel = HotelSystem::Hotel.new
+
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 06), Date.new(2020, 03, 18))
+    hotel.rooms[1].add_reservation(res3)
+    
+
+    hotel.make_reservation(2, Date.new(2020, 03, 18), Date.new(2020, 04, 01))
+
+    hotel.rooms[1].reservations.length.must_equal 2 
+  end 
+
+  it "finds the total cost of a reservation" do 
+
+    res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
+
+    hotel = HotelSystem::Hotel.new
+    hotel.rooms[1].add_reservation(res2)
+    hotel.rooms[1].add_reservation(res1)
+    hotel.rooms[10].add_reservation(res3)
+    
+
+    cost = hotel.total_cost(1)
+
+    
+    cost.must_equal 600
+
+  end 
 
 end 

@@ -1,9 +1,6 @@
-require 'date'
-require 'minitest/autorun'
-require 'minitest/reporters'
-require 'minitest/skip_dsl'
 
-require_relative '../lib/reservation'
+require_relative 'test_helper'
+
 
 
 describe "reservation" do
