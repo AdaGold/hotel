@@ -7,7 +7,11 @@ module HotelSystem
     attr_accessor :rooms
    
     def initialize
-      @rooms = create_rooms
+      @rooms = [] #create_rooms
+      20.times do |i|
+        @rooms << HotelSystem::Room.new(i+1, 200)
+      end 
+      
     end 
     
     def find_reservations_with_room_number(room_number, start_date, end_date)
@@ -112,14 +116,6 @@ module HotelSystem
 
     #PRIVATE METHODS 
     private
-
-    def create_rooms
-      rooms = []
-      20.times do |i|
-        rooms << HotelSystem::Room.new(i+1, 200)
-      end 
-      return rooms
-    end 
 
     #used for fine_reservations_for_room and list_reservations_with_date 
     def is_between_two_dates(range_wanted, date)
