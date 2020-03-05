@@ -19,6 +19,11 @@ describe 'CSV Record Class - Load All' do
     expect {HotelManager::CsvRecord.load_all}.must_raise ArgumentError
   end
 
+  it "raises an error if invoked directly (without subclassing)" do
+    full_path = "#{TEST_DATA_DIR}/reservations.csv"
+    expect {HotelManager::CsvRecord.load_all(full_path: full_path)}.must_raise NotImplementedError
+  end
+
 end
 
 describe "blah" do
@@ -31,7 +36,7 @@ describe "blah" do
     end
 
     it "raises an error if invoked directly (without subclassing)" do
-      full_path = "#{TEST_DATA_DIR}/testrecords.csv"
+      full_path = "#{TEST_DATA_DIR}/reservations.csv"
       expect {
         HotelManager::CsvRecord.load_all(full_path: full_path)
       }.must_raise NotImplementedError

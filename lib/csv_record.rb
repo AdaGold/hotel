@@ -29,6 +29,10 @@ module HotelManager
       ).map { |record| from_csv(record) }
     end
 
+    def self.from_csv(record)
+      raise NotImplementedError, 'Implement me in a child class!'
+    end
+
     def self.build_path(directory, file_name)
       raise ArgumentError, "Either full_path or directory is required" if directory.nil?
       
