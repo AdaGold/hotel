@@ -150,7 +150,7 @@ Remember: Your job is to only build the classes that store information and handl
 #### User Stories
 
 - As a user of the hotel system...
-  - I can view a list of rooms that are not reserved for a given date range, so that I can see all available rooms for that day
+  - I can view a list of rooms that are not reserved for a given date range, so that I can see all available rooms for those days
   - I can make a reservation of a room for a given date range, and that room will not be part of any other reservation overlapping that date range
   - I want an exception raised if I try to reserve a room during a date range when all rooms are reserved, so that I cannot make two reservations for the same room that overlap by date
 
