@@ -73,9 +73,6 @@ describe "Reservation Block Class" do
 end
 
 # Edge case - date entered is > 31 days per month or leap year
-# raise argument error if start and end date are the same
-
-# Able to reserve a hotel block (group of rooms for a specific group of customers for a set period of time)
 
 
 

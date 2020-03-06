@@ -39,13 +39,7 @@ module HotelManager
 				room_ids: chosen_rooms
 			)
 
-			# add_reservation(new_reservation)
-			add_reservation(new_reservation)
-		end
-
-		# Add reservation to instance variables
-		def add_reservation(reservation)
-			@reservation_blocks << reservation
+			@reservation_blocks << new_reservation
 		end
 
 		def find_room(id)
@@ -59,7 +53,6 @@ module HotelManager
 
 		# List out all reservations by room and date range
 		def search_by_room_date(room, first_date, second_date)
-			search_date_validation(first_date,second_date)
 			raise ArgumentError, "Room #{room} does not exist" if @rooms.last.id < room
 
 			reservation_room_date = []
@@ -86,7 +79,6 @@ module HotelManager
 		end
 
 		def list_room_by_range(first_date, second_date) 
-			search_date_validation(first_date,second_date)
 
 			available_rooms = @rooms.dup
 
@@ -101,20 +93,11 @@ module HotelManager
 			return reservation_found?(available_rooms, "rooms")
 		end
 
-		# GET RID OF -- return available rooms as []
+		# Raise argument error if no items found
 		def reservation_found? tracker, type
-			if tracker.empty?
-				raise ArgumentError, "No #{type} available in date range."
-			end
-			
-			return tracker
-		end
+			raise ArgumentError, "No #{type} available in date range." if tracker.empty?
 
-		# potentially move to own class to be inherited?
-		def search_date_validation(first_date, second_date)
-			if first_date.class != Date || second_date.class != Date 
-				raise ArgumentError, "One date (#{first_date} or #{second_date}) is not valid"
-			end 
+			return tracker
 		end
 
 	end
