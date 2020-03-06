@@ -22,6 +22,85 @@ describe "Reservation Manager Class" do
 	end
 end
 
+describe "Reservation Manager Class - Allow Booking" do
+	before do 
+		@sample = HotelManager::ReservationManager.new()
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
+	end
+
+	it "allow booking overlapping last day" do
+		@sample.save_reservation(Date.new(2020,3,15),Date.new(2020,3,20),num_of_rooms: 5)
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks.length).must_equal 2
+	end
+
+	it "allow individual booking on same range" do
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15))
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks.length).must_equal 2
+	end
+
+	it "allow booking within range" do
+		@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,14))
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks.length).must_equal 2
+	end
+
+	it "allow booking outside of range" do
+		@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,3,18))
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks.length).must_equal 2
+	end
+
+	it "allow booking before range" do
+		@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,3,5))
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks.length).must_equal 2
+	end
+
+	it "allow booking after range" do
+		@sample.save_reservation(Date.new(2020,3,8),Date.new(2020,3,20))
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks.length).must_equal 2
+	end
+end
+
+describe "Reservation Manager Class - Double Booking" do
+	before do 
+		@sample = HotelManager::ReservationManager.new()
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
+		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
+	end
+
+	it "raise error - individual overbooking same range" do
+		expect{@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15))}.must_raise ArgumentError
+	end
+
+	it "raise error - overbooking within range" do
+		expect{@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,14),num_of_rooms: 5)}.must_raise ArgumentError
+	end
+
+	it "raise error - overbooking outside range" do
+		expect{@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,4,1),num_of_rooms: 5)}.must_raise ArgumentError
+	end
+
+	it "raise error - overbooking before range" do
+		expect{@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,3,5),num_of_rooms: 5)}.must_raise ArgumentError
+	end
+
+	it "raise error - overbooking after range" do
+		expect{@sample.save_reservation(Date.new(2020,3,8),Date.new(2020,3,20),num_of_rooms: 5)}.must_raise ArgumentError
+	end
+
+	it "allow booking overlapping last day" do
+		@sample.save_reservation(Date.new(2020,3,15),Date.new(2020,3,20),num_of_rooms: 5)
+		expect(@sample.reservation_blocks[4]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks.length).must_equal 5
+	end
+end
+
 describe "Reservation Manager Class - Search Functions" do
 	before do
 		@sample = HotelManager::ReservationManager.new()
@@ -148,84 +227,7 @@ describe "Reservation Manager Class - Create New Reservation" do
 	end
 end
 
-describe "Reservation Manager Class - Double Booking" do
-	before do 
-		@sample = HotelManager::ReservationManager.new()
-		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
-		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
-		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
-		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
-	end
 
-	it "raise error - individual overbooking same range" do
-		expect{@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15))}.must_raise ArgumentError
-	end
-
-	it "raise error - overbooking within range" do
-		expect{@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,14),num_of_rooms: 5)}.must_raise ArgumentError
-	end
-
-	it "raise error - overbooking outside range" do
-		expect{@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,4,1),num_of_rooms: 5)}.must_raise ArgumentError
-	end
-
-	it "raise error - overbooking before range" do
-		expect{@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,3,5),num_of_rooms: 5)}.must_raise ArgumentError
-	end
-
-	it "raise error - overbooking after range" do
-		expect{@sample.save_reservation(Date.new(2020,3,8),Date.new(2020,3,20),num_of_rooms: 5)}.must_raise ArgumentError
-	end
-
-	it "allow booking overlapping last day" do
-		@sample.save_reservation(Date.new(2020,3,15),Date.new(2020,3,20),num_of_rooms: 5)
-		expect(@sample.reservation_blocks[4]).must_be_kind_of HotelManager::ReservationBlock
-		expect(@sample.reservation_blocks.length).must_equal 5
-	end
-end
-
-describe "Reservation Manager Class - Allow Booking" do
-	before do 
-		@sample = HotelManager::ReservationManager.new()
-		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15),num_of_rooms:5)
-	end
-
-	it "allow booking overlapping last day" do
-		@sample.save_reservation(Date.new(2020,3,15),Date.new(2020,3,20),num_of_rooms: 5)
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
-		expect(@sample.reservation_blocks.length).must_equal 2
-	end
-
-	it "allow individual booking on same range" do
-		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
-		expect(@sample.reservation_blocks.length).must_equal 2
-	end
-
-	it "allow booking within range" do
-		@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,14))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
-		expect(@sample.reservation_blocks.length).must_equal 2
-	end
-
-	it "allow booking outside of range" do
-		@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,3,18))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
-		expect(@sample.reservation_blocks.length).must_equal 2
-	end
-
-	it "allow booking before range" do
-		@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,3,5))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
-		expect(@sample.reservation_blocks.length).must_equal 2
-	end
-
-	it "allow booking after range" do
-		@sample.save_reservation(Date.new(2020,3,8),Date.new(2020,3,20))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
-		expect(@sample.reservation_blocks.length).must_equal 2
-	end
-end
 
 # List of available rooms will not include the rooms in block reservation
 # Correctly list out whether a given block has any rooms available?
