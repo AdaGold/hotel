@@ -30,10 +30,10 @@ module HotelManager
 
 		# Check input validation
 		def validate_date
-			if @start_date.class != Date || @end_date.class != Date
-				raise ArgumentError, "Date #{@start_date} or #{@end_date} not valid"
+			if !@start_date.is_a?(Date) || !@end_date.is_a?(Date)
+				raise ArgumentError, "Expected #{@start_date} and #{@end_date} to be date"
 			elsif @start_date >= @end_date 
-				raise ArgumentError, "#{@start_date} is before #{@end_date} "
+				raise ArgumentError, "#{@start_date} must be before #{@end_date}"
 			end
 		end
 

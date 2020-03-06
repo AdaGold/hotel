@@ -27,10 +27,10 @@ module HotelManager
 			# change list_room_by_range to return argument rather than string
 			available_rooms = list_room_by_range(first_date,second_date)
 			
-			if available_rooms.is_a? Array
-				chosen_rooms = available_rooms.select.with_index do |room, index|
-					room.id if index < num_of_rooms
-				end
+			if available_rooms.is_a? Array # Change to check !.empty?
+				# add in error handling if available rooms < num_of_rooms
+				# get rid of if check after implmenting the above
+				chosen_rooms = available_rooms.take(num_of_rooms)
 			else
 				raise ArgumentError, "Something's not right here..."
 			end
@@ -148,6 +148,7 @@ module HotelManager
 			return reservation_found?(available_rooms, "rooms")
 		end
 
+		# GET RID OF -- return available rooms as []
 		def reservation_found? tracker, type
 			tracker.empty? ? "No #{type} available in date range." : tracker
 		end
