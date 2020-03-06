@@ -22,61 +22,19 @@ describe "Reservation Manager Class" do
 	end
 end
 
-describe "Reservation Manager Class - Manipulation" do
+describe "Reservation Manager Class - Search Functions" do
 	before do
-		@res_one_data = {
-			id: 1,
-			customer_id: 1, 
-			start_date: Date.new(2020,3,2),
-			end_date: Date.new(2020,3,5),
-			room_cost: 200,
-			room_ids: [1]
-		}
-		@res_two_data = {
-			id: 2,
-			customer_id: 2, 
-			start_date: Date.new(2020,3,15),
-			end_date: Date.new(2020,3,24),
-			room_cost: 200,
-			room_ids: [1]
-		}
-		@rooms = [7, 8, 9]
-		@res_block_data = {
-			id: 3,
-			customer_id: 3, 
-			start_date: Date.new(2020,3,2),
-			end_date: Date.new(2020,3,18),
-			room_cost: 100,
-			room_ids: @rooms
-		} 
-		
-		@res_one = HotelManager::ReservationBlock.new(@res_one_data)
-		@res_two = HotelManager::ReservationBlock.new(@res_two_data)
-		
-		@res_block = HotelManager::ReservationBlock.new(@res_block_data)
-		@sample_two = HotelManager::ReservationManager.new()
-
-		@sample_two.add_reservation(@res_one) 
-		@sample_two.add_reservation(@res_two)
-		@sample_two.add_reservation(@res_block)
+		@sample = HotelManager::ReservationManager.new()
+		@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,5))
+		@sample.save_reservation(Date.new(2020,3,15),Date.new(2020,3,24))
+		@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,18),num_of_rooms:3)
 	end
 
 	describe "test search by room AND date range" do
 		it "able to list reservation by room/date range" do
-			@rooms = [1, 2, 3]
-			@res_block_data = {
-				id: 4,
-				customer_id: 4, 
-				start_date: Date.new(2020,3,6),
-				end_date: Date.new(2020,3,12),
-				room_cost: 100,
-				room_ids: @rooms
-			} 
+			@sample.save_reservation(Date.new(2020,3,6),Date.new(2020,3,12),num_of_rooms:3,room_cost:100)
 
-			@res_block = HotelManager::ReservationBlock.new(@res_block_data)
-			@sample_two.add_reservation(@res_block)
-
-			@search_result = @sample_two.search_by_room_date(1, Date.new(2020,3,1), Date.new(2020,3,10))
+			@search_result = @sample.search_by_room_date(1, Date.new(2020,3,1), Date.new(2020,3,10))
 			expect(@search_result).must_be_kind_of Array
 			expect(@search_result[1]).must_be_kind_of HotelManager::ReservationBlock
 			expect(@search_result[0].id).must_equal 1
@@ -84,18 +42,18 @@ describe "Reservation Manager Class - Manipulation" do
 		end
 
 		it "notifies user if no room by room/date range" do
-			expect{@sample_two.search_by_room_date(1, Date.new(2020,4,1), Date.new(2020,4,10))}.must_raise ArgumentError
+			expect{@sample.search_by_room_date(1, Date.new(2020,4,1), Date.new(2020,4,10))}.must_raise ArgumentError
 		end
 
 		it "raise argument error if invalid room or date range" do
-			expect{@sample_two.search_by_room_date(30, Date.new(2020,3,1), Date.new(2020,3,10))}.must_raise ArgumentError
-			expect{@sample_two.search_by_room_date(1, "Date.new(2020,3,1)", Date.new(2020,3,10))}.must_raise ArgumentError
+			expect{@sample.search_by_room_date(30, Date.new(2020,3,1), Date.new(2020,3,10))}.must_raise ArgumentError
+			expect{@sample.search_by_room_date(1, "Date.new(2020,3,1)", Date.new(2020,3,10))}.must_raise ArgumentError
 		end
 	end
 
 	describe "test search by date" do
 		it "able to list reservation by specific date" do
-			@search_result = @sample_two.search_by_date(Date.new(2020,3,17))
+			@search_result = @sample.search_by_date(Date.new(2020,3,17))
 			expect(@search_result).must_be_kind_of Array
 			expect(@search_result[0]).must_be_kind_of HotelManager::ReservationBlock
 			expect(@search_result[0].id).must_equal 2
@@ -103,31 +61,36 @@ describe "Reservation Manager Class - Manipulation" do
 		end
 
 		it "raise argument error if no reservation_blocks on that date" do
-			expect{@sample_two.search_by_date(Date.new(2020,4,1))}.must_raise ArgumentError
+			expect{@sample.search_by_date(Date.new(2020,4,1))}.must_raise ArgumentError
 		end
 
 		it "raise argument error if invalid date entered" do
-			expect{@sample_two.search_by_date("Date.new(2020,3,1)")}.must_raise ArgumentError
+			expect{@sample.search_by_date("Date.new(2020,3,1)")}.must_raise ArgumentError
 		end
 	end
 
 	# see list of rooms available for a given date range 
 	describe "list rooms available by date range" do
 		it "able to list out all available rooms by date range" do
-			@search_result = @sample_two.list_room_by_range(Date.new(2020,4,1),Date.new(2020,4,7))
+			@search_result = @sample.list_room_by_range(Date.new(2020,4,1),Date.new(2020,4,7))
 			expect(@search_result).must_be_kind_of Array
 			expect(@search_result.length).must_equal 20
 		end 
 
 		it "able to list out all available rooms by date range" do
-			@search_result = @sample_two.list_room_by_range(Date.new(2020,3,1),Date.new(2020,3,5))
+			@search_result = @sample.list_room_by_range(Date.new(2020,3,1),Date.new(2020,3,5))
 			expect(@search_result).must_be_kind_of Array
 			expect(@search_result[0]).must_be_kind_of HotelManager::Room
 			expect(@search_result.length).must_equal 16
 		end 
 
 		it "notify user if no rooms are available" do
-			#complete later, need to modify hotel room # to by dynamic (user input)
+			@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,18),num_of_rooms:5)
+			@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,18),num_of_rooms:5)
+			@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,18),num_of_rooms:5)
+			@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,18))
+			
+			expect{@sample.list_room_by_range(Date.new(2020,3,1),Date.new(2020,3,5))}.must_raise ArgumentError
 		end
 	end
 end
