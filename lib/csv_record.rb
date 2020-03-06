@@ -1,3 +1,7 @@
+################################
+## ADAPTED FROM OO-RIDE-SHARE ##
+################################
+
 require 'csv'
 require 'pry'
 
@@ -29,8 +33,6 @@ module HotelManager
         raise ArgumentError, 'ID cannot be blank or less than one.'
       end
     end
-
-    # private
     
     def self.from_csv(record)
       raise NotImplementedError, 'Implement me in a child class!'
