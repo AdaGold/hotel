@@ -16,5 +16,5 @@ require "pry"
 # require_relative your lib files here!
 require_relative '../lib/room.rb'
 require_relative '../lib/reservation_manager.rb'
-require_relative '../lib/reservation_block.rb'
+require_relative '../lib/reservation.rb'
 require_relative '../lib/csv_record.rb'

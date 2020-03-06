@@ -30,37 +30,37 @@ describe "Reservation Manager Class - Allow Booking" do
 
 	it "allow booking overlapping last day" do
 		@sample.save_reservation(Date.new(2020,3,15),Date.new(2020,3,20),num_of_rooms: 5)
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::Reservation
 		expect(@sample.reservation_blocks.length).must_equal 2
 	end
 
 	it "allow individual booking on same range" do
 		@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,15))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::Reservation
 		expect(@sample.reservation_blocks.length).must_equal 2
 	end
 
 	it "allow booking within range" do
 		@sample.save_reservation(Date.new(2020,3,2),Date.new(2020,3,14))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::Reservation
 		expect(@sample.reservation_blocks.length).must_equal 2
 	end
 
 	it "allow booking outside of range" do
 		@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,3,18))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::Reservation
 		expect(@sample.reservation_blocks.length).must_equal 2
 	end
 
 	it "allow booking before range" do
 		@sample.save_reservation(Date.new(2020,2,25),Date.new(2020,3,5))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::Reservation
 		expect(@sample.reservation_blocks.length).must_equal 2
 	end
 
 	it "allow booking after range" do
 		@sample.save_reservation(Date.new(2020,3,8),Date.new(2020,3,20))
-		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks[1]).must_be_kind_of HotelManager::Reservation
 		expect(@sample.reservation_blocks.length).must_equal 2
 	end
 end
@@ -96,7 +96,7 @@ describe "Reservation Manager Class - Double Booking" do
 
 	it "allow booking overlapping last day" do
 		@sample.save_reservation(Date.new(2020,3,15),Date.new(2020,3,20),num_of_rooms: 5)
-		expect(@sample.reservation_blocks[4]).must_be_kind_of HotelManager::ReservationBlock
+		expect(@sample.reservation_blocks[4]).must_be_kind_of HotelManager::Reservation
 		expect(@sample.reservation_blocks.length).must_equal 5
 	end
 end
@@ -115,7 +115,7 @@ describe "Reservation Manager Class - Search Functions" do
 
 			@search_result = @sample.search_by_room_date(1, Date.new(2020,3,1), Date.new(2020,3,10))
 			expect(@search_result).must_be_kind_of Array
-			expect(@search_result[1]).must_be_kind_of HotelManager::ReservationBlock
+			expect(@search_result[1]).must_be_kind_of HotelManager::Reservation
 			expect(@search_result[0].id).must_equal 1
 			expect(@search_result[1].id).must_equal 4
 		end
@@ -134,7 +134,7 @@ describe "Reservation Manager Class - Search Functions" do
 		it "able to list reservation by specific date" do
 			@search_result = @sample.search_by_date(Date.new(2020,3,17))
 			expect(@search_result).must_be_kind_of Array
-			expect(@search_result[0]).must_be_kind_of HotelManager::ReservationBlock
+			expect(@search_result[0]).must_be_kind_of HotelManager::Reservation
 			expect(@search_result[0].id).must_equal 2
 			expect(@search_result[1].id).must_equal 3
 		end

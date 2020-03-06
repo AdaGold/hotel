@@ -4,7 +4,7 @@ require 'pry'
 require_relative 'room'
 
 module HotelManager
-	class ReservationBlock
+	class Reservation
 
 		attr_reader :id, :customer_id, :start_date, :end_date, :room_cost, :rooms, :room_ids
 

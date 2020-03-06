@@ -18,26 +18,26 @@ describe "Reservation Block Class" do
 			rooms: @rooms
 		}
 		
-		@reservation = HotelManager::ReservationBlock.new(@reservation_data)
+		@reservation = HotelManager::Reservation.new(@reservation_data)
 	end
 
 	describe "Reservation Block Class - Attributes" do
 
 		it "is an instance of Reservation Block" do
-			expect(@reservation).must_be_kind_of HotelManager::ReservationBlock
+			expect(@reservation).must_be_kind_of HotelManager::Reservation
 			expect(@reservation.rooms).must_be_kind_of Array
 		end
 
 		it "raises argument if block only has one room" do
 			@rooms = nil
 			@reservation_data[:rooms] = @rooms
-			expect{HotelManager::ReservationBlock.new(@reservation_data)}.must_raise ArgumentError
+			expect{HotelManager::Reservation.new(@reservation_data)}.must_raise ArgumentError
 		end
 
 		it "raises argument if block has more than 5 rooms" do
 			@rooms += [HotelManager::Room.new(id: 6)]
 			@reservation_data[:rooms] = @rooms
-			expect{HotelManager::ReservationBlock.new(@reservation_data)}.must_raise ArgumentError
+			expect{HotelManager::Reservation.new(@reservation_data)}.must_raise ArgumentError
 		end
 
 		it "calculates total cost correctly" do
@@ -55,19 +55,19 @@ describe "Reservation Block Class" do
 
 		it "raises argument error if start is not date class" do
 			@reservation_data[:start_date] = "Janurary 5th, 2020"
-			expect{HotelManager::ReservationBlock.new(@reservation_data)}.must_raise ArgumentError
+			expect{HotelManager::Reservation.new(@reservation_data)}.must_raise ArgumentError
 		end
 
 		it "raises argument error if end before start date" do
 			@reservation_data[:start_date] = Date.new(2020,3,5)
 			@reservation_data[:end_date] = Date.new(2020,3,2)
-			expect{HotelManager::ReservationBlock.new(@reservation_data)}.must_raise ArgumentError
+			expect{HotelManager::Reservation.new(@reservation_data)}.must_raise ArgumentError
 		end
 
 		it "raises argument error if start and end date are the same" do
 			@reservation_data[:start_date] = Date.new(2020,3,5)
 			@reservation_data[:end_date] = Date.new(2020,3,5)
-			expect{HotelManager::ReservationBlock.new(@reservation_data)}.must_raise ArgumentError
+			expect{HotelManager::Reservation.new(@reservation_data)}.must_raise ArgumentError
 		end
 	end	
 end

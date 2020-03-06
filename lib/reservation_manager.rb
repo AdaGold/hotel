@@ -1,7 +1,7 @@
 require 'pry'
 require 'date'
 
-require_relative 'reservation_block'
+require_relative 'reservation'
 require_relative 'room'
 
 module HotelManager
@@ -30,7 +30,7 @@ module HotelManager
 
 			chosen_rooms.map!{|room| room.id}
 
-			new_reservation = HotelManager::ReservationBlock.new(
+			new_reservation = HotelManager::Reservation.new(
 				id: @reservation_blocks.length + 1, 
 				customer_id: customer_id, 
 				start_date: first_date, 
