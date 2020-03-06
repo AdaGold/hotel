@@ -5,16 +5,16 @@ require_relative 'test_helper'
 
 describe "reservation" do
   it "initializes a reservation correctly" do 
-    reservation = HotelSystem::Reservation.new(500, Date.new(2020, 03, 05), Date.new(2020, 03, 06))
+    reservation = HotelSystem::Reservation.new(500, Date.new(2020, 03, 18), Date.new(2020, 03, 20))
 
     reservation.must_be_instance_of HotelSystem::Reservation
   
   end 
 
   it "total cost must be correct " do 
-    reservation = HotelSystem::Reservation.new(500, Date.new(2020, 03, 10), Date.new(2020, 03, 12))
+    reservation = HotelSystem::Reservation.new(500, Date.new(2020, 03, 18), Date.new(2020, 03, 21))
     cost = reservation.get_total_cost
-    cost.must_equal 400
+    cost.must_equal 600
   
   end 
 

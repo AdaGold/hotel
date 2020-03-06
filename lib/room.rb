@@ -9,7 +9,7 @@ module HotelSystem
     def initialize(room_number, cost_per_night, reservations=[])
       @room_number = room_number
       @cost_per_night = cost_per_night
-      @reservations = reservations
+      @reservations = []
     end 
 
     def add_reservation(reservation)

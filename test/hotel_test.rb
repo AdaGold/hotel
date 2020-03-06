@@ -201,32 +201,61 @@ describe "other instance methods" do
 
   it " can make a reservation the same day one ends" do 
     #make_reservation(room_number, start_date, end_date)
-    res1 = HotelSystem::Reservation.new(1, Date.new(2020,03,05), Date.new(2020,03,06))
-    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+    res1 = HotelSystem::Reservation.new(1, Date.new(2020,03, 10), Date.new(2020,03,12))
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 18), Date.new(2020, 03,20)) 
 
-    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 11), Date.new(2020,04,02))
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 20), Date.new(2020,04,02))
 
     hotel = HotelSystem::Hotel.new
     hotel.rooms[1].add_reservation(res2)
     hotel.rooms[1].add_reservation(res1)
-    hotel.make_reservation(2, Date.new(2020, 03, 11), Date.new(2020, 04, 02))
+    hotel.make_reservation(2, Date.new(2020, 03, 12), Date.new(2020, 03, 15))
 
     hotel.rooms[1].reservations.length.must_equal 3
 
 
   end 
 
-  it " can make a reservation the same day one ends" do 
-    #make_reservation(room_number, start_date, end_date)
-    res1 = HotelSystem::Reservation.new(1, Date.new(2020,03,05), Date.new(2020,03,06))
-    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+  it " can raise argument error if days are overlapped" do 
+    
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 18), Date.new(2020, 03,20)) 
+
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 20), Date.new(2020,04,02))
+    
+
+    #should raise argument error
+    hotel = HotelSystem::Hotel.new
+    hotel.rooms[1].add_reservation(res2)
+    hotel.rooms[1].add_reservation(res3)
+    expect{hotel.make_reservation(2, Date.new(2020, 03, 10), Date.new(2020, 04, 01))}.must_raise ArgumentError
+
+  end 
+
+  it "can return the right answer for no_shared_days?" do 
+    res1 = HotelSystem::Reservation.new(1, Date.new(2020,03,10), Date.new(2020,03,12))
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 14), Date.new(2020, 03,17)) 
+
+    #should raise argument error
+    hotel = HotelSystem::Hotel.new
+    hotel.rooms[1].add_reservation(res2)
+    #hotel.rooms[1].add_reservation(res1)
+    ans = hotel.no_shared_days?(Date.new(2020, 03, 25), Date.new(2020, 03, 30), res2)
+    ans.must_equal true 
+
+
+  end 
+
+  it "can return the right answer for no_shared_days?" do 
+    res1 = HotelSystem::Reservation.new(1, Date.new(2020,03,9), Date.new(2020,03,12))
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 14), Date.new(2020, 03,17)) 
 
     #should raise argument error
     hotel = HotelSystem::Hotel.new
     hotel.rooms[1].add_reservation(res2)
     hotel.rooms[1].add_reservation(res1)
-    expect{hotel.make_reservation(2, Date.new(2020, 03, 05), Date.new(2020, 04, 02))}.must_raise ArgumentError
+    ans = hotel.no_shared_days?(Date.new(2020, 03, 10), Date.new(2020, 03, 30), res2)
+    ans.must_equal false 
+
 
   end 
-
 end 
