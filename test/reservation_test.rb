@@ -1,6 +1,6 @@
 require_relative 'test_helper'
 
-describe "Reservation Class" do
+xdescribe "Reservation Class" do
 	before do
 		@reservation_data = {
 			id: 1,

@@ -38,9 +38,30 @@ module HotelManager
 			end
 		end
 
-		# Calculate cost of reservation (exclusive of last date)
+		# Check input validation
+		def validate_date
+			if !@start_date.is_a?(Date) || !@end_date.is_a?(Date)
+				raise ArgumentError, "Expected #{@start_date} and #{@end_date} to be date"
+			elsif @start_date >= @end_date 
+				raise ArgumentError, "#{@start_date} must be before #{@end_date}"
+			end
+		end
+
+		# Calculate cost of reservation, exclusive of last date
 		def total_cost
-			super * @rooms.length
+			@room_cost * (@end_date - @start_date - 1) * @rooms.length
+		end
+		
+		# Checks if reservation exists on a specific date 
+		def check_date(search_date)
+			(search_date >= @start_date) && (search_date <= @end_date)
+		end
+
+		# Checks whether reservation is within a given date range 
+		def check_reservation_range(date_one, date_two)
+			first_date = date_one < date_two ? date_one : date_two
+			second_date = date_one < date_two ? date_two : date_one
+			first_date < @end_date && second_date > @start_date
 		end
 
 	end
