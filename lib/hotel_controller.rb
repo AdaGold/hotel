@@ -17,11 +17,11 @@ module Hotel
     end
 # access the list of reservations for a specified room and a given date range
     def list_reservations_for_room(room, start_date, end_date)
-      list = []
+      list = [] # returns an array of reservations that falls within the date range
       @reservations.each do |reservation|
         if room == reservation.room_number
           if reservation.date_range.overlap?(start_date, end_date)
-           list.add(reservation)
+           list << reservation
           end
         end
       end
@@ -35,7 +35,9 @@ module Hotel
 
       # check for available rooms
       if available.length > 0
-        return Reservation.new(start_date, end_date, available[0])
+        newly_created_reservation = Reservation.new(start_date, end_date, available[0])
+        reservations << newly_created_reservation
+        return newly_created_reservation
       else
         raise ArgumentError, "No available rooms."
       end
@@ -47,7 +49,7 @@ module Hotel
       list = []
       @reservations.each do |reservation|
         if reservation.date_range.include?(date)
-          list.add(reservation)
+          list << reservation
         end
       end
       return list
@@ -58,11 +60,11 @@ module Hotel
       # start_date and end_date should be instances of class Date
       available_rooms = []
       # iterate through the rooms to find available room 
-      @rooms.each_with_index do |room, index|
-        reservations = list_reservations_for_room(start_date, end_date, index + 1)
-      
+      @rooms.each do |room|
+        reservations = list_reservations_for_room(room, start_date, end_date)
+  
         if(reservations.length() == 0) # rooms that are empty
-          available_rooms << index + 1
+          available_rooms << room
         end
       end
       return available_rooms

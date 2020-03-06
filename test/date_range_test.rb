@@ -12,7 +12,7 @@ describe Hotel::DateRange do
       expect(range.end_date).must_equal end_date
     end
 
-    it "is an an error for negative-lenght ranges" do
+    it "is an an error for negative-length ranges" do
       #arrange
       start_date = Date.new(2017, 01, 01)
       end_date = start_date  - 3
@@ -26,6 +26,20 @@ describe Hotel::DateRange do
       #arrange
       start_date = Date.new(2017, 01, 01)
       end_date = start_date  
+      #Act #assert
+      expect {Hotel::DateRange.new(start_date, end_date)}.must_raise ArgumentError
+    end
+    it "is an invalid date range if start date is greater than end date" do
+      #arrange
+      start_date = Date.new(2017, 01, 04)
+      end_date = Date.new(2017, 01, 01)  
+      #Act #assert
+      expect {Hotel::DateRange.new(start_date, end_date)}.must_raise ArgumentError
+    end
+    it "is invalid if start date is same as end date" do
+      #arrange
+      start_date = Date.new(2017, 01, 01)
+      end_date = Date.new(2017, 01, 01)  
       #Act #assert
       expect {Hotel::DateRange.new(start_date, end_date)}.must_raise ArgumentError
     end
@@ -47,6 +61,19 @@ describe Hotel::DateRange do
 
       expect(@range.overlap?(start_date, end_date)).must_equal true
     end
+     
+    it "return true if date selected overlaps with the date_range" do
+      #arrange
+      start_date = Date.new(2017, 01, 01)
+      end_date = Date.new(2017, 01, 05)
+      test_start_date = Date.new(2017, 01, 01)
+      test_end_date = Date.new(2017, 01, 05)
+      #act
+      @range = Hotel::DateRange.new(start_date, end_date)
+      #assert
+      expect(@range.overlap?(test_start_date, test_end_date)).must_equal true
+    end
+   
 
     it "returns true for a contained range" do
       #arrange

@@ -8,6 +8,7 @@ module Hotel
       @room_number = room_number
       @start_date = start_date
       @end_date = end_date
+    
     end
     
   # get the total cost for a given reservation
