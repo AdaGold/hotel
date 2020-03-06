@@ -38,9 +38,9 @@ module Hotel
       # get room_num, get start_date and end_date as inputs and return reservations
     end
 
-    # def get reservations for specific date
-    #   # for that one specific date get all the reservations
-    # end
+     def get_reservations(date)
+      return reservation.select {|reservation| reservation.date_range.with_in_range(date)} 
+    end
 
   end
 end
@@ -57,7 +57,9 @@ end
 
 # I can access the list of all of the rooms in the hotel (done)
 # I access the list of reservations for a specified room and a given date range (change the date using parse method)
+
 # I can access the list of reservations for a specific date, so that I can track reservations by date
+
 # I can get the total cost for a given reservation
 
 # I want exception raised when an invalid date range is provided, so that I can't make a reservation for an invalid date range
