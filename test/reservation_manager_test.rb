@@ -226,14 +226,3 @@ describe "Reservation Manager Class - Create New Reservation" do
 		expect{@sample.save_reservation(Date.new(2020,3,1),Date.new(2020,3,5),num_of_rooms:2)}.must_raise ArgumentError
 	end
 end
-
-
-
-# List of available rooms will not include the rooms in block reservation
-# Correctly list out whether a given block has any rooms available?
-# Able to reserve a specific room from a hotel block, but only for the full duration of the block (individual reservation_blocks still work?)
-# List of reservation by date will list out both individual and block reservation_blocks
-# Check to make sure that when a block is reserved, the indivudal room reservation dates will also be there
-# Confirm that all availabilty checking logic from Wave 2 also respects room blocks
-
-# 2 or more days overlapping (of all dates in the range)

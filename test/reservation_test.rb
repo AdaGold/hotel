@@ -73,6 +73,7 @@ describe "Reservation Block Class" do
 end
 
 # Edge case - date entered is > 31 days per month or leap year
+# Add in test for if a a block is reserved, where only part of the rooms are available
 
 
 

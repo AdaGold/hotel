@@ -79,7 +79,6 @@ module HotelManager
 		end
 
 		def list_room_by_range(first_date, second_date) 
-
 			available_rooms = @rooms.dup
 
 			@reservation_blocks.each do |reservation_block|
