@@ -3,7 +3,7 @@ module Hotel
     attr_accessor :start_date, :end_date
 
     def initialize(start_date, end_date)
-      # if start date is on or after end Date, raise exception
+      # if start date is on or after end Date, raise an exception
       if start_date >= end_date
         raise ArgumentError, " Invalid Date Range."
       

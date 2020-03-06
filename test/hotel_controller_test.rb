@@ -16,31 +16,29 @@ describe Hotel::HotelController do
      describe "list_reservations_for_room" do
       it "returns a list of reservations that fall with in the given date range for a specific room." do
 
-        # Arrange : add a new Reservation for room #2 from March 1, March 5
+        # arrange : add a new Reservation for room #2 from March 1, March 5
         start_date = Date.new(2017, 03, 01)
         end_date = Date.new(2017, 03, 05)
         room = 2
 
         @hotel_controller.reservations  << Hotel::Reservation.new(start_date, end_date, room)
 
-        # Arrange : add a new Reservation for room #2 from March 10, March 15
+        # arrange : add a new Reservation for room #2 from March 10, March 15
         start_date = Date.new(2017, 03, 10)
         end_date = Date.new(2017, 03, 15)
         room = 2
 
         @hotel_controller.reservations  << Hotel::Reservation.new(start_date, end_date, room)
 
-        # Arrange : add a new Reservation for room #2 from March 20, March 23
+        # arrange : add a new Reservation for room #2 from March 20, March 23
         start_date = Date.new(2017, 03, 20)
         end_date = Date.new(2017, 03, 23)
         room = 2
 
         @hotel_controller.reservations  << Hotel::Reservation.new(start_date, end_date, room)
-       
-        # act
+       # act
         all_found_reservations = @hotel_controller.list_reservations_for_room(2, Date.new(2017, 03, 01), Date.new(2017, 03, 31))
-
-        #assert
+       # assert
         expect(all_found_reservations.length).must_equal 3
        end
       end

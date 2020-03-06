@@ -43,7 +43,7 @@ module Hotel
       end
     end
   # access the list of reservations for a specific date,
-  # so that I can track reservations by date
+  # so that it can track reservations by date
     def show_reservations_for_date(date)
       # go through reservations and add the ones whose range include the given date
       list = []

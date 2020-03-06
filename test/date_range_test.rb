@@ -17,7 +17,6 @@ describe Hotel::DateRange do
       start_date = Date.new(2017, 01, 01)
       end_date = start_date  - 3
        #act #assert
-       
       expect {Hotel::DateRange.new(start_date, end_date)}.must_raise ArgumentError
 
     end
@@ -29,6 +28,7 @@ describe Hotel::DateRange do
       #Act #assert
       expect {Hotel::DateRange.new(start_date, end_date)}.must_raise ArgumentError
     end
+
     it "is an invalid date range if start date is greater than end date" do
       #arrange
       start_date = Date.new(2017, 01, 04)
@@ -36,6 +36,7 @@ describe Hotel::DateRange do
       #Act #assert
       expect {Hotel::DateRange.new(start_date, end_date)}.must_raise ArgumentError
     end
+
     it "is invalid if start date is same as end date" do
       #arrange
       start_date = Date.new(2017, 01, 01)
@@ -76,35 +77,37 @@ describe Hotel::DateRange do
    
 
     it "returns true for a contained range" do
-      #arrange
+      # arrange
       start_date = Date.new(2017, 01, 01)
       end_date = Date.new(2017, 01, 05)
       test_start_date = Date.new(2017, 01, 03)
       test_end_date = Date.new(2017, 01, 04)
-      #act
+      # act
       @range = Hotel::DateRange.new(start_date, end_date)
-      #assert
+      # assert
       expect(@range.overlap?(test_start_date, test_end_date)).must_equal true
     end
 
     it "returns true for a range that overlaps in front" do 
+      # arrange
       start_date = Date.new(2017, 01, 01)
       end_date = Date.new(2017, 01, 04)
       test_start_date = Date.new(2017, 01, 01)
       test_end_date = Date.new(2017, 01, 8)
-      #act
+      # act
       @range = Hotel::DateRange.new(start_date, end_date)
-      #assert
+      # assert
       expect(@range.overlap?(test_start_date, test_end_date)).must_equal true
     end
     it "returns true for a range that overlaps  when the new_start_date is in the middle" do 
+      # arrange
       start_date = Date.new(2017, 01, 01)
       end_date = Date.new(2017, 01, 04)
       test_start_date = Date.new(2017, 01, 03)
       test_end_date = Date.new(2017, 01, 8)
-      #act
+      # act
       @range = Hotel::DateRange.new(start_date, end_date)
-      #assert
+      # assert
       expect(@range.overlap?(test_start_date, test_end_date)).must_equal true
     end
 
@@ -113,9 +116,9 @@ describe Hotel::DateRange do
       end_date = Date.new(2017, 01, 03)
       test_start_date = Date.new(2016, 12, 30)
       test_end_date = Date.new(2017, 01, 03)
-      #act
+      # act
       @range = Hotel::DateRange.new(start_date, end_date)
-      #assert
+      # assert
       expect(@range.overlap?(test_start_date, test_end_date)).must_equal true
     end
 
@@ -124,9 +127,9 @@ describe Hotel::DateRange do
       end_date = Date.new(2017, 01, 05)
       test_start_date = Date.new(2017, 01, 03)
       test_end_date = Date.new(2017, 01, 05)
-      #act
+      # act
       @range = Hotel::DateRange.new(start_date, end_date)
-      #assert
+      # assert
       expect(@range.overlap?(test_start_date, test_end_date)).must_equal true
     end
 
@@ -135,20 +138,20 @@ describe Hotel::DateRange do
       end_date = Date.new(2017, 01, 04)
       test_start_date = Date.new(2017, 01, 01)
       test_end_date = Date.new(2017, 01, 05)
-      #act
+      # act
       @range = Hotel::DateRange.new(start_date, end_date)
-      #assert
+      # assert
       expect(@range.overlap?(test_start_date, test_end_date)).must_equal true
     end
 
-    it "returns true for a range starting on the end_date date" do # check later
+    it "returns true for a range starting on the end_date date" do
       start_date = Date.new(2017, 01, 01)
       end_date = Date.new(2017, 01, 05)
       test_start_date = Date.new(2017, 01, 05)
       test_end_date = Date.new(2017, 01, 8)
-      #act
+      # act
       @range = Hotel::DateRange.new(start_date, end_date)
-      #assert
+      # assert
       expect(@range.overlap?(test_start_date, test_end_date)).must_equal true
     end
 
@@ -158,33 +161,33 @@ describe Hotel::DateRange do
       end_date = Date.new(2017, 01, 05)
       test_start_date = Date.new(2016, 12, 28)
       test_end_date = Date.new(2017, 01, 01)
-      #act
+      # act
       @range = Hotel::DateRange.new(start_date, end_date)
-      #assert
+      # assert
       expect(@range.overlap?(test_start_date, test_end_date)).must_equal true
     end
 
     it "returns false for a range completely before" do
-      #arrange
+      # arrange
       start_date = Date.new(2017, 01, 01)
       end_date = Date.new(2017, 01, 03)
       test_start_date = Date.new(2016, 12, 25)
       test_end_date = Date.new(2016, 12, 30)
       # act 
       @range = Hotel::DateRange.new(start_date, end_date)
-      #assert
+      # assert
       expect(@range.overlap?(test_start_date, test_end_date)).must_equal false
     end
 
     it "returns false for a date completely after" do
-       #arrange
+       # arrange
        start_date = Date.new(2017, 01, 01)
        end_date = Date.new(2017, 01, 03)
        test_start_date = Date.new(2018, 07, 2)
        test_end_date = Date.new(2018, 07, 06)
        # act 
        @range = Hotel::DateRange.new(start_date, end_date)
-       #assert
+       # assert
        expect(@range.overlap?(test_start_date, test_end_date)).must_equal false
     end
   end
@@ -194,41 +197,41 @@ describe Hotel::DateRange do
 
   describe "include?" do
     it "returns false if the date is clearly out" do
-       #arrange
+       # arrange
        start_date = Date.new(2017, 01, 01)
        end_date = Date.new(2017, 01, 04)
        test_date = Date.new(2017, 01, 07)
-       #act
+       # act
        range = Hotel::DateRange.new(start_date, end_date)
         does_include = range.include?(test_date)
  
-       #assert
+       # assert
        expect(does_include).must_equal false
     end
 
     it "returns true for dates in the range" do
-      #arrange
+      # arrange
       start_date = Date.new(2017, 01, 01)
       end_date = Date.new(2017, 01, 04)
       test_date = Date.new(2017, 01, 02)
-      #act
+      # act
       range = Hotel::DateRange.new(start_date, end_date)
       does_include = range.include?(test_date)
 
-      #assert
+      # assert
       expect(does_include).must_equal true
     end
 
     it "returns false for the end_date date" do
-      #arrange
+      # arrange
       start_date = Date.new(2017, 01, 01)
       end_date = Date.new(2017, 01, 04)
       test_date = Date.new(2017, 01, 04)
-      #act
+      # act
       range = Hotel::DateRange.new(start_date, end_date)
       does_include = range.include?(test_date)
 
-      #assert
+      # assert
       expect(does_include).must_equal false
     end
   end
@@ -236,14 +239,14 @@ describe Hotel::DateRange do
 
   describe "nights" do
     it "returns the correct number of nights" do
-      #arrange
+      # arrange
       start_date = Date.new(2017, 01, 01)
       end_date = start_date + 3
-      #act
+      # act
       range = Hotel::DateRange.new(start_date, end_date)
       nights = range.nights
 
-      #assert
+      # assert
       expect(nights).must_equal 3
     end
   end
