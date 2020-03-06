@@ -1,7 +1,6 @@
 require 'pry'
 require 'date'
 
-require_relative 'reservation'
 require_relative 'reservation_block'
 require_relative 'room'
 
@@ -66,13 +65,9 @@ module HotelManager
 		def add_reservation(reservation, class_storage)
 			potential_rooms = self.list_room_by_range(reservation.start_date, reservation.end_date) 
 
-			if reservation.class == HotelManager::Reservation
-				found_room = potential_rooms.include? find_room(reservation.room_id)
-			elsif reservation.class == HotelManager::ReservationBlock
-				found_room = reservation.room_ids.map do |room_id|
-					potential_rooms.include? find_room(room_id)
-				end.all? (true)
-			end
+			found_room = reservation.room_ids.map do |room_id|
+				potential_rooms.include? find_room(room_id)
+			end.all? (true)
 			
 			if found_room
 				class_storage << reservation

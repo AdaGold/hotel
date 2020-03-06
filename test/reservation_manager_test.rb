@@ -200,7 +200,6 @@ describe "Reservation Manager Class - Manipulation" do
 
 			@search_result = @sample_two.search_by_room_date(1, Date.new(2020,3,1), Date.new(2020,3,10))
 			expect(@search_result).must_be_kind_of Array
-			expect(@search_result[0]).must_be_kind_of HotelManager::Reservation
 			expect(@search_result[1]).must_be_kind_of HotelManager::ReservationBlock
 			expect(@search_result[0].id).must_equal 1
 			expect(@search_result[1].id).must_equal 4
@@ -221,8 +220,7 @@ describe "Reservation Manager Class - Manipulation" do
 		it "able to list reservation by specific date" do
 			@search_result = @sample_two.search_by_date(Date.new(2020,3,17))
 			expect(@search_result).must_be_kind_of Array
-			expect(@search_result[0]).must_be_kind_of HotelManager::Reservation
-			expect(@search_result[1]).must_be_kind_of HotelManager::ReservationBlock
+			expect(@search_result[0]).must_be_kind_of HotelManager::ReservationBlock
 			expect(@search_result[0].id).must_equal 2
 			expect(@search_result[1].id).must_equal 3
 		end
