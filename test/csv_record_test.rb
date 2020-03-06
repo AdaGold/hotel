@@ -13,11 +13,9 @@ describe 'CSV Record Class' do
     expect {HotelManager::CsvRecord.new("One")}.must_raise ArgumentError
   end
 
-  xit 'validates that id accepts natural numbers' do
+  it 'validates that id accepts natural numbers' do
     [1, 10, 9999].each {|id| HotelManager::CsvRecord.validate_id(id)}
   end
-
-
 end
 
 describe 'CSV Record Class - Load All' do
@@ -25,9 +23,8 @@ describe 'CSV Record Class - Load All' do
     expect {HotelManager::CsvRecord.load_all}.must_raise ArgumentError
   end
 
-  xit "raises an error if invoked directly (without subclassing)" do
-    record = HotelManager::CsvRecord.new(1)
-    record.build_path(TEST_DATA_DIR,"")
+  it "raises an error if missing directory or file path" do
+    expect {HotelManager::CsvRecord.build_path(nil,"")}.must_raise ArgumentError
   end
 
   it "raises an error if invoked directly (without subclassing)" do
