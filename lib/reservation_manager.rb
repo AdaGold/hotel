@@ -38,14 +38,14 @@ module HotelManager
 			chosen_rooms.map!{|room| room.id}
 			
 			if num_of_rooms == 1
-				class_storage = @reservations
-				new_reservation = HotelManager::Reservation.new(
-					id: @reservations.length + 1, 
+				class_storage = @reservation_blocks
+				new_reservation = HotelManager::ReservationBlock.new(
+					id: @reservation_blocks.length + 1, 
 					customer_id: customer_id, 
 					start_date: first_date, 
 					end_date: second_date,
 					room_cost: room_cost, 
-					room_id: chosen_rooms[0]
+					room_ids: chosen_rooms
 				)
 			else 
 				class_storage = @reservation_blocks

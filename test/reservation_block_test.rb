@@ -29,7 +29,7 @@ describe "Reservation Block Class" do
 		end
 
 		it "raises argument if block only has one room" do
-			@rooms = [HotelManager::Room.new(id: 1)]
+			@rooms = nil
 			@reservation_data[:rooms] = @rooms
 			expect{HotelManager::ReservationBlock.new(@reservation_data)}.must_raise ArgumentError
 		end

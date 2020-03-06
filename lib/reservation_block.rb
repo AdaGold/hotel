@@ -33,7 +33,7 @@ module HotelManager
 		def validate_room(attribute)
 			raise ArgumentError, "Room or room_id is required" if @rooms.nil? && @room_ids.nil?
 			
-			if attribute.length <= 1 || attribute.length > 5
+			if attribute.length < 1 || attribute.length > 5
 				raise ArgumentError, "#{attribute.length} is an invalid number of rooms for a hotel block"
 			end
 		end
