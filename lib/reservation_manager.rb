@@ -34,8 +34,7 @@ module HotelManager
 			end
 			
 			chosen_rooms.map!{|room| room.id}
-			
-			class_storage = @reservation_blocks
+
 			new_reservation = HotelManager::ReservationBlock.new(
 				id: @reservation_blocks.length + 1, 
 				customer_id: customer_id, 
@@ -45,11 +44,11 @@ module HotelManager
 				room_ids: chosen_rooms
 			)
 
-			add_reservation(new_reservation,class_storage)
+			add_reservation(new_reservation)
 		end
 
 		# Add reservation to instance variables
-		def add_reservation(reservation, class_storage)
+		def add_reservation(reservation)
 			potential_rooms = self.list_room_by_range(reservation.start_date, reservation.end_date) 
 
 			found_room = reservation.room_ids.map do |room_id|
@@ -57,7 +56,7 @@ module HotelManager
 			end.all? (true)
 			
 			if found_room
-				class_storage << reservation
+				@reservation_blocks << reservation
 			else 
 				raise ArgumentError, "#{reservation.class} double booked. Not saved to reservation manager."
 			end
@@ -103,7 +102,7 @@ module HotelManager
 			search_date_validation(first_date,second_date)
 
 			available_rooms = @rooms.dup
-			
+
 			@reservation_blocks.each do |reservation_block|
 				if reservation_block.check_reservation_range(first_date, second_date)
 					reservation_block.room_ids.each do |room_id|
