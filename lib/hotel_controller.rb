@@ -18,6 +18,7 @@ module Hotel
       new_reservation = Reservation.new(date_range, available_room) #find the available room 
       @reservations << new_reservation
       
+      
       return new_reservation
     end
 
