@@ -117,7 +117,7 @@ describe Hotel::DateRange do
   describe "nights" do
     it "returns the correct number of nights" do
       start_date = Date.new(2017, 02, 03)
-      end_date = start_date + 3
+      end_date = start_date + 3 
       range = Hotel::DateRange.new(start_date, end_date)
       expect(range.nights).must_equal 3
 

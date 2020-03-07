@@ -2,8 +2,12 @@ require_relative "test_helper"
 
 describe Hotel::HotelController do
   before do
+    start_date = Date.new(2020, 01, 04)
+    end_date = start_date + 3
     @hotel_controller = Hotel::HotelController.new
-    @date = Date.parse("2020-08-04")
+    @date_range = Hotel::DateRange.new(start_date, end_date)
+    @reservation = @hotel_controller.reserve_room(@date_range)
+    @room_list = @hotel_controller.get_available_rooms(@date_range)
   end
   describe "wave 1" do
     describe "rooms" do
@@ -32,39 +36,28 @@ describe Hotel::HotelController do
       end 
     end
     
-    describe "reserve_room" do
-      it "takes two Date objects and returns a Reservation" do
-        start_date = @date
-        end_date = start_date + 3
-
-        reservation = @hotel_controller.reserve_room(DateRange.new(start_date, end_date))
-
-        expect(reservation).must_be_kind_of Hotel::Reservation
+    describe "reserve a room" do
+      it "takes date_range object and returns a Reservation" do
+        expect(@reservation).must_be_kind_of Hotel::Reservation
       end
+
+      it "date range is an instance of the class DateRange" do 
+        expect(@reservation.date_range).must_be_kind_of Hotel::DateRange
+      end
+
     end
 
-  #   xdescribe "reservations" do
-  #     it "takes a Date and returns a list of Reservations" do
-  #       reservation_list = @hotel_controller.reservations(@date)
+    describe "wave 2" do
+      describe "get_available_rooms" do
+        it "takes a date_range and returns a list" do
 
-  #       expect(reservation_list).must_be_kind_of Array
-  #       reservation_list.each do |res|
-  #         res.must_be_kind_of Reservation
-  #       end
-  #     end
-  #   end
-  # end
-
-  # xdescribe "wave 2" do
-  #   describe "available_rooms" do
-  #     it "takes two dates and returns a list" do
-  #       start_date = @date
-  #       end_date = start_date + 3
-
-  #       room_list = @hotel_controller.available_rooms(start_date, end_date)
-
-  #       expect(room_list).must_be_kind_of Array
-  #     end
-  #   end
+          
+          expect(@room_list).must_be_kind_of Array
+        end
+        it "returns a list of instances of rooms" do 
+          expect(@room_list[0]).must_be_kind_of Hotel::Room
+        end 
+      end
+    end 
   end
 end
