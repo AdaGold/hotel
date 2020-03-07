@@ -12,34 +12,25 @@ module Hotel
     end
 
     def list_of_available_rooms(start_date, end_date)
-      test_date_range = (start_date...end_date).to_a
-      return @all_rooms.reject do |room|
-               (room.dates_unavailable & test_date_range).length > 0
+      return @all_rooms.select do |room|
+               room.is_available_during(start_date, end_date)
              end
     end
 
     def reserve_room(start_date, end_date, guest_name:, room:)
-        given_date_range = (start_date...end_date).to_a
       raise(ArgumentError, "This room #{room} does not exist in our hotel:(") unless @all_rooms.any? do |individual_room|
         individual_room.room_number == room
       end
-      
 
-      
       reservation_room = @all_rooms.find do |room_object|
         room_object.room_number == room
       end
-      raise(ArgumentError, "This room #{room} is unavailable for reservation for given dates #{start_date} - #{end_date}") unless (reservation_room.dates_unavailable & given_date_range).length == 0
-      #raise an argumentErro when the start_date and/or the  end_date of a reservation for a room already exits aka if the room is not available for those dates
-
+      raise(ArgumentError, "This room #{room} is unavailable for reservation for given dates #{start_date} - #{end_date}") unless reservation_room.is_available_during(start_date, end_date)
 
       new_res = Hotel::Reservation.new(start_date, end_date, guest_name: guest_name, room: room)
-      #add reservation to room's reservation_list
-      reservation_room.add_reservation_to_room(new_res)
 
-      #add this reservation to all_reservations in hotel
+      reservation_room.add_reservation_to_room(new_res)
       @all_reservations << new_res
-      
       return new_res
     end
 
