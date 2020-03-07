@@ -103,17 +103,6 @@ describe Hotel::DateRange do
     end
   end
 
-  xdescribe "include?" do
-    it "reutrns false if the date is clearly out" do
-    end
-
-    it "returns true for dates in the range" do
-    end
-
-    it "returns false for the end_date date" do
-    end
-  end
-
   describe "nights" do
     it "returns the correct number of nights" do
       start_date = Date.new(2017, 02, 03)

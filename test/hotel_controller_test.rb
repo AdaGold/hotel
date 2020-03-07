@@ -40,22 +40,21 @@ describe Hotel::HotelController do
       it "takes date_range object and returns a Reservation" do
         expect(@reservation).must_be_kind_of Hotel::Reservation
       end
-
       it "date range is an instance of the class DateRange" do 
         expect(@reservation.date_range).must_be_kind_of Hotel::DateRange
       end
-
     end
 
     describe "wave 2" do
       describe "get_available_rooms" do
         it "takes a date_range and returns a list" do
-
-          
           expect(@room_list).must_be_kind_of Array
         end
         it "returns a list of instances of rooms" do 
           expect(@room_list[0]).must_be_kind_of Hotel::Room
+        end 
+        it "return an array with all the available rooms" do
+          expect(@room_list.length).must_equal 19
         end 
       end
     end 

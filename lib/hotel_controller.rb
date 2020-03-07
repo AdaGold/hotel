@@ -13,14 +13,14 @@ module Hotel
 
     def reserve_room(date_range)
       room_to_reserve = get_available_rooms(date_range)[0] #getting the first instance of room available of the array for the reservation
-      new_reservation = Reservation.new(date_range, room_to_reserve) 
-      room_to_reserve.add_reservation(new_reservation)
-      return new_reservation
+      if room_to_reserve == nil 
+        raise ArgumentError.new("No available rooms for date range") 
+      else
+        new_reservation = Reservation.new(date_range, room_to_reserve) 
+        room_to_reserve.add_reservation(new_reservation)
+        return new_reservation
+      end
     end
-
-    # def lookup_reservation_by_date(date_range) 
-    #     return
-    # end
 
     def get_available_rooms(date_range) #list of rooms 
       rooms_available = []
@@ -31,6 +31,10 @@ module Hotel
       end 
       return rooms_available
     end
+
+    def reservations_by_date(date_range)
+      
+    end 
 
 
   end
