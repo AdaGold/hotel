@@ -43,11 +43,8 @@ describe "DateRange" do
       expect(@date).must_respond_to :all_dates
     end
 
-    it "Should iterate through date range and give an array of all dates" do
+    it "Should give an array of all dates" do
       expect(@date.all_dates).must_equal @all_dates
-    end
-
-    it "Should give an array of all the dates within the date range" do
       expect(@date.all_dates).must_be_kind_of Array
     end
 

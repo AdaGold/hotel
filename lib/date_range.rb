@@ -10,6 +10,8 @@ module Hotel
       @end_date = end_date
     end
 
+    #for future refactoring- does_match_date(date)
+    #this method will elaborate on the current method so it takes a date and returns a true or flase depending on if that date exists/overlaps all the days in the date range 
     def all_dates
       return (@start_date...@end_date).to_a
     end
