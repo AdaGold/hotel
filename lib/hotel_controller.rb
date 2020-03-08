@@ -32,8 +32,15 @@ module Hotel
       return rooms_available
     end
 
-    def reservations_by_date(date_range)
-      
+    def access_reservations(date_range) ##give me the rooms reserved for date range 
+      list_reservations = []
+      @rooms.each do |room|
+        room.reservations.each do |r|
+          if r.date_range.include_date_range?(date_range)
+          list_reservations << r
+        end 
+      end 
+      return list_reservations
     end 
 
 

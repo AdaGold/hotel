@@ -43,7 +43,7 @@ describe Hotel::DateRange do
       test_range = Hotel::DateRange.new(start_date, end_date)
 
       expect(@range.overlap?(test_range)).must_equal true
-    end
+    end 
 
     it "returns true for a contained range" do
       start_date = Date.new(2017, 01, 03)
@@ -112,5 +112,25 @@ describe Hotel::DateRange do
 
     end
   end
+  describe "include_date_range?" do 
+    before do 
+      start_date = Date.new(2017, 01, 01)
+      end_date = start_date + 3
+      @range = Hotel::DateRange.new(start_date, end_date)
+    end 
+    it "is included in the range" do
+      second_start_date = Date.new(2017, 01, 01)
+      second_end_date = second_start_date + 1 
+      second_range= Hotel::DateRange.new(second_start_date, second_end_date)
+      expect(@range.include_date_range?(second_range)).must_equal true
+    end 
+    it "is not included in the range" do 
+      start_date = Date.new(2016, 12, 27)
+      end_date = start_date + 2 
+      second_range = Hotel::DateRange.new(start_date, end_date)
+      expect(@range.include_date_range?(second_range)).must_equal false
+    end 
+  end 
+
 
 end

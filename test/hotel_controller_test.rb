@@ -45,18 +45,32 @@ describe Hotel::HotelController do
       end
     end
 
-    describe "wave 2" do
-      describe "get_available_rooms" do
-        it "takes a date_range and returns a list" do
-          expect(@room_list).must_be_kind_of Array
-        end
-        it "returns a list of instances of rooms" do 
-          expect(@room_list[0]).must_be_kind_of Hotel::Room
-        end 
-        it "return an array with all the available rooms" do
-          expect(@room_list.length).must_equal 19
-        end 
+    describe "get_available_rooms" do
+      it "takes a date_range and returns a list" do
+        expect(@room_list).must_be_kind_of Array
       end
+      it "returns a list of instances of rooms" do 
+        expect(@room_list[0]).must_be_kind_of Hotel::Room
+      end 
+      it "return an array with all the available rooms" do
+        expect(@room_list.length).must_equal 19
+      end 
+      
+      describe "access reservations" do 
+        it "returns an array" do 
+          array = @hotel_controller.access_reservations(@date_range)
+          expect(array).must_be_kind_of Array
+        end 
+        it "returns an array of reservations for the date range" do 
+          reservations = @hotel_controller.access_reservations(@date_range)[0]
+          expect(reservations).must_be_kind_of Hotel::Reservation
+        end 
+        it "returns only reservations within the date range" do 
+          reservations = @hotel_controller.access_reservations(@date_range)
+          expect()
+        end 
+
+      end 
     end 
   end
 end
