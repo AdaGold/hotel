@@ -27,16 +27,27 @@ describe "System class" do
   end
 
   it "gets list of reservation and given a date" do
-    #   #Arrange
+    #Arrange
     date = Date.parse ("02/02/2020")
     system = Hotel::System.new(20)
     system.create_reservation("03/12/2020", "03/12/2020")
     system.create_reservation("02/02/2020", "02/04/2020")
 
-    #   #Act
+    #Act
     res_array = system.search_by_date(date)
 
-    #   #Assert
+    #Assert
     expect(res_array.length).must_equal 1
   end
+
+  it "raises exception, if no available rooms" do
+    #Arrange
+    system = Hotel::System.new(1)
+    system.create_reservation("03/03/2010", "03/04/2020")
+    #Act
+    expect{system.create_reservation("03/03/2010", "03/04/2020")}.must_raise Exception
+    #Assert
+  end
+
+  
 end
