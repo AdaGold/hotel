@@ -26,13 +26,17 @@ describe "System class" do
     expect(system.reservations.length).must_equal 1
   end
 
-  # it "gets list of reservation given one date" do
-  #   #Arrange
-  #   date = Date.parse ("03/02/2020")
-  #   system = Hotel::System.new(20)
+  it "gets list of reservation and given a date" do
+    #   #Arrange
+    date = Date.parse ("02/02/2020")
+    system = Hotel::System.new(20)
+    system.create_reservation("03/12/2020", "03/12/2020")
+    system.create_reservation("02/02/2020", "02/04/2020")
 
-  #   #Act
+    #   #Act
+    res_array = system.search_by_date(date)
 
-  #   #Assert
-  # end
+    #   #Assert
+    expect(res_array.length).must_equal 1
+  end
 end
