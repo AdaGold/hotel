@@ -32,7 +32,9 @@ describe "front_desk" do
     it "Should have all_reservations that is an array of all hotel reservations" do
       expect(@pineapple_villa).must_respond_to :all_reservations
       expect(@pineapple_villa.all_reservations).must_be_kind_of Array
-      #TODO check for Reservation Instance
+      @pineapple_villa.all_reservations.each do |reservation|
+        expect(reservation).must_be_instance_of Hotel::Reservation
+      end
     end
 
     it "Should have a list of all rooms" do
