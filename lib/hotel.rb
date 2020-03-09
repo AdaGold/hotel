@@ -6,11 +6,26 @@ module HotelSystem
     attr_accessor :rooms
 
     def initialize
-      @rooms = [] #create_rooms
+      @rooms = [] 
       20.times do |i|
         @rooms << HotelSystem::Room.new(i+1, 200)
       end 
     end 
+    #the block can only be the last 5 rooms 15-20
+    # def make_reservation_block(start_date, end_date, rooms_numbers, rate)
+    #   rooms = []
+    #   rooms_numbers.each do |num|
+    #     if num > 20 || num < 15
+    #       raise ArgumentError.new("you can only reserve rooms 15-20 for a block reservation")
+    #     end 
+    #     rooms << find_room(num)
+    #   end 
+      
+    #   rooms.each do |room|
+    #     room.cost_per_night = cost_with_discount(rate, room)
+    #     make_reservation(room.room_number, start_date, end_date)
+    #   end
+    # end 
     
     def find_reservations_with_room_number(room_number, start_date, end_date)
       room = find_room(room_number)
@@ -50,12 +65,11 @@ module HotelSystem
             return reservation
           end 
         end 
-      end 
+      end
     end 
 
     def total_cost(reservation_number)
-      res = find_reservation(reservation_number)
-      return res.total_cost
+      return find_reservation(reservation_number).total_cost
     end 
 
     def available_rooms(start_date, end_date) 
@@ -75,7 +89,8 @@ module HotelSystem
       room = find_room(room_number)
       
       true_for_all = []
-      if room.reservations == []
+
+      if room.reservations.length  == 0
           room.reservations << HotelSystem::Reservation.new(next_reservation_number, start_date, end_date)
       else
           room.reservations.each do |res|
@@ -92,21 +107,13 @@ module HotelSystem
       end 
     end
 
-
-
-    # def make_reservation_block(block, start_date, end_date)
-    #   block.each do |room|
-    #     make_reservation(room.room_number, start_date, end_date)
-    #   end 
-    # end 
     
-  
+  #there may be some cases where a reservation starts when one ends, but trust me it still works the method name isn't very accurate
     def no_shared_days?(start_date, end_date, reservation)
       count = 0 
       reservation_start = reservation.start_date
       reservation_end = reservation.end_date
       while start_date < end_date
-        
         while reservation_start < reservation_end
           if start_date == reservation_start 
             count += 1
@@ -116,16 +123,15 @@ module HotelSystem
        reservation_start = reservation.start_date 
        start_date += 1
       end 
-
       if (reservation.end_date - reservation.start_date == 1) && reservation_start == start_date
         return false 
       else
         return count < 2
       end 
-
     end 
      
     private
+
     #used for fine_reservations_for_room and list_reservations_with_date 
     def is_between_two_dates(range_wanted, date)
       return date >= range_wanted[0] && date <= range_wanted[1];
@@ -144,32 +150,14 @@ module HotelSystem
       return max + 1 
     end
 
+    def cost_with_discount(rate, room)
+      return room.cost_per_night - (room.cost_per_night*(rate/100))
+    end 
   end 
 end 
 
 
 def main
-  # hotel = HotelSystem::Hotel.new
-  # #puts hotel.rooms.to_s
-
-  # hotel.make_reservation_block([hotel.rooms[0], hotel.rooms[1], hotel.rooms[2], hotel.rooms[3]], Date.new(2020, 03, 10), Date.new(2020, 03, 18))
-
-  # puts hotel.rooms.to_s
-  #res1 = HotelSystem::Reservation.new(1, Date.new(2020,03,9), Date.new(2020,03,12))
-  res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 14), Date.new(2020, 03,17)) 
-
-  #should raise argument error
-  hotel = HotelSystem::Hotel.new
-  #hotel.rooms[1].add_reservation(res2)
-  #hotel.rooms[1].add_reservation(res1)
-  ans = hotel.no_shared_days?(Date.new(2020, 03, 10), Date.new(2020, 03, 14), res2)
-
-  puts ans
-
-  
-
-
-end 
-
+end
 
 main

@@ -73,7 +73,7 @@ describe "other instance methods" do
      
 
     res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
-    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 10), Date.new(2020, 03,11)) 
 
     res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02)) 
 
@@ -91,7 +91,7 @@ describe "other instance methods" do
   it "finds the correct reservations given a room number" do 
 
     res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
-    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 10), Date.new(2020, 03,11)) 
 
     res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
 
@@ -111,7 +111,7 @@ describe "other instance methods" do
   it "finds the correct reservations given a room number - test 2" do 
 
     res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
-    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 10), Date.new(2020, 03,12)) 
 
     res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
 
@@ -129,7 +129,7 @@ describe "other instance methods" do
   
   it "finds the available rooms" do 
     res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
-    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 10), Date.new(2020, 03,18)) 
 
     res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
 
@@ -148,7 +148,7 @@ describe "other instance methods" do
   it "evaluates overlapping correcty " do 
     hotel = HotelSystem::Hotel.new
 
-    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 06), Date.new(2020, 03,29))
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 10), Date.new(2020, 03,29))
     answer = hotel.no_shared_days?(Date.new(2020, 03, 18), Date.new(2020, 04, 18), res3)
 
 
@@ -160,7 +160,7 @@ describe "other instance methods" do
     
     hotel = HotelSystem::Hotel.new
 
-    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 06), Date.new(2020, 03,29))
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 10), Date.new(2020, 03,29))
     hotel.rooms[1].add_reservation(res3)
     #make_reservation(room_number, start_date, end_date)
 
@@ -170,7 +170,7 @@ describe "other instance methods" do
   it "must make a reservation inside of specified room" do 
     hotel = HotelSystem::Hotel.new
 
-    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 06), Date.new(2020, 03, 18))
+    res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 10), Date.new(2020, 03, 18))
     hotel.rooms[1].add_reservation(res3)
     
 
@@ -182,7 +182,7 @@ describe "other instance methods" do
   it "finds the total cost of a reservation" do 
 
     res1 = HotelSystem::Reservation.new(1, Date.new(2020,04,03), Date.new(2020,04,06))
-    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 06), Date.new(2020, 03,11)) 
+    res2 = HotelSystem::Reservation.new(2, Date.new(2020, 03, 10), Date.new(2020, 03,11)) 
 
     res3 = HotelSystem::Reservation.new(3, Date.new(2020, 03, 31), Date.new(2020,04,02))
 
@@ -258,4 +258,25 @@ describe "other instance methods" do
 
 
   end 
+
+  # it "raises argument error when given invalid rooms" do 
+  #   hotel = HotelSystem::Hotel.new
+  #   expect{hotel.make_reservation_block(Date.new(2020, 03, 14), Date.new(2020, 03, 18), [1, 2, 3], 15)}.must_raise ArgumentError
+  # end 
+
+  # it "makes a reservation block" do 
+  #   hotel = HotelSystem::Hotel.new
+    
+  #   hotel.make_reservation_block(Date.new(2020, 05, 28), Date.new(2020, 05, 30), [19, 18], 15)
+  #   puts hotel.rooms[18].reservations.to_s
+  #   hotel.rooms[18].reservations.length.must_equal 1
+  # end 
+
+
+
+  # it "will not make a reservation from reservation block if room is booked" do 
+  #   hotel = HotelSystem::Hotel.new
+  #   expect{hotel.make_reservation_block(Date.new(2020, 03, 14), Date.new(2020, 03, 18), [19, 18, 20], 15)}.must_raise ArgumentError
+
+  # end 
 end 

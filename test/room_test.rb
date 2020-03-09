@@ -50,4 +50,6 @@ describe "class methods" do
 
       
   end 
+
+
 end 
