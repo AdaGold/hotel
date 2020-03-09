@@ -1,7 +1,7 @@
 require_relative "test_helper"
 
 describe Hotel::DateRange do
-  describe "consructor" do
+  describe "constructor" do
     before do 
       start_date = Date.new(2017, 01, 01)
       end_date = start_date + 3

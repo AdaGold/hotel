@@ -19,7 +19,6 @@ module Hotel
       end 
     end
 
-
     def include_date_range?(date_range)
       date_range.start_date.between?(@start_date, @end_date) || date_range.end_date.between?(@start_date, @end_date)
     end   
