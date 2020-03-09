@@ -67,9 +67,9 @@ reserves a room from a block | ✔️
 
 | Overall Feedback | Criteria | yes/no |
 | --- | --- | --- |
-| Green (Meets/Exceeds Standards) | 14+ total in all sections | ✔️
-| Yellow (Approaches Standards) | 9-13 total in all sections | ✔️
-| Red (Not at Standard) | 0-8 total in all sections, or assignment is breaking/doesn’t run with less than 5 minutes of debugging | ✔️
+| Green (Meets/Exceeds Standards) | 14+ total in all sections | 
+| Yellow (Approaches Standards) | 9-13 total in all sections | 
+| Red (Not at Standard) | 0-8 total in all sections, or assignment is breaking/doesn’t run with less than 5 minutes of debugging | 
 
 ### Additional Feedback
 
