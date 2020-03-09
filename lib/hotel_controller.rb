@@ -4,8 +4,6 @@ require_relative 'date_range'
 
 module Hotel
   class HotelController
-    
-    #Hotel controller makes the reservation using the attributes of reservation class 
     attr_reader :rooms, :get_available_rooms, :access_reservations
     attr_accessor :reserve_room
     def initialize

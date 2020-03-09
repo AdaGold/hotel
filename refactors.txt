@@ -1,0 +1,4 @@
+One thing i would do differently would be to create a class for hotel blocks. 
+I found myself lost multiple times for not having a specific space for creating the blocks. 
+I would want to find a better method name for access_reservations, could not come up with a more clear name that 
+indicate the function. 
