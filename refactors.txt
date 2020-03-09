@@ -1,0 +1,13 @@
+change the method in date range to does_match(date) - this will return true or false depening if the date is included in the date range array 
+combine the dates_unavailable and is_available_during methods into one method 
+room probably doesn't need to keep track of it's reservations- only reservation should know about room since room doesn't change whereas reservation does 
+
+overall- keep methods that belong to a class within that class to iliminate the dependency between classes 
+
+
+
+
+
+
+
+write wave 3- make a block reservation class 
