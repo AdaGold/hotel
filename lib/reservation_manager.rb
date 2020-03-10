@@ -8,7 +8,7 @@ require_relative 'block'
 module Hotel
   class ReservationManager
 
-    attr_reader :rooms, :reservations
+    attr_reader :rooms
 
     def initialize
       @rooms = create_rooms

@@ -11,14 +11,14 @@ module Hotel
     def initialize(rooms, stay_begin, stay_end, rate)
       super(room, stay_begin, stay_end, rate)
 
-      @rooms = rooms.to_h { |room| [room, nil]}
+      @rooms = rooms.to_h { |room| [room, false]}
       @rate = rate
 
       claim_rooms
     end
 
     def any_available?
-      available_rooms = @rooms.select { |room, bool| bool == nil}
+      available_rooms = @rooms.select { |room, bool| bool == false}
       if available_rooms.length > 0
         return true
       else
@@ -26,21 +26,19 @@ module Hotel
       end
     end
 
-    def reserve_room(first, last, preferred_room: nil)
-      unless preferred_room == nil
-        available_rooms = @rooms.select { |room, bool| bool == nil}
-        if available_rooms.length == 0
-          raise ArgumentError.new("There are no rooms in the block available to book!")
-        else
-          available_rooms.first.value = true 
-        end
+    def reserve_room(first, last)
+
+      if first != @stay_begin || last != @stay_end
+        raise ArgumentError.new "#{first} - #{last} is not a valid date range!"
+      end
+      
+      available_rooms = @rooms.reject { |room, bool| bool == true}
+      if available_rooms.length == 0
+        raise ArgumentError.new("There are no rooms in the block available to book!")
+      else
+        @rooms[available_rooms.keys.first] = true
       end
 
-      if @rooms[preferred_room] == nil
-        @rooms[preferred_room] = true
-      else
-        raise ArgumentError.new("Room #{preferred_room.number} is not available to book!")
-      end
     end
 
     private

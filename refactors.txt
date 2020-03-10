@@ -1,0 +1,3 @@
+Find better/more consistent naming conventions for my stay begin/stay end date objects.
+More clearly defining the responsibility of the reservation manager class as well as it's relationship with the other classes.
+Figuring out what weird thing is going on with my date subtraction during the calculation of stay cost.
